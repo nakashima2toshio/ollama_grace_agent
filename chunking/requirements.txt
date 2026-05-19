@@ -1,0 +1,13 @@
+# requirements.txt
+# chunking パッケージの依存関係
+ 
+# OpenAI API（LLM: チャンク分割 / 3段階セマンティックチャンキング）
+# [MIGRATION] google-genai → openai
+openai>=1.30.0
+ 
+# Data validation
+pydantic>=2.0.0
+ 
+# Progress bar
+tqdm>=4.65.0
+ 

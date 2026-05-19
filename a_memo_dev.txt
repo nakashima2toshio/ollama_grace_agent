@@ -1,0 +1,180 @@
+memo:
+(Q)『日本大百科全書』において、言語はどのような多義的な概念として解説されていますか？
+(A)言語は多義的であり、大脳に蓄えられた「語彙と文法規則の体系」やその体系を用いる「能力」を指すとされています。
+また、全人類に共通する抽象的な「言語能力」を指すこともあれば、
+特定の社会で使用される「個々の個別言語」を指すこともあるなど、
+脳内システムから具体的な言語体系まで幅広く捉えられています。
+
+（Q）日本語はどのような多義的な概念として解説されていますか？
+
+自律型Agent：（全11記事）
+・Github：https://github.com/nakashima2toshio/gemini_grace_agent
+
+・[実践・自律型 Agent・全コード公開]（1/10）全体像
+https://zenn.dev/toshio/articles/54b0c51742b05b
+
+・[実践・自律型Agent] （2/10）計画（Planner詳細）
+https://zenn.dev/toshio/articles/e2569807fbd105
+
+・[実践・自律型Agent] （3/10）実行（Executor詳細）
+https://zenn.dev/toshio/articles/923a4093ef46d3
+
+・[実践・自律型Agent] （4/10）信頼度計算システム（confidence詳細）
+https://zenn.dev/toshio/articles/e67abbef158f24
+
+・[実践・自律型Agent] （5/10）介入判定システム（intervention詳細）
+https://zenn.dev/toshio/articles/1da596a099ee21
+
+・[実践・自律型Agent] （6/10）再計画（RePlan詳細）
+https://zenn.dev/toshio/articles/6e96b49e2ed60f
+
+・[実践・自律型Agent] （7/10）再計画(RePlan)の「改善」（tool: Web_Search追加）
+https://zenn.dev/toshio/articles/c4e64cd40e713c
+
+・[実践・自律型Agent] （8-a/10）自律型Agent のテスト作成
+https://zenn.dev/toshio/articles/b40f4180818904
+
+・[実践・自律型Agent] （8-b/10）自律型Agent のテスト作成
+https://zenn.dev/toshio/articles/34958b36a20668
+
+・[実践・自律型Agent] （8-c/10）自律型Agent のテスト作成 Up許可待ち：
+https://zenn.dev/toshio/articles/4e22f5337bea3e
+
+・[自律型Agent用：テストデータのダウンロード] From HuggingFace
+https://zenn.dev/toshio/articles/0ff187f4d15f5e
+
+------------------------------------------------------------------
+#ai #agent #rag
+
+RAGのキモ技術=チャンク分割を最新化、全面改訂しました。
+
+「チャンク分割・方式のまとめ」
+[Step 1] 階層構造化（段落分割）
+       - テキストをブロック分割し、LLMで章・節・
+         トピック転換を判定して段落単位に分割
+       - chunks ▲ 増加
+
+[Step 2] 意味的チャンキング
+       - 各段落をLLMで意味の単位に再分割
+         （問題提起+解決策など）
+       - Q/A生成に最適サイズのチャンクを生成
+       - chunks ▲▲ さらに増加
+
+[Step 3] 文脈連続性チェック
+       - 隣接チャンク間の連続性をLLMで判定
+       - 指示語・前方依存がある → 結合
+       - 話題転換・独立して理解可能 → 分離
+       - chunks ▼ 減少（過分割を修正）
+
+Rag: Chunk チャンク分割
+
+・Github：https://github.com/nakashima2toshio/gemini_grace_agent
+
+・[実践・RAG・チャンク作成・全コード公開]（1/5）チャンク分割( 本番用)
+https://zenn.dev/toshio/articles/af802b3eb682bf
+
+・[実践・RAG・チャンク作成]（2/5）チャンク分割(Step1: 階層構造化)
+https://zenn.dev/toshio/articles/b1fa4fcfc98d0a
+
+・[実践・RAG・チャンク作成]（3/5）チャンク分割(Step2: 意味的分割)
+https://zenn.dev/toshio/articles/e10f8c7ae06e43
+
+・[実践・RAG・チャンク作成]（4/5）チャンク分割(Step3: 文脈連続性チェック)
+https://zenn.dev/toshio/articles/2a9278ff1ee1f7
+
+・[実践・RAG・チャンク作成]（5/5）チャンク分割( 非同期・並列処理)
+https://zenn.dev/toshio/articles/af68a9c2940d0c
+
+------------------------------------------------------------------
+# ------------
+#ai #agent #rag
+
+RAGのキモ技術=・チャンク分割、Q/Aペア作成、ベクターDB（Qdrant）登録の流れの
+「Q/Aペア作成、ベクターDB（Qdrant）登録」を全面更新、最新化しました。
+
+Rag: Qa_Pair　Q/Aペア作成・Qdrant登録&CRUD
+
+---
+■ Q/A GENERATION (Phase 1)
+
+  [Step 1] 入力CSV自動判定
+           - CSVカラム構成を解析し処理を自動切替
+           - question+answer あり → Q/A生成スキップ、直接登録
+           - text あり → Q/A生成パイプラインへ
+           - いずれもなし → エラー終了
+
+  [Step 2a] スマートQ/A生成（デフォルト）
+           - LLMがチャンクごとに最適なQ/A数を動的決定（0〜5個）
+           - 情報量が少ないチャンクは0個（スキップ）
+           - Celery並列処理で高速化
+
+  [Step 2b] 従来方式Q/A生成（--no-smart-generation）
+           - トークン数ベースで固定Q/A数を算出（2〜8個）
+           - batch-chunks単位でまとめてLLMに送信
+
+---
+■ QDRANT REGISTRATION (Phase 2)
+  [Step 3] Embedding生成
+           - gemini-embedding-001 使用（3072次元）
+           - バッチ処理（デフォルト: 100件ずつ）
+
+  [Step 4] コレクション作成 & バッチアップサート
+           - --recreate で既存コレクション削除→再作成
+           - Hybrid Search対応（Dense + Sparse ベクトル）
+           - コサイン類似度による検索
+
+---
+■ QDRANT CRUD OPERATIONS
+  ● Create  - コレクション作成、ポイント追加
+  ● Read    - コレクション一覧、ポイント検索・取得
+  ● Update  - ポイントのペイロード更新
+  ● Delete  - ポイント削除、コレクション削除
+
+・Github：https://github.com/nakashima2toshio/gemini_grace_agent
+
+・[実践・RAG・Q/A作成・全コード公開]（1/6）Q/Aペア作成・Qdrant登録・全体の流れ
+https://zenn.dev/toshio/articles/c75f191007f2f7
+
+・[実践・RAG・Q/A作成]（2/6）Q/Aペア作成
+https://zenn.dev/toshio/articles/c57ee7f7a21aa8
+
+・[実践・RAG・Q/A作成]（3/6）Q/Aペア作成・QAパイプライン
+https://zenn.dev/toshio/articles/5863d2592d29e9
+
+・[実践・RAG・Q/A作成]（4/6）Q/Aペア作成・QAジェネレータ
+https://zenn.dev/toshio/articles/b23ed1c48d2ea0
+
+・[実践・RAG・Q/A作成]（5/6）Q/Aペア作成・分析・カバレージ
+https://zenn.dev/toshio/articles/90410077757129
+
+・[実践・RAG・Q/A登録]（6/6）ベクターDB/Qdrant・CRUD
+https://zenn.dev/toshio/articles/c90b628b2e7678
+
+
+Test:
+
+実行コマンド：
+./start_celery.sh stop
+./start_celery.sh restart -w 16
+
+streamlit run agent_rag.py --server.port 8501
+
+python -m chunking.csv_text_to_chunks_text_csv -i ./OUTPUT/cc_news_5per.csv -o ./OUTPUT/cc_news_5per_chunked.csv -w 8 -b 1500 -m gemini-2.0-flash
+python -m chunking.csv_text_to_chunks_text_csv -i ./OUTPUT/fineweb_edu_ja_5per.csv -o ./OUTPUT/fineweb_edu_ja_5per_chunked.csv -w 8 -b 1500 -m gemini-2.0-flash
+python -m chunking.csv_text_to_chunks_text_csv -i ./OUTPUT/japanese_text_5per.csv -o ./OUTPUT/japanese_text_5per_chunked.csv -w 8 -b 1500 -m gemini-2.0-flash
+python -m chunking.csv_text_to_chunks_text_csv -i ./OUTPUT/livedoor_5per.csv -o ./OUTPUT/livedoor_5per_chunked.csv -w 8 -b 1500 -m gemini-2.0-flash
+python -m chunking.csv_text_to_chunks_text_csv -i ./OUTPUT/wikipedia_ja_5per.csv -o ./OUTPUT/wikipedia_ja_5per_chunked.csv -w 8 -b 1500 -m gemini-2.0-flash
+
+./start_celery.sh stop
+./start_celery.sh restart -w 16
+
+make_qa_register_qdrant.py - Q/A生成からQdrant登録までを完結する統合ツール：
+make_qa.py + register_csv_to_qdrant.py の両方の処理。
+
+python qa_qdrant/make_qa_register_qdrant.py --input-csv OUTPUT/wikipedia_ja_5per_chunked.csv --collection wikipedia_ja_5per --use-celery --celery-workers 16 --recreate
+python qa_qdrant/make_qa_register_qdrant.py --input-csv OUTPUT/cc_news_5per_chunked.csv --collection cc_news_5per --use-celery --celery-workers 16 --recreate
+python qa_qdrant/make_qa_register_qdrant.py --input-csv OUTPUT/fineweb_edu_ja_5per_chunked.csv --collection fineweb_edu_ja_5per --use-celery --celery-workers 16 --recreate
+python qa_qdrant/make_qa_register_qdrant.py --input-csv OUTPUT/japanese_text_5per_chunked.csv --collection japanese_text_5per --use-celery --celery-workers 16 --recreate
+python qa_qdrant/make_qa_register_qdrant.py --input-csv OUTPUT/livedoor_5per_chunked.csv --collection livedoor_5per --use-celery --celery-workers 16 --recreate
+python qa_qdrant/make_qa_register_qdrant.py --input-csv OUTPUT/fineweb_edu_ja_5per_chunked.csv--collection cc_news_5per --use-celery --celery-workers 16 --recreate
+

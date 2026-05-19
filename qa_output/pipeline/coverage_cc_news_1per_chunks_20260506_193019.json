@@ -1,0 +1,127 @@
+{
+  "coverage_rate": 0.75,
+  "covered_chunks": 3,
+  "total_chunks": 4,
+  "uncovered_chunks": [
+    {
+      "chunk_id": "cc_news_1per_chunk_3",
+      "similarity": 0.6235411125653488,
+      "gap": 0.07645888743465112,
+      "text_preview": "This is officially our new favorite way to get in on the football fun...."
+    }
+  ],
+  "max_similarities": [
+    0.7491017429647228,
+    0.7388052507054538,
+    0.7402367320622314,
+    0.6235411125653488
+  ],
+  "threshold": 0.7,
+  "multi_threshold": {
+    "strict": {
+      "threshold": 0.8,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 4,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_1per_chunk_0",
+          "similarity": 0.7491017429647228,
+          "gap": 0.05089825703527728
+        },
+        {
+          "chunk_id": "cc_news_1per_chunk_1",
+          "similarity": 0.7388052507054538,
+          "gap": 0.06119474929454627
+        },
+        {
+          "chunk_id": "cc_news_1per_chunk_2",
+          "similarity": 0.7402367320622314,
+          "gap": 0.05976326793776865
+        },
+        {
+          "chunk_id": "cc_news_1per_chunk_3",
+          "similarity": 0.6235411125653488,
+          "gap": 0.1764588874346512
+        }
+      ]
+    },
+    "standard": {
+      "threshold": 0.7,
+      "covered_chunks": 3,
+      "coverage_rate": 0.75,
+      "uncovered_count": 1,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_1per_chunk_3",
+          "similarity": 0.6235411125653488,
+          "gap": 0.07645888743465112
+        }
+      ]
+    },
+    "lenient": {
+      "threshold": 0.6,
+      "covered_chunks": 4,
+      "coverage_rate": 1.0,
+      "uncovered_count": 0,
+      "uncovered_chunks": []
+    }
+  },
+  "chunk_analysis": {
+    "by_length": {
+      "long": {
+        "count": 2,
+        "covered": 2,
+        "avg_similarity": 0.7439534968350883,
+        "coverage_rate": 1.0
+      },
+      "medium": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.7402367320622314,
+        "coverage_rate": 1.0
+      },
+      "short": {
+        "count": 1,
+        "covered": 0,
+        "avg_similarity": 0.6235411125653488,
+        "coverage_rate": 0.0
+      }
+    },
+    "by_position": {
+      "beginning": {
+        "count": 2,
+        "covered": 2,
+        "avg_similarity": 0.7439534968350883,
+        "coverage_rate": 1.0
+      },
+      "middle": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.7402367320622314,
+        "coverage_rate": 1.0
+      },
+      "end": {
+        "count": 1,
+        "covered": 0,
+        "avg_similarity": 0.6235411125653488,
+        "coverage_rate": 0.0
+      }
+    },
+    "summary": {
+      "total_chunks": 4,
+      "total_qa_pairs": 13,
+      "threshold_used": 0.7,
+      "insights": [
+        "shortチャンクのカバレージが低い（0.0%）",
+        "文書end部分のカバレージが低い（0.0%）"
+      ]
+    }
+  },
+  "dataset_type": "cc_news_1per_chunks",
+  "optimal_thresholds": {
+    "strict": 0.8,
+    "standard": 0.7,
+    "lenient": 0.6
+  }
+}

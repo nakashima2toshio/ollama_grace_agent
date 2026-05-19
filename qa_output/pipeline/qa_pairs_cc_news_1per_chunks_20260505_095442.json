@@ -1,0 +1,100 @@
+[
+  {
+    "question": "Regina Willoughbyの引退と、Columbia City Balletでの最後のシーズンについて教えてください。",
+    "answer": "Regina Willoughbyは40歳で、3月に舞台を引退します。Columbia City Balletでの最後のシーズンは、娘Melinaの初シーズンと重なっています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "引退",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "娘のMelina Willoughbyは、Columbia City Balletでどのようにキャリアを始めたのですか？",
+    "answer": "18歳のMelina Willoughbyは、Columbia City Balletで初シーズンを迎え、トレーニーとしてキャリアを始めました。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "初シーズン",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "『The Nutcracker』では、ReginaとMelinaはそれぞれどんな役割で同時出演していましたか？",
+    "answer": "同じ『The Nutcracker』で同時に出演し、ReginaはSnow Queen、Melinaはsnow corpsを務めました。さらに、2人ともArabian divertissementにも出ています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "役割分担",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "親子で同じ舞台に立つことについて、Reginaはどう感じていましたか？",
+    "answer": "Reginaは「一緒に踊るのはとても不思議」と語り、Melinaがバレエをここまで続けるとは思っていなかったと話しています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "親子共演",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "NYCBの暫定リーダーシップチームは何のために発表されたのですか？",
+    "answer": "バレエ・マスター・イン・チーフのピーター・マーティンスが休職している間、NYCBの芸術面を運営するために発表されました。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "暫定体制",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Peter Martinsはなぜ休職したのですか？",
+    "answer": "NYCBとSchool of American Balletの両方から一時休職を申し出ており、彼に向けられたセクシュアルハラスメント疑惑に関する内部調査が進行中だからです。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "休職理由",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "暫定リーダーシップチームのメンバーは誰ですか？",
+    "answer": "バレエ・マスターのJonathan Staffordを中心に、NYCBのレジデント・コレオグラファー兼ソリストのJustin Peck、バレエ・マスターのCraig HallとRebecca Krohnの4人です。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "チーム構成",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "各メンバーはNYCBとどのような関係がありますか？",
+    "answer": "Staffordは元プリンシパル・ダンサー、Peckは現レジデント・コレオグラファー兼ソリスト、HallとKrohnは元ダンサーです。Krohnは舞台を離れて新役職に就いてから2か月しか経っていません。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "経歴関係",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "暫定チームの担当業務と任期はどうなっていますか？",
+    "answer": "日々の芸術面の業務として、スケジューリング、キャスティング、リハーサルの পরিচাল পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? পরিচাল? conducting rehearsals を担当します。任期の長さはまだ発表されていません。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "担当業務",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Pennsylvania BalletとBoston BalletはSuper Bowl向けにどんなパフォーマンスをしましたか？",
+    "answer": "両バレエ団は、通常のリハーサルを一時中断して、ゲームデーを祝うためのSuper Bowlテーマの振付を披露しました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "Super Bowl演出",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Pennsylvania BalletのPhiladelphia Eaglesをテーマにした演出内容は何ですか？",
+    "answer": "Eaglesグリーンの衣装で、fouetté turns、空高く跳ぶジャンプ、そして白鳥の腕の動きを取り入れた、テンポの速いルーティンでした。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "Eagles演出",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Boston BalletのSuper Bowl関連動画には誰が出演していましたか？",
+    "answer": "Facebookで公開した動画には、プリンシパルのPaul CraigとソリストのDerek Dunnが出演していました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "出演者",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Boston BalletはProdigal Sonの小道具を使って何を加えましたか？",
+    "answer": "Prodigal Sonの小道具を使うことで、Balanchine風の要素を動画に加えました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "Balanchine要素",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "この文では、何が「公式に新しいお気に入りの方法」と言われていますか？",
+    "answer": "フットボールを楽しむための新しい方法が、公式に「私たちのお気に入りの方法」だと言われています。",
+    "chunk_id": "cc_news_1per_chunk_3",
+    "topic": "football fun",
+    "dataset_type": "cc_news_1per_chunks"
+  }
+]

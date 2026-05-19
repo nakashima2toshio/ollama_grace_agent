@@ -1,0 +1,14 @@
+[docker compose Stop]
+docker compose -f docker-compose.yml down
+
+[docker compose start]
+docker compose -f docker-compose.yml up -d
+
+------------------
+# MCP環境セットアップスクリプト
+python setup.py
+
+# MCPサーバー起動スクリプト
+Usage: python server.py
+
+

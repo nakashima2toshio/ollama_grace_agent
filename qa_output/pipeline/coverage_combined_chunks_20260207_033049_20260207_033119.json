@@ -1,0 +1,69 @@
+{
+  "coverage_rate": 1.0,
+  "covered_chunks": 1,
+  "total_chunks": 1,
+  "uncovered_chunks": [],
+  "max_similarities": [
+    0.7783248804357555
+  ],
+  "threshold": 0.7,
+  "multi_threshold": {
+    "strict": {
+      "threshold": 0.8,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 1,
+      "uncovered_chunks": [
+        {
+          "chunk_id": 0,
+          "similarity": 0.7783248804357555,
+          "gap": 0.021675119564244505
+        }
+      ]
+    },
+    "standard": {
+      "threshold": 0.7,
+      "covered_chunks": 1,
+      "coverage_rate": 1.0,
+      "uncovered_count": 0,
+      "uncovered_chunks": []
+    },
+    "lenient": {
+      "threshold": 0.6,
+      "covered_chunks": 1,
+      "coverage_rate": 1.0,
+      "uncovered_count": 0,
+      "uncovered_chunks": []
+    }
+  },
+  "chunk_analysis": {
+    "by_length": {
+      "long": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.7783248804357555,
+        "coverage_rate": 1.0
+      }
+    },
+    "by_position": {
+      "beginning": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.7783248804357555,
+        "coverage_rate": 1.0
+      }
+    },
+    "summary": {
+      "total_chunks": 1,
+      "total_qa_pairs": 5,
+      "threshold_used": 0.7,
+      "insights": []
+    }
+  },
+  "dataset_type": "combined_chunks_20260207_033049",
+  "optimal_thresholds": {
+    "strict": 0.8,
+    "standard": 0.7,
+    "lenient": 0.6
+  }
+}

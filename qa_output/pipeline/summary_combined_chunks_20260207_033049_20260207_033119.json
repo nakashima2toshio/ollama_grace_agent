@@ -1,0 +1,12 @@
+{
+  "dataset_type": "combined_chunks_20260207_033049",
+  "dataset_name": "combined_chunks_20260207_033049",
+  "generated_at": "20260207_033119",
+  "total_qa_pairs": 5,
+  "coverage_rate": 1.0,
+  "files": {
+    "qa_json": "qa_output/pipeline/qa_pairs_combined_chunks_20260207_033049_20260207_033119.json",
+    "qa_csv": "qa_output/pipeline/qa_pairs_combined_chunks_20260207_033049_20260207_033119.csv",
+    "coverage": "qa_output/pipeline/coverage_combined_chunks_20260207_033049_20260207_033119.json"
+  }
+}

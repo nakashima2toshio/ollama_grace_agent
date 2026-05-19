@@ -1,0 +1,88 @@
+# grace_config.yml
+# [MIGRATION] 2026-05-05 Gemini → OpenAI 移植対応
+# 変更: llm.provider "gemini" → "openai", model "gemini-3-flash-preview" → "gpt-5.4-mini"
+# 変更: embedding.provider "gemini" → "openai"
+
+# LLM設定
+llm:
+  provider: "openai"                # [MIGRATION] "gemini" → "openai"
+  model: "gpt-5.4-mini"            # [MIGRATION] "gemini-3-flash-preview" → "gpt-5.4-mini"
+  temperature: 0.7
+  max_tokens: 4096
+  timeout: 30
+
+# Embedding設定
+embedding:
+  provider: "openai"               # [MIGRATION] "gemini" → "openai"
+  model: "text-embedding-3-large"  # [MIGRATION] "gemini-embedding-001" → "text-embedding-3-large"
+  dimensions: 3072
+
+# Confidence設定
+confidence:
+  weights:
+    search_quality: 0.25
+    source_agreement: 0.20
+    llm_self_eval: 0.25
+    tool_success: 0.15
+    query_coverage: 0.15
+  thresholds:
+    silent: 0.9
+    notify: 0.7
+    confirm: 0.4
+
+# 介入設定
+intervention:
+  default_timeout: 300
+  auto_proceed_on_timeout: false
+  max_clarification_rounds: 3
+
+# リプラン設定
+replan:
+  max_replans: 3
+  confidence_threshold: 0.4
+  partial_replan_threshold: 0.6
+  cooldown_seconds: 5
+
+# コスト管理設定
+cost:
+  daily_limit_usd: 10.0
+  hourly_limit_usd: 2.0
+  per_query_limit_usd: 0.50
+  warning_threshold: 0.8
+
+# エラーハンドリング設定
+error:
+  max_retries: 3
+  retry_delay_base: 1.0
+  retry_delay_max: 30.0
+  exponential_backoff: true
+
+# ログ設定
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/grace_run.log"
+  max_size_mb: 100
+  backup_count: 5
+
+# Qdrant設定
+qdrant:
+  url: "http://localhost:6333"
+  collection_name: "customer_support_faq"
+  search_limit: 5
+  score_threshold: 0.35
+  rag_sufficient_score: 0.7
+  search_priority: ["wikipedia_ja", "livedoor", "cc_news", "japanese_text"]
+
+# Web検索設定
+web_search:
+  backend: "serpapi"
+  num_results: 5
+  language: "ja"
+  timeout: 30
+  serpapi_api_key: ""
+
+# ツール設定
+tools:
+  enabled: ["rag_search", "web_search", "reasoning", "ask_user"]
+  disabled: []

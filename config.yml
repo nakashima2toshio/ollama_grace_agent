@@ -1,0 +1,338 @@
+# config.yml
+# [MIGRATION] 2026-04-25 Anthropic API → OpenAI API 移植対応
+# 変更概要:
+#   - models.default:           "claude-sonnet-4-6" → "gpt-4o-mini"
+#   - models.available:         Claude モデル → OpenAI モデル
+#   - provider.default_llm:     "anthropic" → "openai"
+#   - provider.default_embedding: "openai" のまま継続（変更不要）
+#   - openai セクション:        新規追加（LLM設定）
+#   - anthropic セクション:     後方互換のため残存（Legacy）
+#   - embedding:                OpenAI text-embedding-3-large のまま継続（変更不要）
+#   - qdrant:                   同一サーバー・コレクション継続（変更不要）
+
+# =====================================================
+# LLM モデル設定
+# =====================================================
+models:
+  # [MIGRATION anthropic→openai] "claude-sonnet-4-6" → "gpt-4o-mini"
+  default: "gpt-4o-mini"
+  available:
+    - "gpt-4o"                    # 最高性能・複雑タスク向け
+    - "gpt-4o-mini"               # デフォルト推奨（コスト効率）
+    - "gpt-4.1"                   # GPT-4.1（最新）
+    - "gpt-4.1-mini"              # GPT-4.1 軽量版
+    - "o1-mini"                   # 推論特化
+
+  categories:
+    powerful:  ["gpt-4o", "gpt-4.1"]
+    balanced:  ["gpt-4o-mini", "gpt-4.1-mini"]  # デフォルト推奨
+    reasoning: ["o1-mini"]
+    # Claude カテゴリ（後方互換のため残存 - 削除可）
+    legacy_claude:
+      balanced: ["claude-sonnet-4-6"]
+      fast:     ["claude-haiku-4-5-20251001"]
+
+samples:
+  images:
+    nature: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+  prompts: {}
+  audio:
+    tts_example: "こんにちは、これはテキスト読み上げのテストです。"
+    voice_agent_greeting: "音声エージェントのテストです。何かお手伝いできることはありますか？"
+    transcription_test: "This is a test for speech-to-text functionality."
+
+audio:
+  voices: ["alloy", "nova", "echo", "onyx", "shimmer"]
+  supported_formats: ["*.mp3", "*.wav", "*.m4a"]
+  tts_max_chars: 4096
+  voice_agent_system_prompt: "You are a friendly Japanese voice assistant. Respond in concise Japanese (≤2 sentences)."
+  tts:
+    default_voice: "alloy"
+    streaming_enabled: true
+    quality_settings:
+      tts-1: "speed_optimized"
+      tts-1-hd: "quality_optimized"
+      gpt-4o-mini-tts: "gpt4o_enhanced"
+  stt:
+    response_format: "text"
+    language: "ja"
+    max_file_size_mb: 25
+  realtime:
+    default_format: "pcm16"
+    vad_enabled: true
+    sample_rate: 16000
+
+model_pricing:
+  tts-1:
+    input: 0.015
+    output: 0.0
+  tts-1-hd:
+    input: 0.030
+    output: 0.0
+  gpt-4o-mini-tts:
+    input: 0.025
+    output: 0.0
+  whisper-1:
+    input: 0.006
+    output: 0.0
+  gpt-4o-transcribe:
+    input: 0.010
+    output: 0.0
+
+# =====================================================
+# [MIGRATION 新規追加] OpenAI LLM Configuration
+# =====================================================
+openai:
+  # LLM設定
+  default_model: "gpt-4o-mini"
+  available_models:
+    - "gpt-4o"                    # 最高性能・複雑タスク向け
+    - "gpt-4o-mini"               # デフォルト推奨（コスト効率）
+    - "gpt-4.1"                   # GPT-4.1（最新）
+    - "gpt-4.1-mini"              # GPT-4.1 軽量版
+    - "o1-mini"                   # 推論特化
+
+  # 生成パラメータ
+  generation:
+    default_temperature: 0.7
+    default_max_tokens: 4096
+
+  # 料金（$/1M tokens）
+  pricing:
+    gpt-4o:
+      input: 2.50
+      output: 10.00
+    gpt-4o-mini:
+      input: 0.15
+      output: 0.60
+    gpt-4.1:
+      input: 2.00
+      output: 8.00
+    gpt-4.1-mini:
+      input: 0.40
+      output: 1.60
+    o1-mini:
+      input: 1.10
+      output: 4.40
+
+  # レート制限（目安）
+  rate_limits:
+    requests_per_minute: 3500
+    tokens_per_minute: 200000
+
+  # ReAct Agent 設定
+  agent:
+    max_turns: 10
+    max_tokens: 4096
+    reflection_max_tokens: 2048
+
+# =====================================================
+# [Legacy] Anthropic API Configuration（後方互換）
+# =====================================================
+anthropic:
+  # LLM設定
+  default_model: "claude-sonnet-4-6"
+  available_models:
+    - "claude-opus-4-7"           # 最新 Opus（最高性能）
+    - "claude-opus-4-6"           # Opus 前世代
+    - "claude-sonnet-4-6"         # デフォルト推奨（バランス型）
+    - "claude-sonnet-4-5"         # Sonnet 前世代
+    - "claude-haiku-4-5-20251001" # 高速・低コスト
+
+  # 生成パラメータ
+  generation:
+    default_temperature: 0.7
+    default_max_tokens: 4096
+    max_context_tokens: 200000    # claude-sonnet-4-6 は 1M token 対応（beta）
+
+  # 料金（$/1M tokens）
+  pricing:
+    claude-opus-4-7:
+      input: 5.00
+      output: 25.00
+    claude-opus-4-6:
+      input: 15.00
+      output: 75.00
+    claude-sonnet-4-6:
+      input: 3.00
+      output: 15.00
+    claude-sonnet-4-5:
+      input: 3.00
+      output: 15.00
+    claude-haiku-4-5-20251001:
+      input: 0.80
+      output: 4.00
+
+  # レート制限（目安）
+  rate_limits:
+    requests_per_minute: 2000
+    tokens_per_minute: 1600000
+
+  # ReAct Agent 設定
+  agent:
+    max_turns: 10
+    max_tokens: 4096
+    reflection_max_tokens: 2048
+
+# =====================================================
+# [MIGRATION 新規追加] OpenAI Embedding Configuration
+# Embedding は Anthropic API に相当機能がないため OpenAI を使用
+# =====================================================
+openai_embedding:
+  # [MIGRATION] text-embedding-3-large を採用
+  # 次元数 3072 = Gemini gemini-embedding-001 と同次元 → Qdrant コレクション再作成不要
+  model: "text-embedding-3-large"
+  dimensions: 3072
+
+  # 料金
+  pricing:
+    text-embedding-3-large:
+      input: 0.00013   # $0.00013 / 1K tokens
+    text-embedding-3-small:
+      input: 0.00002
+    text-embedding-ada-002:
+      input: 0.00010
+
+# =====================================================
+# Gemini API Configuration (Legacy: 後方互換のため残存)
+# anthropic_grace_agent では使用しない
+# =====================================================
+gemini:
+  # LLM設定（Legacy）
+  default_model: "gemini-2.0-flash"
+  available_models:
+    - "gemini-3-pro"
+    - "gemini-3.0-flash"
+    - "gemini-2.5-flash"
+    - "gemini-2.0-flash"
+    - "gemini-1.5-pro"
+    - "gemini-1.5-flash"
+
+  # Embedding設定（Legacy: anthropic_grace_agent では openai を使用）
+  embedding:
+    model: "gemini-embedding-001"
+    dimensions: 3072
+    task_types:
+      - "RETRIEVAL_DOCUMENT"
+      - "RETRIEVAL_QUERY"
+      - "SEMANTIC_SIMILARITY"
+      - "CLASSIFICATION"
+
+  # 思考レベル設定
+  thinking:
+    default_level: "low"
+    supported_models:
+      - "gemini-3-pro-preview"
+      - "gemini-2.5-flash-preview"
+
+  # 生成パラメータ
+  generation:
+    default_temperature: 1.0
+    default_max_tokens: 8192
+    top_p: 0.95
+    top_k: 40
+
+  # 料金（$/1M tokens）
+  pricing:
+    gemini-3-pro-preview:
+      input: 1.25
+      output: 10.0
+    gemini-2.5-flash-preview:
+      input: 0.15
+      output: 3.50
+    gemini-2.0-flash:
+      input: 0.10
+      output: 0.40
+    gemini-1.5-pro:
+      input: 1.25
+      output: 5.00
+    gemini-1.5-flash:
+      input: 0.075
+      output: 0.30
+    gemini-embedding-001:
+      input: 0.00
+      output: 0.00
+
+  # レート制限
+  rate_limits:
+    requests_per_minute: 60
+    tokens_per_minute: 1000000
+
+# =====================================================
+# Provider Configuration
+# =====================================================
+provider:
+  # [MIGRATION anthropic→openai] デフォルトプロバイダーを OpenAI に変更
+  default_llm: "openai"            # "anthropic" → "openai"
+  default_embedding: "openai"      # 変更なし（継続）
+
+  # OpenAI 設定（LLM + Embedding）
+  openai:
+    llm_model: "gpt-4o-mini"                    # デフォルトモデル
+    embedding_model: "text-embedding-3-large"   # 変更なし
+    embedding_dims: 3072                         # 変更なし
+
+  # Anthropic設定（Legacy: 後方互換のため残存）
+  anthropic:
+    llm_model: "claude-sonnet-4-6"
+
+  # Gemini設定（Legacy）
+  gemini:
+    embedding_model: "gemini-embedding-001"
+    embedding_dims: 3072
+
+# =====================================================
+# Qdrant Configuration
+# =====================================================
+qdrant:
+  # コレクション設定
+  collection:
+    default_name: "rag_documents"
+    distance_metric: "Cosine"
+
+  # [MIGRATION] ベクトル次元数
+  # text-embedding-3-large: 3072 = gemini-embedding-001: 3072
+  # → Qdrant コレクションの再作成は不要
+  vector_dims:
+    openai: 3072                   # text-embedding-3-large（3072次元: Gemini と同次元）
+    gemini: 3072                   # gemini-embedding-001（後方互換）
+    fastembed: 384                 # ローカル軽量モデル（別途対応）
+
+  # インデックス設定
+  index:
+    on_disk: false
+    quantization: null
+
+# =====================================================
+# API Keys (環境変数で上書き推奨)
+# =====================================================
+api:
+  # [MIGRATION] 環境変数 ANTHROPIC_API_KEY を追加
+  # anthropic_api_key: ""   # → 環境変数 ANTHROPIC_API_KEY で設定
+  # openai_api_key:    ""   # → 環境変数 OPENAI_API_KEY で設定
+  # google_api_key:    ""   # → 環境変数 GOOGLE_API_KEY で設定（Gemini Legacy用）
+  timeout: 30
+  max_retries: 3
+
+# =====================================================
+# Logging
+# =====================================================
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null
+  max_bytes: 10485760
+  backup_count: 5
+
+# =====================================================
+# LLM Provider Switch (環境変数で上書き可能)
+# =====================================================
+llm:
+  # [MIGRATION anthropic→openai] "anthropic" → "openai"
+  # 環境変数: LLM_PROVIDER=openai
+  provider: "openai"
+
+embedding:
+  # [MIGRATION] "gemini" → "openai"
+  # 環境変数: EMBEDDING_PROVIDER=openai
+  provider: "openai"

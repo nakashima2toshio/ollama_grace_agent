@@ -1,0 +1,93 @@
+[
+  {
+    "question": "Regina WilloughbyのColumbia City Balletでの最後のシーズンはどのようなものですか？",
+    "answer": "Regina WilloughbyにとってColumbia City Balletでの最後のシーズンは、引退の時期と娘Melinaの入団が重なり、親子で同じ舞台を共有する特別なシーズンです。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "引退と最終シーズン",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Melina WilloughbyはColumbia City Balletでどのようにキャリアを始めましたか？",
+    "answer": "18歳のMelina Willoughbyは、このシーズンがColumbia City Balletでの初シーズンで、トレーニーとしてキャリアを始めました。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "初シーズン",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "The NutcrackerではReginaとMelinaはそれぞれどの役を踊っていますか？",
+    "answer": "同じ『The Nutcracker』で同時に出演しており、ReginaはSnow Queen、Melinaはsnow corpsを務め、さらに2人ともArabian divertissementにも出ています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "役割分担",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "親子で同じ舞台に立つことについてReginaはどうコメントしていますか？",
+    "answer": "Reginaは「一緒に踊るのはとても現実離れしている」と語り、Melinaがバレエをここまで続けるとは思っていなかったとも話しています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "Reginaのコメント",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "New York City Balletは、誰が率いる暫定リーダーシップ体制を発表したのですか？",
+    "answer": "NYCB理事会は、芸術面を運営する暫定チームを発表しました。チームはバレエ・マスター兼元プリンシパルのジョナサン・スタッフォードが率います。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "暫定体制",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Peter Martinsはなぜ休職しているのですか？",
+    "answer": "Peter Martinsは、NYCBとSchool of American Balletの両方から一時休職を申し出ました。彼をめぐる性的嫌がらせ疑惑について、内部調査が行われているためです。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "休職と調査",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "NYCBの暫定チームは誰で構成されていますか？",
+    "answer": "暫定チームは4人で、ジョナサン・スタッフォード、レジデント・コレオグラファー兼ソリストのジャスティン・ペック、バレエ・マスターのクレイグ・ホールとレベッカ・クローンです。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "チーム構成",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "暫定チームの役割と任期はどうなっていますか？",
+    "answer": "チームは日々の芸術面の運営を担い、スケジュール、配役、リハーサルの指揮を担当します。ただし、任期の長さはまだ発表されていません。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "役割と任期",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエとボストン・バレエは、スーパーボウルに向けて何をしたのですか？",
+    "answer": "両バレエ団は通常のリハーサルを一時中断し、ゲームデーを祝ってスーパーボウルを意識した振付を披露しました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "スーパーボウル演目",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエの演目は、イーグルスをどう意識していましたか？",
+    "answer": "イーグルスの緑の衣装で、フェッテ回転や高いジャンプ、そして“鳥”にちなんだ白鳥の腕の動きを取り入れた、速いテンポのルーティンでした。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "イーグルス演目",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ボストン・バレエのFacebook動画には、誰が出演していましたか？",
+    "answer": "ボストン・バレエはFacebookで動画を公開し、プリンシパルのポール・クレイグとソリストのデレク・ダンが出演しました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "Facebook動画",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ボストン・バレエは『プロディガル・サン』の小道具を使って、どんな演出をしましたか？",
+    "answer": "『プロディガル・サン』の小道具を使い、バランシン風の要素を加えた演出をしました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "バランシン風演出",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "この文では、フットボールを楽しむ方法について何と言っていますか？",
+    "answer": "「これは正式に、フットボールの楽しみ方として私たちのお気に入りの新しい方法です」と述べています。",
+    "chunk_id": "cc_news_1per_chunk_3",
+    "topic": "football fun",
+    "dataset_type": "cc_news_1per_chunks"
+  }
+]

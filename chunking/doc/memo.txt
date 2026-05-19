@@ -1,0 +1,25 @@
+## 依存パッケージのインストール
+pip install -r chunking/requirements.txt
+
+## 基本的な実行
+python -m chunking.csv_to_chunks_text_para -i input.txt -o output.txt
+
+## 基本的な実行、並列数を3に変更
+python -m chunking.csv_to_chunks_text_para -i ./OUTPUT/wikipedia_ja_5per.csv -o ./OUTPUT/wikipedia_ja_5per_chunked.csv -w 3
+
+## 詳細ログ出力
+python -m chunking.csv_to_chunks_text_para -i input.txt -o output.txt -v
+
+## 中断したジョブを再開
+python -m chunking.csv_to_chunks_text_para --resume JOB_ID -i input.txt -o output.txt
+
+## ジョブ一覧表示
+python -m chunking.csv_to_chunks_text_para --list-jobs
+
+---
+実装した機能
+機能説明並列処理asyncio + Semaphore で最大8並列（変更可能）動的並列数調整429エラー時に自動で並列数を減少リトライ3回リトライ、
+指数バックオフ不完全JSON対策max_output_tokens=4096 + JSON検証 + フォールバックチェックポイント各ステップ完了時に保存、
+再開可能プログレスバーtqdmで進捗表示ログ機能ファイル+コンソールに出力
+
+---

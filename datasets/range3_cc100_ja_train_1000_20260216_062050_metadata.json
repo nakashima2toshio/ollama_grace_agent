@@ -1,0 +1,13 @@
+{
+  "dataset_name": "range3/cc100-ja",
+  "dataset_type": "japanese_text",
+  "config": "",
+  "split": "train",
+  "sample_size": 1000,
+  "actual_size": 1000,
+  "downloaded_at": "2026-02-16T06:20:50.515900",
+  "columns": [
+    "id",
+    "text"
+  ]
+}

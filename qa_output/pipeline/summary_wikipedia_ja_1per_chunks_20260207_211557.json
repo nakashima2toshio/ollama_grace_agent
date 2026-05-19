@@ -1,0 +1,12 @@
+{
+  "dataset_type": "wikipedia_ja_1per_chunks",
+  "dataset_name": "wikipedia_ja_1per_chunks",
+  "generated_at": "20260207_211557",
+  "total_qa_pairs": 13,
+  "coverage_rate": 1.0,
+  "files": {
+    "qa_json": "qa_output/pipeline/qa_pairs_wikipedia_ja_1per_chunks_20260207_211557.json",
+    "qa_csv": "qa_output/pipeline/qa_pairs_wikipedia_ja_1per_chunks_20260207_211557.csv",
+    "coverage": "qa_output/pipeline/coverage_wikipedia_ja_1per_chunks_20260207_211557.json"
+  }
+}

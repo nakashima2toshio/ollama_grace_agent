@@ -1,0 +1,93 @@
+[
+  {
+    "question": "Regina Willoughbyにとって、Columbia City Balletでのこのシーズンはどのような意味がありますか？",
+    "answer": "Regina Willoughbyにとって、これはColumbia City Balletでの最後のシーズンです。彼女は3月に舞台を引退する予定で、娘Melinaの初シーズンと重なっています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "最後のシーズン",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "Melina WilloughbyはColumbia City Balletでどのようにキャリアを始めたのですか？",
+    "answer": "18歳のMelina Willoughbyは、このシーズンが同カンパニーでの初シーズンです。彼女はトレーニーとしてキャリアを始めました。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "初シーズン",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "『The Nutcracker』ではReginaとMelinaはそれぞれどんな役で同時に出演していますか？",
+    "answer": "ReginaはSnow Queenを務め、Melinaはsnow corpsに入っています。さらに、2人はArabian divertissementでも同じ舞台に立っています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "親子共演",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "親子で同じ舞台に立つことについて、Reginaはどう感じていますか？",
+    "answer": "Reginaは「一緒に踊るのはとてもシュール」と語っています。また、Melinaがバレエをここまで続けるとは思っていなかったとも話しています。",
+    "chunk_id": "cc_news_1per_chunk_0",
+    "topic": "Reginaの感想",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "NYCBはどのような暫定リーダーシップ体制を発表しましたか？",
+    "answer": "ニューヨーク・シティ・バレエ団（NYCB）の理事会は、ピーター・マーティンズの休職中に芸術面を運営する暫定チームを発表しました。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "暫定体制",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ピーター・マーティンズはなぜ休職し、何が行われていますか？",
+    "answer": "マーティンズはNYCBとスクール・オブ・アメリカン・バレエの両方から一時休職を申し出ており、団体では彼に向けられたセクハラ疑惑について内部調査が進められています。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "休職と調査",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "NYCBの4人の暫定チームのメンバーは誰ですか？",
+    "answer": "暫定チームは、ジョナサン・スタフォード、ジャスティン・ペック、クレイグ・ホール、レベッカ・クローンの4人で構成されています。",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "構成メンバー",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "暫定チームの役割と任期について、何が分かっていますか？",
+    "answer": "チームは日々の芸術面の運営、具体的にはスケジュール調整、配役、リハーサル পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল পরিচাল",
+    "chunk_id": "cc_news_1per_chunk_1",
+    "topic": "役割と任期",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエとボストン・バレエは、スーパーボウル向けに何を披露したのですか？",
+    "answer": "両バレエ団は、試合当日を祝ってスーパーボウルをテーマにした振付を披露しました。通常のリハーサルの合間に、地域のチームを応援する演目を踊っています。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "スーパーボウル演目",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエの演目は、イーグルスをどう意識していましたか？",
+    "answer": "ダンサーたちはイーグルスを意識した緑の衣装で登場し、フェッテ回転、高いジャンプ、白鳥の腕の動きを含む速い振付を披露しました。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "イーグルス衣装",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ボストン・バレエはどのように動画を公開し、誰が出演しましたか？",
+    "answer": "ボストン・バレエはFacebookで自分たちの動画を公開しました。主演はプリンシパルのポール・クレイグとソリストのデレク・ダンです。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "Facebook動画",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "ボストン・バレエは『プロディガル・サン』の小道具を使って、どんな要素を加えましたか？",
+    "answer": "『プロディガル・サン』の小道具を使い、バランシン風のトリックを加えました。記事では、そうした工夫で演目に独自の味を出したと述べています。",
+    "chunk_id": "cc_news_1per_chunk_2",
+    "topic": "バランシン風要素",
+    "dataset_type": "cc_news_1per_chunks"
+  },
+  {
+    "question": "この文では、何が「公式に新しいお気に入りの方法」だと言っていますか？",
+    "answer": "フットボールの楽しさを味わうための新しい方法が、公式にお気に入りだと言っています。",
+    "chunk_id": "cc_news_1per_chunk_3",
+    "topic": "football fun",
+    "dataset_type": "cc_news_1per_chunks"
+  }
+]

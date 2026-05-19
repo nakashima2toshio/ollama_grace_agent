@@ -1,0 +1,91 @@
+{
+  "coverage_rate": 1.0,
+  "covered_chunks": 5,
+  "total_chunks": 5,
+  "uncovered_chunks": [],
+  "max_similarities": [
+    0.8837933812213603,
+    0.8462298364290851,
+    0.8803055450091616,
+    0.893269083330427,
+    0.8576871516349568
+  ],
+  "threshold": 0.7,
+  "multi_threshold": {
+    "strict": {
+      "threshold": 0.8,
+      "covered_chunks": 5,
+      "coverage_rate": 1.0,
+      "uncovered_count": 0,
+      "uncovered_chunks": []
+    },
+    "standard": {
+      "threshold": 0.7,
+      "covered_chunks": 5,
+      "coverage_rate": 1.0,
+      "uncovered_count": 0,
+      "uncovered_chunks": []
+    },
+    "lenient": {
+      "threshold": 0.6,
+      "covered_chunks": 5,
+      "coverage_rate": 1.0,
+      "uncovered_count": 0,
+      "uncovered_chunks": []
+    }
+  },
+  "chunk_analysis": {
+    "by_length": {
+      "long": {
+        "count": 3,
+        "covered": 3,
+        "avg_similarity": 0.862570123095134,
+        "coverage_rate": 1.0
+      },
+      "medium": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.8803055450091616,
+        "coverage_rate": 1.0
+      },
+      "short": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.893269083330427,
+        "coverage_rate": 1.0
+      }
+    },
+    "by_position": {
+      "beginning": {
+        "count": 2,
+        "covered": 2,
+        "avg_similarity": 0.8650116088252227,
+        "coverage_rate": 1.0
+      },
+      "middle": {
+        "count": 2,
+        "covered": 2,
+        "avg_similarity": 0.8867873141697943,
+        "coverage_rate": 1.0
+      },
+      "end": {
+        "count": 1,
+        "covered": 1,
+        "avg_similarity": 0.8576871516349568,
+        "coverage_rate": 1.0
+      }
+    },
+    "summary": {
+      "total_chunks": 5,
+      "total_qa_pairs": 18,
+      "threshold_used": 0.7,
+      "insights": []
+    }
+  },
+  "dataset_type": "cc_news_1per_chunks",
+  "optimal_thresholds": {
+    "strict": 0.8,
+    "standard": 0.7,
+    "lenient": 0.6
+  }
+}

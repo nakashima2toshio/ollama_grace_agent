@@ -3,19 +3,21 @@ GRACE Planner - 計画生成エージェント
 
 ユーザーの質問を分析し、実行計画を生成
 
+[2026-05-19] ollama_grace_agent 移植対応:
+    - OpenAIClient → OllamaClient (via create_llm_client)
+    - create_llm_client("openai") → create_llm_client("ollama")
+    - max_completion_tokens → max_tokens (Ollama は max_completion_tokens 非対応)
+    - generate_structured() は JSON モード + Pydantic parse で代替
+
 [2026-05-05] openai_grace_agent 移植対応:
     - AnthropicClient → OpenAIClient (via create_llm_client)
     - create_llm_client("anthropic") → create_llm_client("openai")
-    - response_schema=ExecutionPlan → generate_structured() で Structured Outputs に代替
-    - max_tokens → max_completion_tokens（gpt-5.4-mini以降の仕様変更）
-    - AFC関連バグ回避コードを削除（Anthropic では不要）
 """
 
 import logging
 from typing import Optional, List
 
-# [MIGRATION] 削除: from google import genai / from google.genai import types
-# [MIGRATION] 追加: AnthropicClient を helper_llm 経由で使用
+# [MIGRATION openai→ollama] OllamaClient を helper_llm 経由で使用
 from helper.helper_llm import create_llm_client
 
 from .schemas import (
@@ -130,12 +132,10 @@ class Planner:
         self.config = config or get_config()
         self.model_name = model_name or self.config.llm.model
 
-        # [MIGRATION] genai.Client() → AnthropicClient
-        # [MIGRATION] create_llm_client("anthropic") → create_llm_client("openai")
-        # generate_structured() が Structured Outputs による構造化出力を隠蔽する
-        self.llm = create_llm_client("openai", default_model=self.model_name)
+        # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
+        # OllamaClient は OpenAI 互換 API 経由でローカル LLM を呼び出す
+        self.llm = create_llm_client("ollama", default_model=self.model_name)
 
-        # KeywordExtractorの初期化（変更なし）
         try:
             self.keyword_extractor = KeywordExtractor(prefer_mecab=True)
             logger.info("Planner: KeywordExtractor initialized")
@@ -157,23 +157,18 @@ class Planner:
         logger.info(f"Creating execution plan for: {query[:50]}...")
 
         try:
-            # 利用可能なコレクションを取得
             available_collections = self._get_available_collections()
             collections_str = ", ".join(available_collections) if available_collections else "(コレクションなし)"
 
-            # 複雑度を推定（LLM使用）
             estimated_complexity = self.estimate_complexity_with_llm(query)
 
-            # プロンプトを構築
             prompt = PLAN_GENERATION_PROMPT.format(
                 available_collections=collections_str,
                 query=query
             ) + "\n\nIMPORTANT: Ensure the output is a valid, complete JSON object. Do not truncate the response."
 
-            # --- [IPO LOG] PROCESS INPUT (GRACE PLANNER) ---
             logger.info(f"\n{'=' * 20} [GRACE PLANNER IPO: INPUT] {'=' * 20}\n{prompt}\n{'=' * 60}")
 
-            # リトライ付きでLLM呼び出し（最大2回）
             import time as _time
 
             plan = None
@@ -184,31 +179,26 @@ class Planner:
                 try:
                     t0 = _time.time()
 
-                    # [MIGRATION] generate_content() + response_schema=ExecutionPlan
-                    #           → generate_structured() で Structured Outputs に自動変換
-                    # 戻り値は ExecutionPlan インスタンスが直接返る
-                    # ・空レスポンスガード不要（Tool Use は必ず構造体を返す）
-                    # ・JSONDecodeError チェック不要（SDK がパース済み）
-                    # ・AFC バグ対策コード不要（Anthropic には AFC が存在しない）
+                    # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
+                    # OllamaClient.generate_structured() は JSON モード + Pydantic parse で実装
                     plan = self.llm.generate_structured(
                         prompt=prompt,
                         response_schema=ExecutionPlan,
                         model=self.model_name,
-                        max_completion_tokens=8192,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
-                        system="You are an expert planning agent. Always respond using the provided tool.",
+                        max_tokens=8192,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
+                        system="You are an expert planning agent. Always respond using the provided JSON schema.",
                         temperature=self.config.llm.temperature,
                     )
 
                     elapsed = _time.time() - t0
                     logger.info(f"[API時間] create_plan LLM (attempt {attempt + 1}/{max_attempts}): {elapsed:.1f}秒")
 
-                    # --- [IPO LOG] PROCESS OUTPUT (GRACE PLANNER) ---
                     logger.info(
                         f"\n{'=' * 20} [GRACE PLANNER IPO: OUTPUT] {'=' * 20}\n"
                         f"{plan.model_dump_json(indent=2)}\n{'=' * 60}"
                     )
 
-                    break  # 成功したらループ終了
+                    break
 
                 except Exception as e:
                     last_error = e
@@ -218,13 +208,9 @@ class Planner:
             if plan is None:
                 raise last_error or ValueError("Plan creation failed after all retries")
 
-            # 事前に計算した正確な複雑度を適用
             plan.complexity = estimated_complexity
-
-            # 計画IDを設定
             plan.plan_id = create_plan_id()
 
-            # 依存関係を検証
             errors = validate_plan_dependencies(plan)
             if errors:
                 logger.warning(f"Plan validation errors: {errors}")
@@ -235,7 +221,6 @@ class Planner:
                 f"requires_confirmation={plan.requires_confirmation}"
             )
 
-            # 最終的なプラン内容をログ出力
             logger.info(f"Final Execution Plan:\n{plan.model_dump_json(indent=2)}")
 
             return plan
@@ -246,9 +231,7 @@ class Planner:
             return self._create_fallback_plan(query)
 
     def _create_plan_legacy(self, query: str) -> ExecutionPlan:
-        """
-        質問から実行計画を生成（Legacy Agent委譲版 - バックアップ）
-        """
+        """質問から実行計画を生成（Legacy Agent委譲版 - バックアップ）"""
         return ExecutionPlan(
             original_query=query,
             complexity=0.1,
@@ -271,7 +254,7 @@ class Planner:
         )
 
     def _get_available_collections(self) -> list:
-        """利用可能なQdrantコレクションを取得（変更なし）"""
+        """利用可能なQdrantコレクションを取得"""
         try:
             client = QdrantClient(url=self.config.qdrant.url)
             cols = get_all_collections(client)
@@ -281,14 +264,7 @@ class Planner:
             return self.config.qdrant.search_priority
 
     def _create_fallback_plan(self, query: str) -> ExecutionPlan:
-        """
-        フォールバック用の単純な計画を生成（変更なし）
-
-        Args:
-            query: ユーザーの質問
-        Returns:
-            ExecutionPlan: 単純な2ステップ計画
-        """
+        """フォールバック用の単純な計画を生成"""
         logger.info("Creating fallback plan")
 
         try:
@@ -332,14 +308,7 @@ class Planner:
         )
 
     def estimate_complexity(self, query: str) -> float:
-        """
-        質問の複雑度を推定（キーワードベース簡易版・変更なし）
-
-        Args:
-            query: ユーザーの質問
-        Returns:
-            float: 複雑度スコア
-        """
+        """質問の複雑度を推定（キーワードベース簡易版）"""
         complexity_factors = [
             ("比較", 0.15), ("違い", 0.15), ("複数", 0.2),
             ("最新", 0.1),  ("理由", 0.1),  ("方法", 0.1),
@@ -360,36 +329,24 @@ class Planner:
         return min(1.0, score)
 
     def estimate_complexity_with_llm(self, query: str) -> float:
-        """
-        LLMを使用して質問の複雑度を推定
-
-        Args:
-            query: ユーザーの質問
-        Returns:
-            float: 複雑度スコア
-        """
+        """LLMを使用して質問の複雑度を推定"""
         import time as _time
         try:
             prompt = COMPLEXITY_ESTIMATION_PROMPT.format(query=query)
 
             t0 = _time.time()
 
-            # [MIGRATION] generate_content() (OpenAI版)
-            #           → generate_content() (OpenAI版)
-            # 戻り値は str（response.text 相当）が直接返る
-            # AFC 無効化オプションは Anthropic では不要なため削除
+            # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
             complexity_str = self.llm.generate_content(
                 prompt=prompt,
                 model=self.model_name,
-                max_completion_tokens=10,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=10,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
                 temperature=0.1,
             )
 
             elapsed = _time.time() - t0
             logger.info(f"[API時間] estimate_complexity_with_llm: {elapsed:.1f}秒")
 
-            # [MIGRATION] response.text → complexity_str (str が直接返る)
-            # Noneガード: generate_content() は str を返すため基本不要だが念のため残す
             if not complexity_str or not complexity_str.strip():
                 logger.warning("estimate_complexity_with_llm: empty response")
                 return self.estimate_complexity(query)
@@ -406,15 +363,7 @@ class Planner:
             plan: ExecutionPlan,
             feedback: str
     ) -> ExecutionPlan:
-        """
-        フィードバックに基づいて計画を修正
-
-        Args:
-            plan: 元の計画
-            feedback: ユーザーからのフィードバック
-        Returns:
-            ExecutionPlan: 修正された計画
-        """
+        """フィードバックに基づいて計画を修正"""
         logger.info(f"Refining plan {plan.plan_id} with feedback")
 
         refine_prompt = f"""
@@ -435,20 +384,18 @@ class Planner:
             import time as _time
             t0 = _time.time()
 
-            # [MIGRATION] generate_content() + response_schema=ExecutionPlan
-            #           → generate_structured() で Structured Outputs に自動変換
+            # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
             refined_plan = self.llm.generate_structured(
                 prompt=refine_prompt,
                 response_schema=ExecutionPlan,
                 model=self.model_name,
-                max_completion_tokens=4096,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=4096,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
                 temperature=self.config.llm.temperature,
             )
 
             elapsed = _time.time() - t0
             logger.info(f"[API時間] refine_plan LLM: {elapsed:.1f}秒")
 
-            # [MIGRATION] model_validate_json(response.text) → 不要（直接 ExecutionPlan が返る）
             refined_plan.plan_id = create_plan_id()
 
             logger.info(f"Plan refined: {refined_plan.plan_id}")
@@ -460,7 +407,7 @@ class Planner:
 
 
 # =============================================================================
-# ファクトリ関数（変更なし）
+# ファクトリ関数
 # =============================================================================
 
 def create_planner(
@@ -480,7 +427,7 @@ def create_planner(
 
 
 # =============================================================================
-# エクスポート（変更なし）
+# エクスポート
 # =============================================================================
 
 __all__ = [

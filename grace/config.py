@@ -23,7 +23,6 @@ def init_grace_logging():
 
     log_file = log_dir / "grace_run.log"
 
-    # 既存のハンドラがあるかチェックして重複を防ぐ
     root_logger = logging.getLogger()
     if not root_logger.handlers:
         logging.basicConfig(
@@ -35,7 +34,6 @@ def init_grace_logging():
             ]
         )
     else:
-        # graceパッケージの出力を確実にする
         grace_logger = logging.getLogger("grace")
         if not any(isinstance(h, logging.FileHandler) for h in grace_logger.handlers):
             fh = logging.FileHandler(log_file, encoding='utf-8')
@@ -44,7 +42,6 @@ def init_grace_logging():
             grace_logger.setLevel(logging.INFO)
 
 
-# モジュール読み込み時に初期化
 init_grace_logging()
 
 logger = logging.getLogger(__name__)
@@ -56,10 +53,10 @@ logger = logging.getLogger(__name__)
 
 class LLMConfig(BaseModel):
     """LLM設定"""
-    # [MIGRATION anthropic→openai] provider: "anthropic" → "openai"
-    # [MIGRATION anthropic→openai] model: "claude-sonnet-4-6" → "gpt-4o-mini"（デフォルト）
-    provider: str = "openai"
-    model: str = "gpt-4o-mini"
+    # [MIGRATION openai→ollama] provider: "openai" → "ollama"
+    # [MIGRATION openai→ollama] model: "gpt-4o-mini" → "llama3.2"
+    provider: str = "ollama"
+    model: str = "llama3.2"
     temperature: float = 0.7
     max_tokens: int = 4096
     timeout: int = 30
@@ -67,12 +64,13 @@ class LLMConfig(BaseModel):
 
 class EmbeddingConfig(BaseModel):
     """Embedding設定"""
-    # [MIGRATION] provider: "gemini" → "openai"
-    # [MIGRATION] model: "gemini-embedding-001" → "text-embedding-3-large"
-    # dimensions: 3072 のまま維持（Gemini と同次元 → Qdrant コレクション再作成不要）
-    provider: str = "openai"
-    model: str = "text-embedding-3-large"
-    dimensions: int = 3072
+    # [MIGRATION openai→ollama] provider: "openai" → "ollama"
+    # [MIGRATION openai→ollama] model: "text-embedding-3-large" → "nomic-embed-text"
+    # [MIGRATION openai→ollama] dimensions: 3072 → 768
+    # ⚠️ 次元数変更のため Qdrant コレクションの再作成が必要です
+    provider: str = "ollama"
+    model: str = "nomic-embed-text"
+    dimensions: int = 768
 
 
 class ConfidenceWeights(BaseModel):
@@ -99,7 +97,7 @@ class ConfidenceConfig(BaseModel):
 
 class InterventionConfig(BaseModel):
     """介入設定"""
-    default_timeout: int = 300  # 5分
+    default_timeout: int = 300
     auto_proceed_on_timeout: bool = False
     max_clarification_rounds: int = 3
 
@@ -143,20 +141,18 @@ class QdrantConfig(BaseModel):
     collection_name: str = "customer_support_faq"
     search_limit: int = 5
     score_threshold: float = 0.35
-    rag_sufficient_score: float = 0.7  # RAG結果が十分と判断するスコア閾値（これ未満ならweb_searchを動的実行）
+    rag_sufficient_score: float = 0.7
     search_priority: list = Field(default_factory=lambda: ["wikipedia_ja", "livedoor", "cc_news", "japanese_text"])
 
 
 class WebSearchConfig(BaseModel):
     """Web検索設定"""
-    backend: str = "serpapi"  # "duckduckgo" or "google_cse" or "serpapi"
+    backend: str = "serpapi"
     num_results: int = 5
     language: str = "ja"
     timeout: int = 30
-    # Google CSE用（backendが"google_cse"の場合のみ使用）※新規受付停止
     google_cse_api_key: str = ""
     google_cse_engine_id: str = ""
-    # SerpAPI用（backendが"serpapi"の場合に使用）
     serpapi_api_key: str = ""
 
 
@@ -164,6 +160,14 @@ class ToolsConfig(BaseModel):
     """ツール設定"""
     enabled: list = Field(default_factory=lambda: ["rag_search", "web_search", "reasoning", "ask_user"])
     disabled: list = Field(default_factory=list, description="プロジェクト全体で恒久的に禁止するツールのリスト")
+
+
+class OllamaConfig(BaseModel):
+    """Ollama設定 (新規追加: ollama_grace_agent)"""
+    base_url: str = "http://localhost:11434/v1"
+    llm_model: str = "llama3.2"
+    embedding_model: str = "nomic-embed-text"
+    embedding_dims: int = 768
 
 
 class GraceConfig(BaseModel):
@@ -180,6 +184,7 @@ class GraceConfig(BaseModel):
     qdrant: QdrantConfig = Field(default_factory=QdrantConfig)
     web_search: WebSearchConfig = Field(default_factory=WebSearchConfig)
     tools: ToolsConfig = Field(default_factory=ToolsConfig)
+    ollama: OllamaConfig = Field(default_factory=OllamaConfig)  # 新規追加
 
 
 # =============================================================================
@@ -201,10 +206,8 @@ class ConfigLoader:
         if self._config is not None:
             return self._config
 
-        # 1. デフォルト設定
         config_dict: Dict[str, Any] = {}
 
-        # 2. YAMLファイルから読み込み
         config_file = Path(self.config_path)
         if config_file.exists():
             try:
@@ -218,10 +221,8 @@ class ConfigLoader:
         else:
             logger.info(f"Config file not found: {self.config_path}, using defaults")
 
-        # 3. 環境変数で上書き
         config_dict = self._apply_env_overrides(config_dict)
 
-        # 4. Pydanticモデルで検証
         self._config = GraceConfig(**config_dict)
 
         return self._config
@@ -232,7 +233,6 @@ class ConfigLoader:
             if not key.startswith(self.ENV_PREFIX):
                 continue
 
-            # GRACE_LLM_MODEL -> llm.model
             parts = key[len(self.ENV_PREFIX):].lower().split('_')
 
             if len(parts) >= 2:
@@ -242,7 +242,6 @@ class ConfigLoader:
                 if section not in config_dict:
                     config_dict[section] = {}
 
-                # 型変換
                 config_dict[section][subkey] = self._convert_value(value)
                 logger.debug(f"Config override: {section}.{subkey} = {value}")
 
@@ -250,23 +249,19 @@ class ConfigLoader:
 
     def _convert_value(self, value: str) -> Any:
         """文字列から適切な型に変換"""
-        # bool
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
 
-        # int
         try:
             return int(value)
         except ValueError:
             pass
 
-        # float
         try:
             return float(value)
         except ValueError:
             pass
 
-        # リスト（カンマ区切り）
         if ',' in value:
             return [v.strip() for v in value.split(',')]
 
@@ -330,6 +325,7 @@ __all__ = [
     "QdrantConfig",
     "WebSearchConfig",
     "ToolsConfig",
+    "OllamaConfig",
     "GraceConfig",
 
     # Loader

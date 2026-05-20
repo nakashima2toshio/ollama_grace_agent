@@ -315,8 +315,8 @@ class ReasoningTool(BaseTool):
     ):
         self.config = config or get_config()
         self.model_name = model_name or self.config.llm.model
-        # [MIGRATION] genai.Client() → AnthropicClient (via create_llm_client)
-        self.llm = create_llm_client("openai", default_model=self.model_name)   # [MIGRATION anthropic→openai]
+        # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
+        self.llm = create_llm_client("ollama", default_model=self.model_name)
 
     def execute(
             self,
@@ -354,7 +354,7 @@ class ReasoningTool(BaseTool):
             answer = self.llm.generate_content(
                 prompt=prompt,
                 model=self.model_name,
-                max_completion_tokens=self.config.llm.max_tokens,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=self.config.llm.max_tokens,
                 temperature=self.config.llm.temperature,
                 system=(
                     "あなたは社内ドキュメント検索システムと連携した「ハイブリッド・ナレッジ・エージェント」です。"

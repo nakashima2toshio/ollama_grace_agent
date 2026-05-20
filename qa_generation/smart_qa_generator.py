@@ -245,12 +245,12 @@ class SmartQAGenerator:
 {chunk_text}
 ```
 
-# 出力形式（JSON配列）
-[
+# 出力形式（JSONオブジェクト）
+# [MIGRATION openai→ollama] response_format=json_object はオブジェクトのみ対応のため配列をラップ
+{{"qa_pairs": [
     {{"question": "質問1", "answer": "回答1", "topic": "トピック1"}},
-    {{"question": "質問2", "answer": "回答2", "topic": "トピック2"}},
-    ...
-]
+    {{"question": "質問2", "answer": "回答2", "topic": "トピック2"}}
+]}}
 
 # ガイドライン
 1. **質問の形式**:
@@ -290,7 +290,19 @@ class SmartQAGenerator:
             if text.endswith('```'):
                 text = text[:-3]
 
-            qa_pairs = json.loads(text.strip())
+            parsed = json.loads(text.strip())
+
+            # [MIGRATION openai→ollama] json_object モードではオブジェクトで返るため配列を取り出す
+            if isinstance(parsed, dict):
+                qa_pairs = parsed.get("qa_pairs", [])
+                if not qa_pairs:
+                    # フォールバック: 値がリストになっている最初のキーを使う
+                    for v in parsed.values():
+                        if isinstance(v, list):
+                            qa_pairs = v
+                            break
+            else:
+                qa_pairs = parsed  # 万が一配列で返ってきた場合の後方互換
 
             # 件数チェック
             if len(qa_pairs) != qa_count:

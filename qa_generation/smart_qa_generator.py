@@ -51,23 +51,26 @@ class SmartQAGenerator:
     def _generate_content(self, prompt: str, temperature: float = 0.1) -> str:
         """
         コンテンツ生成
-        [MIGRATION] client.models.generate_content() → llm.generate_content()
-        戻り値は str が直接返るため response.text の取り出し不要
+        [MIGRATION openai→ollama] JSON モードを強制して llama3.2 の空レスポンスを防止
 
         Args:
             prompt: プロンプト
             temperature: 温度パラメータ
         Returns:
-            生成されたテキスト
+            生成されたテキスト（JSON文字列）
         """
-        # [MIGRATION] Gemini: self.client.models.generate_content(model, contents, config)
-        #           → Anthropic: self.llm.generate_content(prompt, model, temperature, max_tokens)
-        # AFC 無効化オプションは Anthropic では不要
         return self.llm.generate_content(
             prompt=prompt,
             model=self.model,
             temperature=temperature,
-            max_tokens=4096,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
+            max_tokens=4096,
+            # [MIGRATION openai→ollama] llama3.2 は JSON モードなしだと空文字列を返すことがある
+            response_format={"type": "json_object"},
+            system=(
+                "あなたはJSONのみを出力するアシスタントです。"
+                "余分なテキスト・説明・マークダウンは一切出力しないでください。"
+                "JSONのみを出力してください。"
+            ),
         )
 
 

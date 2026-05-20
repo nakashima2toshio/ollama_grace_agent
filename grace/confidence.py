@@ -453,8 +453,8 @@ class LLMSelfEvaluator:
         self.config = config or get_config()
         self.model_name = model_name or self.config.llm.model
 
-        # [MIGRATION] genai.Client() → AnthropicClient (via create_llm_client)
-        self.llm = create_llm_client("openai", default_model=self.model_name)   # [MIGRATION anthropic→openai]
+        # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
+        self.llm = create_llm_client("ollama", default_model=self.model_name)
 
         logger.info(f"LLMSelfEvaluator initialized with model: {self.model_name}")
 
@@ -494,7 +494,7 @@ class LLMSelfEvaluator:
             text = self.llm.generate_content(
                 prompt=prompt,
                 model=self.model_name,
-                max_completion_tokens=10,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=10,
                 temperature=0.0,
             )
 
@@ -596,7 +596,7 @@ class LLMSelfEvaluator:
                 prompt=prompt,
                 response_schema=EvaluationResult,
                 model=self.model_name,
-                max_completion_tokens=200,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=200,
                 temperature=0.0,
                 system="You are an AI agent monitor. Evaluate the step result and return structured JSON.",
             )
@@ -628,10 +628,9 @@ class SourceAgreementCalculator:
         """
         self.config = config or get_config()
 
-        # [MIGRATION] genai.Client() → create_embedding_client("openai")
-        # Gemini Embedding (embed_content) → OpenAI Embedding (embed_text)
-        # text-embedding-3-large: 3072次元（Gemini と同次元のため Qdrant 互換）
-        self.embedding_client = create_embedding_client("openai")
+        # [MIGRATION openai→ollama] create_embedding_client("openai") → create_embedding_client("ollama")
+        # nomic-embed-text: 768次元（Qdrant コレクション再作成が必要）
+        self.embedding_client = create_embedding_client("ollama")
 
         logger.info("SourceAgreementCalculator initialized")
 
@@ -721,8 +720,8 @@ class QueryCoverageCalculator:
         self.config = config or get_config()
         self.model_name = model_name or self.config.llm.model
 
-        # [MIGRATION] genai.Client() → AnthropicClient (via create_llm_client)
-        self.llm = create_llm_client("openai", default_model=self.model_name)   # [MIGRATION anthropic→openai]
+        # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
+        self.llm = create_llm_client("ollama", default_model=self.model_name)
 
         logger.info("QueryCoverageCalculator initialized")
 
@@ -749,7 +748,7 @@ class QueryCoverageCalculator:
             text = self.llm.generate_content(
                 prompt=prompt,
                 model=self.model_name,
-                max_completion_tokens=10,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=10,
                 temperature=0.0,
             )
 

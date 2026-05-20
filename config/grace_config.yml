@@ -1,21 +1,30 @@
 # grace_config.yml
-# [MIGRATION] 2026-05-05 Gemini → OpenAI 移植対応
-# 変更: llm.provider "gemini" → "openai", model "gemini-3-flash-preview" → "gpt-5.4-mini"
-# 変更: embedding.provider "gemini" → "openai"
+# [MIGRATION] 2026-05-20 OpenAI → Ollama 移植対応
+# 変更: llm.provider "openai" → "ollama", model "gpt-5.4-mini" → "llama3.2"
+# 変更: embedding.provider "openai" → "ollama", model "text-embedding-3-large" → "nomic-embed-text"
+# 変更: embedding.dimensions 3072 → 768（Qdrant コレクション再作成必須）
+# [MIGRATION] 2026-05-05 Gemini → OpenAI 移植対応（履歴）
 
 # LLM設定
 llm:
-  provider: "openai"                # [MIGRATION] "gemini" → "openai"
-  model: "gpt-5.4-mini"            # [MIGRATION] "gemini-3-flash-preview" → "gpt-5.4-mini"
+  provider: "ollama"               # [MIGRATION openai→ollama] "openai" → "ollama"
+  model: "llama3.2"                # [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
   temperature: 0.7
   max_tokens: 4096
   timeout: 30
 
 # Embedding設定
 embedding:
-  provider: "openai"               # [MIGRATION] "gemini" → "openai"
-  model: "text-embedding-3-large"  # [MIGRATION] "gemini-embedding-001" → "text-embedding-3-large"
-  dimensions: 3072
+  provider: "ollama"               # [MIGRATION openai→ollama] "openai" → "ollama"
+  model: "nomic-embed-text"        # [MIGRATION openai→ollama] "text-embedding-3-large" → "nomic-embed-text"
+  dimensions: 768                  # [MIGRATION openai→ollama] 3072 → 768（Qdrant コレクション再作成必須）
+
+# Ollama設定（新規追加）
+ollama:
+  base_url: "http://localhost:11434/v1"
+  llm_model: "llama3.2"
+  embedding_model: "nomic-embed-text"
+  embedding_dims: 768
 
 # Confidence設定
 confidence:

@@ -1,25 +1,23 @@
 # async_api_client.py
 """
-非同期APIクライアント（OpenAI版）
+非同期APIクライアント（Ollama版）
 - asyncio.to_thread() で同期APIをラップ
 - Semaphore で並列数制御（固定）
 - リトライロジック（3回、指数バックオフ）
-- 構造化出力は OpenAI Structured Outputs (beta.chat.completions.parse) で実現
+- 構造化出力は JSON mode + スキーマをシステムプロンプトに埋め込み + model_validate_json() で実現
 
-[MIGRATION] Gemini → OpenAI (2026-05-04)
-  - from google import genai / from google.genai import types → 削除
-  - genai.Client(api_key=...) → OpenAI(api_key=...)
-  - client.models.generate_content() + GenerateContentConfig + response_schema
-    → client.beta.chat.completions.parse(response_format=PydanticClass)
-  - response.text (JSON文字列) → response.choices[0].message.parsed (Pydanticインスタンス)
-  - api_key: GOOGLE_API_KEY → OPENAI_API_KEY
-  - 不完全JSON検出・finish_reason チェック → max_completion_tokens超過検出に変更
-  - max_tokens → max_completion_tokens（gpt-5.4-mini以降の仕様変更に対応）
+[MIGRATION] OpenAI → Ollama (2026-05-20)
+  - OpenAI(api_key=...) → OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+  - client.beta.chat.completions.parse() → client.chat.completions.create() + JSON mode
+  - response_format=PydanticClass → response_format={"type": "json_object"} + スキーマをプロンプトに
+  - choice.message.parsed → model_validate_json(choice.message.content)
+  - max_completion_tokens → max_tokens
 """
 
 import asyncio
 import json
 import logging
+import os
 from typing import Type, Optional
 
 from openai import OpenAI
@@ -39,20 +37,21 @@ class AsyncAPIClient:
 
     def __init__(
         self,
-        api_key: str,
+        api_key: str = "ollama",
         max_workers: int = 8,
         max_retries: int = 3,
         max_output_tokens: int = 8192
     ):
         """
         Args:
-            api_key: OpenAI API Key
+            api_key: 未使用（後方互換のために残す）
             max_workers: 並列数（デフォルト: 8）
             max_retries: リトライ回数（デフォルト: 3）
             max_output_tokens: 出力トークン制限（デフォルト: 8192）
         """
-        # [MIGRATION] genai.Client(api_key=...) → OpenAI(api_key=...)
-        self.client = OpenAI(api_key=api_key)
+        # [MIGRATION openai→ollama] OpenAI(api_key=...) → Ollama 互換エンドポイント
+        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+        self.client = OpenAI(base_url=base_url, api_key="ollama")
         self.max_workers = max_workers
         self.semaphore = asyncio.Semaphore(max_workers)
         self.max_retries = max_retries
@@ -62,7 +61,7 @@ class AsyncAPIClient:
         self._truncated_responses = 0
 
     def _is_truncated(self, finish_reason: Optional[str]) -> bool:
-        """レスポンスが max_completion_tokens で切断されたか判定"""
+        """レスポンスが max_tokens で切断されたか判定"""
         return finish_reason == "length"
 
     async def generate_content(
@@ -77,7 +76,7 @@ class AsyncAPIClient:
         失敗時は指数バックオフでリトライ
 
         Args:
-            model: OpenAI モデル名（例: gpt-4o-mini, gpt-4o）
+            model: Ollama モデル名（例: llama3.2）
             contents: 入力テキスト
             response_schema: レスポンスのPydanticスキーマ
             task_id: タスク識別子（ログ用）
@@ -97,28 +96,30 @@ class AsyncAPIClient:
         response_schema: Type[BaseModel],
         task_id: Optional[str]
     ) -> Optional[str]:
-        """リトライロジック（OpenAI Structured Outputs による構造化出力）"""
+        """リトライロジック（Ollama JSON mode による構造化出力）"""
 
         for attempt in range(self.max_retries):
             try:
                 self._total_requests += 1
 
-                # [MIGRATION] asyncio.to_thread で同期APIを非同期実行
-                # Gemini: client.models.generate_content(model, contents, config=GenerateContentConfig(...))
-                # OpenAI: client.beta.chat.completions.parse(model, messages, response_format=PydanticClass)
-                # [FIX] gpt-5.4-mini 以降は max_tokens が廃止。max_completion_tokens を使用する
+                # [MIGRATION openai→ollama] beta.chat.completions.parse() → chat.completions.create() + JSON mode
+                # スキーマをシステムプロンプトに埋め込み、JSON mode で出力を強制
+                schema_str = json.dumps(response_schema.model_json_schema(), ensure_ascii=False)
                 response = await asyncio.to_thread(
-                    self.client.beta.chat.completions.parse,
+                    self.client.chat.completions.create,
                     model=model,
-                    max_completion_tokens=self.max_output_tokens,
-                    messages=[{"role": "user", "content": contents}],
-                    response_format=response_schema,
+                    max_tokens=self.max_output_tokens,
+                    messages=[
+                        {"role": "system", "content": f"以下のJSONスキーマに従ってJSONのみ出力してください: {schema_str}"},
+                        {"role": "user", "content": contents}
+                    ],
+                    response_format={"type": "json_object"},
                 )
 
                 choice = response.choices[0]
                 finish_reason = choice.finish_reason
 
-                # max_tokens超過チェック（Geminiのfinish_reason=MAX_TOKENS相当）
+                # max_tokens超過チェック
                 if self._is_truncated(finish_reason):
                     self._truncated_responses += 1
                     raise ValueError(
@@ -126,16 +127,14 @@ class AsyncAPIClient:
                         f"Increase max_output_tokens or reduce block_size."
                     )
 
-                # [MIGRATION] レスポンス取得
-                # Gemini: response.text → JSON文字列
-                # OpenAI: choice.message.parsed → Pydanticインスタンス → json.dumps()
-                parsed = choice.message.parsed
-                if parsed is None:
+                # [MIGRATION openai→ollama] choice.message.parsed → model_validate_json(choice.message.content)
+                result_text = choice.message.content
+                if result_text is None:
                     raise ValueError(
-                        f"Parsed result is None (finish_reason: {finish_reason}). "
-                        f"Possible refusal: {choice.message.refusal}"
+                        f"Response content is None (finish_reason: {finish_reason})."
                     )
 
+                parsed = response_schema.model_validate_json(result_text)
                 result_json = json.dumps(parsed.model_dump(), ensure_ascii=False)
                 return result_json
 

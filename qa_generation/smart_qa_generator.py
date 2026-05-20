@@ -34,19 +34,18 @@ class SmartQAGenerator:
     [MIGRATION] Gemini API → Anthropic API に移植済み
     """
 
-    def __init__(self, model: str = "gpt-4o-mini", api_key: Optional[str] = None):
+    def __init__(self, model: str = "llama3.2", api_key: Optional[str] = None):
         """
         初期化
 
         Args:
-            model: 使用する OpenAI モデル（デフォルト: gpt-4o-mini）
-            api_key: OpenAI API Key（環境変数 OPENAI_API_KEY から自動取得）
+            model: 使用する Ollama モデル（デフォルト: llama3.2）
+            api_key: 未使用（後方互換のために残す）
         """
-        # [MIGRATION anthropic→openai] "claude-sonnet-4-6" → "gpt-4o-mini"
-        # api_key は create_llm_client 内部で OPENAI_API_KEY を自動参照するため不要
+        # [MIGRATION openai→ollama] "gpt-4o-mini" → "llama3.2"
         self.model = model
-        self.llm = create_llm_client("openai", default_model=self.model)
-        logger.info(f"OpenAI API を使用 (model={self.model})")
+        self.llm = create_llm_client("ollama", default_model=self.model)
+        logger.info(f"Ollama API を使用 (model={self.model})")
 
 
     def _generate_content(self, prompt: str, temperature: float = 0.1) -> str:
@@ -68,7 +67,7 @@ class SmartQAGenerator:
             prompt=prompt,
             model=self.model,
             temperature=temperature,
-            max_completion_tokens=4096,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+            max_tokens=4096,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
         )
 
 
@@ -391,15 +390,8 @@ def analyze_qa_statistics(results: List[Dict]) -> Dict:
 # ============================================================
 
 if __name__ == "__main__":
-    import os
-
-    # [MIGRATION anthropic→openai] OPENAI_API_KEY を使用
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        print("エラー: OPENAI_API_KEYが設定されていません")
-        exit(1)
-
-    # ジェネレーター初期化（api_key は内部で自動取得）
+    # [MIGRATION openai→ollama] Ollama はローカルLLMのためAPI KEY不要
+    # ジェネレーター初期化
     generator = SmartQAGenerator()
 
     # テストチャンク

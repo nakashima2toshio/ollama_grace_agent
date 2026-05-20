@@ -52,7 +52,7 @@ class QAPipeline:
     def __init__(self,
                  dataset_name: Optional[str] = None,
                  input_file: Optional[str] = None,
-                 model: str = "gpt-5.4-mini",  # [MIGRATION] "claude-sonnet-4-6" → "gpt-5.4-mini"
+                 model: str = "llama3.2",  # [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
                  output_dir: str = "qa_output/pipeline",
                  max_docs: Optional[int] = None,
                  client: Optional[LLMClient] = None):
@@ -267,7 +267,7 @@ class QAPipeline:
 
         # use_smart_generationをCeleryタスクに渡す
         tasks = submit_unified_qa_generation(
-            chunks, self.config, self.model, provider="openai",  # [MIGRATION] "anthropic" → "openai"
+            chunks, self.config, self.model, provider="ollama",  # [MIGRATION openai→ollama] "openai" → "ollama"
             use_smart_generation=use_smart_generation
         )
 

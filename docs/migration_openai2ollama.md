@@ -266,16 +266,15 @@ QDRANT_URL=http://localhost:6333
 | **1** | `helper/helper_llm.py` | クラス追加 | `OllamaClient` 追加、`DEFAULT_LLM_PROVIDER="ollama"` | ✅ |
 | **1** | `helper/helper_embedding.py` | クラス追加 | `OllamaEmbedding` 追加、デフォルト `"ollama"` | ✅ |
 | **1** | `grace/config.py` | 設定変更 | `LLMConfig.model="llama3.2"`、`EmbeddingConfig.dims=768`、`OllamaConfig` 追加 | ✅ |
-| **1** | `config/grace_config.yml` | 設定変更 | llm/embedding プロバイダー・モデルを更新 | ⏳ |
+| **1** | `config/grace_config.yml` | 設定変更 | llm/embedding プロバイダー・モデルを更新 | ✅ |
 | **2** | `grace/planner.py` | API 置換 | `create_llm_client("openai")` → `("ollama")`、`max_completion_tokens` → `max_tokens` | ✅ |
-| **2** | `grace/confidence.py` | API 置換 | LLM/Embedding クライアントを Ollama に変更 | ⏳ |
-| **2** | `grace/tools.py` | API 置換 | `create_embedding_client` を Ollama に変更 | ⏳ |
+| **2** | `grace/confidence.py` | API 置換 | LLM/Embedding クライアントを Ollama に変更 | ✅ |
+| **2** | `grace/tools.py` | API 置換 | `create_llm_client` を Ollama に変更 | ✅ |
 | **2** | `grace/executor.py` | 間接変更 | 依存先の変更に追従 | ➡️ |
 | **2** | `grace/replan.py` | 間接変更 | 依存先の変更に追従 | ➡️ |
 | **2** | `grace/schemas.py` | 変更不要 | Pydantic 定義のみ・API 依存なし | ✔️ |
-| **3** | `services/agent_service.py` | ループ確認 | ReAct インターフェース確認（既に共通形式） | ⏳ |
-| **3** | `agent_main.py` | 設定変更 | モデルデフォルト値を Ollama 用に変更 | ⏳ |
-| **4** | `helper/helper_api.py` | API 分離 | Responses API 依存部分を Chat 形式に統一 | ⏳ |
+| **3** | `services/agent_service.py` | ループ更新 | `create_llm_client("ollama")`、デフォルトモデル `"llama3.2"` | ✅ |
+| **4** | `helper/helper_api.py` | API 分離 | Responses API 型 → Chat Completions 互換型に置換 | ✅ |
 | **5** | Qdrant コレクション | **再作成必須** | 3072次元 → 768次元のため完全に不互換 | ⚠️ |
 
 **状態凡例**: ✅ 完了 / ⏳ 作業中 / ➡️ 間接変更のみ / ✔️ 変更不要 / ⚠️ 要注意
@@ -385,6 +384,7 @@ streamlit run agent_rag.py --server.port 8501
 | 版 | 日付 | 変更内容 |
 |---|---|---|
 | v1.0 | 2026-05-19 | 初版作成。OpenAI → Ollama 移植仕様書 |
+| v1.1 | 2026-05-20 | 第3部の移植状態を最新に更新（confidence.py / tools.py / agent_service.py / helper_api.py 完了） |
 
 ---
 

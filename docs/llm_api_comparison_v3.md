@@ -497,8 +497,7 @@ export EMBEDDING_PROVIDER=ollama
 | `helper_llm.py` の `GeminiClient` デフォルトモデルが `gemini-2.0-flash`（廃止予定） | **要緊急修正** | `"gemini-3-flash-preview"` に変更 |
 | Ollama の `response_format={"type": "json_object"}` 対応モデル | モデルにより異なる | `llama3.2` / `qwen2.5` で確認推奨 |
 | Ollama Tool Use の非対応モデルでの graceful fallback | `phi3`、`gemma2` 等で Tool Use 呼び出し時 | モデル選択時に確認、または JSON モードで代替 |
-| `helper/helper_api.py` の Responses API 依存箇所 | `EasyInputMessageParam` 等の Ollama 非対応部分が残存 | Chat Completions 互換に置き換え必要 |
-| `grace/confidence.py` の Ollama 移行完了確認 | `create_llm_client("ollama")` に変更済みか未確認 | 実コード検証必要 |
+| Qdrant コレクション再作成 | 次元数変更（3072→768） | `python a30_qdrant_registration.py --recreate --limit 100` |
 | Ollama `nomic-embed-text` の実際の次元数 | 768次元（公称値） | `ollama pull nomic-embed-text` 後に実測確認推奨 |
 
 ---

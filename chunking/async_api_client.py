@@ -26,6 +26,29 @@ from pydantic import BaseModel
 logger = logging.getLogger(__name__)
 
 
+def _resolve_schema_refs(schema: dict) -> dict:
+    """
+    JSON Schema の $ref / $defs を解決してフラットな構造に変換する。
+    llama3.2 などの小型モデルは $ref を含む複雑なスキーマを解釈できないため、
+    $ref を実際の定義に展開したシンプルなスキーマを生成する。
+    """
+    defs = schema.get("$defs", {})
+
+    def resolve(obj, depth=0):
+        if depth > 10:
+            return obj
+        if isinstance(obj, dict):
+            if "$ref" in obj:
+                ref_name = obj["$ref"].split("/")[-1]
+                return resolve(defs.get(ref_name, obj), depth + 1)
+            return {k: resolve(v, depth + 1) for k, v in obj.items() if k not in ("$defs", "title")}
+        if isinstance(obj, list):
+            return [resolve(item, depth + 1) for item in obj]
+        return obj
+
+    return resolve(schema)
+
+
 class AsyncAPIClient:
     """
     非同期APIクライアント（OpenAI版）
@@ -103,14 +126,22 @@ class AsyncAPIClient:
                 self._total_requests += 1
 
                 # [MIGRATION openai→ollama] beta.chat.completions.parse() → chat.completions.create() + JSON mode
-                # スキーマをシステムプロンプトに埋め込み、JSON mode で出力を強制
-                schema_str = json.dumps(response_schema.model_json_schema(), ensure_ascii=False)
+                # $ref/$defs を解決したフラットなスキーマを使用（llama3.2 は複雑なスキーマを解釈できない）
+                raw_schema = response_schema.model_json_schema()
+                flat_schema = _resolve_schema_refs(raw_schema)
+                schema_str = json.dumps(flat_schema, ensure_ascii=False, indent=2)
+                system_prompt = (
+                    "あなたはJSONを出力するアシスタントです。\n"
+                    "以下のJSONスキーマに完全に従い、スキーマ定義自体ではなく実際のデータをJSONで出力してください。\n"
+                    "余分なテキスト・説明・マークダウンは一切出力しないでください。JSONのみを出力してください。\n\n"
+                    f"スキーマ:\n{schema_str}"
+                )
                 response = await asyncio.to_thread(
                     self.client.chat.completions.create,
                     model=model,
                     max_tokens=self.max_output_tokens,
                     messages=[
-                        {"role": "system", "content": f"以下のJSONスキーマに従ってJSONのみ出力してください: {schema_str}"},
+                        {"role": "system", "content": system_prompt},
                         {"role": "user", "content": contents}
                     ],
                     response_format={"type": "json_object"},

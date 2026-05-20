@@ -499,7 +499,7 @@ def _split_sentences_simple(text: str) -> List[str]:
 
 async def chunks_all_async(
         text: str,
-        model: str = "gpt-5.4-mini",  # [MIGRATION] "gemini-3-flash-preview" → "gpt-5.4-mini"
+        model: str = "llama3.2",  # [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
         max_workers: int = 8,
         block_size: int = 1000,  # ✅ 2000→1000に変更（MAX_TOKENS対策）
         checkpoint_manager: Optional[CheckpointManager] = None,
@@ -508,18 +508,11 @@ async def chunks_all_async(
         source_file: Optional[str] = None
 ) -> List[str]:
     """テキストを3段階で意味的にチャンク化"""
-    import os
-
-    # [MIGRATION] GOOGLE_API_KEY → OPENAI_API_KEY
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OPENAI_API_KEYが設定されていません")
-
+    # [MIGRATION openai→ollama] OPENAI_API_KEY 不要。OllamaはローカルLLMのためAPI KEY不要。
     client = AsyncAPIClient(
-        api_key=api_key,
         max_workers=max_workers,
         max_retries=3,
-        max_output_tokens=16384  # ✅ 4096→8192に増加（MAX_TOKENS対策）
+        max_output_tokens=16384
     )
 
     if checkpoint_manager is None:
@@ -847,7 +840,7 @@ async def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="gpt-5.4-mini",  # [MIGRATION] "gemini-3-flash-preview" → "gpt-5.4-mini"
+        default="llama3.2",  # [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
         help="使用するLLMモデル"
     )
     parser.add_argument(

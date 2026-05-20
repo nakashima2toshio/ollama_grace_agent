@@ -144,16 +144,15 @@ class ReActAgent:
         use_hybrid_search: bool = True  # ★追加: ハイブリッド検索フラグ
     ):
         self.selected_collections = selected_collections
-        # [MIGRATION] モデルデフォルト: "gemini-3-flash-preview" → "claude-sonnet-4-5"
-        # [MIGRATION] 問題①修正: config_service.py の _get_default_config() も同時に更新済み
-        self.model_name = model_name or get_config("models.default", "claude-sonnet-4-6")
+        # [MIGRATION openai→ollama] モデルデフォルト: "claude-sonnet-4-6" → "llama3.2"
+        self.model_name = model_name or get_config("models.default", "llama3.2")
         self.session_id = session_id or str(uuid.uuid4())
         self.use_hybrid_search = use_hybrid_search
 
-        # [MIGRATION] genai.Client() + chat → AnthropicClient (via create_llm_client)
+        # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
         # チャットセッション管理は messages リストで自前管理するため、
         # _setup_client() / _create_chat() は廃止。
-        self.llm = create_llm_client("openai", default_model=self.model_name)  # [MIGRATION anthropic→openai]
+        self.llm = create_llm_client("ollama", default_model=self.model_name)
 
         # [MIGRATION] Anthropic はステートレス設計のため、会話履歴を self._messages で管理する。
         # execute_turn() の先頭でリセットされる。

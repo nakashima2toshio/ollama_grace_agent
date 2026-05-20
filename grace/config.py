@@ -56,10 +56,10 @@ logger = logging.getLogger(__name__)
 
 class LLMConfig(BaseModel):
     """LLM設定"""
-    # [MIGRATION anthropic→openai] provider: "anthropic" → "openai"
-    # [MIGRATION anthropic→openai] model: "claude-sonnet-4-6" → "gpt-4o-mini"（デフォルト）
-    provider: str = "openai"
-    model: str = "gpt-4o-mini"
+    # [MIGRATION openai→ollama] provider: "openai" → "ollama"
+    # [MIGRATION openai→ollama] model: "gpt-4o-mini" → "llama3.2"
+    provider: str = "ollama"
+    model: str = "llama3.2"
     temperature: float = 0.7
     max_tokens: int = 4096
     timeout: int = 30
@@ -67,12 +67,12 @@ class LLMConfig(BaseModel):
 
 class EmbeddingConfig(BaseModel):
     """Embedding設定"""
-    # [MIGRATION] provider: "gemini" → "openai"
-    # [MIGRATION] model: "gemini-embedding-001" → "text-embedding-3-large"
-    # dimensions: 3072 のまま維持（Gemini と同次元 → Qdrant コレクション再作成不要）
-    provider: str = "openai"
-    model: str = "text-embedding-3-large"
-    dimensions: int = 3072
+    # [MIGRATION openai→ollama] provider: "openai" → "ollama"
+    # [MIGRATION openai→ollama] model: "text-embedding-3-large" → "nomic-embed-text"
+    # [MIGRATION openai→ollama] dimensions: 3072 → 768（Qdrant コレクション再作成必須）
+    provider: str = "ollama"
+    model: str = "nomic-embed-text"
+    dimensions: int = 768
 
 
 class ConfidenceWeights(BaseModel):
@@ -166,11 +166,22 @@ class ToolsConfig(BaseModel):
     disabled: list = Field(default_factory=list, description="プロジェクト全体で恒久的に禁止するツールのリスト")
 
 
+class OllamaConfig(BaseModel):
+    """Ollama 設定（新規追加）
+    [MIGRATION openai→ollama] 2026-05-20
+    """
+    base_url: str = "http://localhost:11434/v1"
+    llm_model: str = "llama3.2"
+    embedding_model: str = "nomic-embed-text"
+    embedding_dims: int = 768
+
+
 class GraceConfig(BaseModel):
     """GRACE Agent 統合設定"""
     version: str = "1.0"
     llm: LLMConfig = Field(default_factory=LLMConfig)
     embedding: EmbeddingConfig = Field(default_factory=EmbeddingConfig)
+    ollama: OllamaConfig = Field(default_factory=OllamaConfig)
     confidence: ConfidenceConfig = Field(default_factory=ConfidenceConfig)
     intervention: InterventionConfig = Field(default_factory=InterventionConfig)
     replan: ReplanConfig = Field(default_factory=ReplanConfig)
@@ -319,6 +330,7 @@ __all__ = [
     # Config models
     "LLMConfig",
     "EmbeddingConfig",
+    "OllamaConfig",
     "ConfidenceWeights",
     "ConfidenceThresholds",
     "ConfidenceConfig",

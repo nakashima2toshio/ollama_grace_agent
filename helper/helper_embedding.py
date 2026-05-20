@@ -1,12 +1,17 @@
 """
 Embeddingクライアント抽象化レイヤー
 
-OpenAI Embeddings API と Gemini Embeddings API の両方に対応する統一インターフェースを提供。
+OpenAI / Gemini / Ollama Embeddings API に対応する統一インターフェースを提供。
 
 [2026-04-20] anthropic_grace_agent 移植対応:
     - デフォルトプロバイダーを "gemini" → "openai" に変更
     - OpenAI デフォルトモデルを text-embedding-3-large (3072次元) に変更
     - Qdrant コレクション次元数 3072 は変更なし（Gemini と同次元）
+
+[2026-05-20] ollama_grace_agent 移植対応:
+    - OllamaEmbedding クラスを追加（nomic-embed-text / 768次元）
+    - デフォルトプロバイダーを "openai" → "ollama" に変更
+    - Qdrant コレクションの再作成が必要（3072次元 → 768次元）
 
 使用例:
     from helper_embedding import create_embedding_client
@@ -45,6 +50,7 @@ logger = logging.getLogger(__name__)
 # Qdrant コレクションの再作成は不要。
 DEFAULT_GEMINI_EMBEDDING_DIMS = 3072
 DEFAULT_OPENAI_EMBEDDING_DIMS = 3072  # 変更前: 1536
+DEFAULT_OLLAMA_EMBEDDING_DIMS = 768   # [MIGRATION openai→ollama] nomic-embed-text
 
 
 class EmbeddingClient(ABC):
@@ -155,6 +161,55 @@ class OpenAIEmbedding(EmbeddingClient):
             if i + batch_size < len(texts):
                 time.sleep(0.1)
 
+        return all_embeddings
+
+
+class OllamaEmbedding(EmbeddingClient):
+    """Ollama Embeddings API 実装（OpenAI SDK 流用 / nomic-embed-text / 768次元）
+
+    [MIGRATION openai→ollama] 2026-05-20
+    - OpenAI SDK の base_url を差し替えて Ollama の OpenAI 互換エンドポイントを使用
+    - dimensions パラメータ非対応（モデル固定次元数）
+    - API キー不要（api_key="ollama" はダミー値）
+    - Qdrant コレクション再作成必須（3072次元 → 768次元）
+    """
+
+    def __init__(
+        self,
+        base_url: Optional[str] = None,
+        model: str = "nomic-embed-text",
+        dims: int = DEFAULT_OLLAMA_EMBEDDING_DIMS,
+    ):
+        self.base_url = base_url or os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+        self.client = OpenAI(base_url=self.base_url, api_key="ollama")
+        self.model = model
+        self._dims = dims
+        logger.info(f"OllamaEmbedding initialized: model={model}, dims={dims}, base_url={self.base_url}")
+
+    @property
+    def dimensions(self) -> int:
+        return self._dims
+
+    def embed_text(self, text: str, task_type: Optional[str] = None) -> List[float]:
+        response = self.client.embeddings.create(
+            model=self.model,
+            input=text,
+            # dimensions パラメータは Ollama では非対応（指定しない）
+        )
+        return response.data[0].embedding
+
+    def embed_texts(self, texts: List[str], batch_size: int = 100) -> List[List[float]]:
+        all_embeddings: List[List[float]] = []
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+            response = self.client.embeddings.create(
+                model=self.model,
+                input=batch,
+            )
+            sorted_data = sorted(response.data, key=lambda x: x.index)
+            all_embeddings.extend([item.embedding for item in sorted_data])
+            if i + batch_size < len(texts):
+                time.sleep(0.05)
         return all_embeddings
 
 
@@ -287,7 +342,7 @@ class GeminiEmbedding(EmbeddingClient):
 
 
 def create_embedding_client(
-    provider: str = "openai",  # [MIGRATION] デフォルト変更: "gemini" → "openai"
+    provider: str = "ollama",  # [MIGRATION openai→ollama] デフォルト変更: "openai" → "ollama"
     **kwargs
 ) -> EmbeddingClient:
     """
@@ -312,26 +367,28 @@ def create_embedding_client(
         embedding = create_embedding_client("fastembed")
     """
     if provider is None:
-        logger.warning("Provider is None. Defaulting to 'openai'.")  # 変更前: 'gemini'
-        provider = "openai"  # 変更前: "gemini"
+        logger.warning("Provider is None. Defaulting to 'ollama'.")
+        provider = "ollama"  # [MIGRATION openai→ollama]
 
-    if provider.lower() == "openai":
+    if provider.lower() == "ollama":
+        return OllamaEmbedding(**kwargs)
+    elif provider.lower() == "openai":
         return OpenAIEmbedding(**kwargs)
     elif provider.lower() == "gemini":
         return GeminiEmbedding(**kwargs)
     elif provider.lower() == "fastembed":
         try:
-            from helper.helper_embedding_fastembed import FastEmbedEmbedding  # [FIXED] helper_embedding_fastembed → helper.helper_embedding_fastembed
+            from helper.helper_embedding_fastembed import FastEmbedEmbedding
             return FastEmbedEmbedding(**kwargs)
         except ImportError as e:
             raise ImportError(f"FastEmbed module load failed: {e}. Check if 'fastembed' is installed.")
     else:
-        raise ValueError(f"Unknown provider: {provider}. Use 'openai', 'gemini', or 'fastembed'")
+        raise ValueError(f"Unknown provider: {provider}. Use 'ollama', 'openai', 'gemini', or 'fastembed'")
 
 
-# [MIGRATION] デフォルトプロバイダー変更: "gemini" → "openai"
-# 環境変数 EMBEDDING_PROVIDER で上書き可能（.env に EMBEDDING_PROVIDER=openai を追加推奨）
-DEFAULT_EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "openai")  # 変更前: "gemini"
+# [MIGRATION openai→ollama] デフォルトプロバイダー変更: "openai" → "ollama"
+# 環境変数 EMBEDDING_PROVIDER で上書き可能（.env に EMBEDDING_PROVIDER=ollama を追加推奨）
+DEFAULT_EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "ollama")  # 変更前: "openai"
 
 
 def get_default_embedding_client(**kwargs) -> EmbeddingClient:
@@ -370,12 +427,14 @@ def get_embedding_dimensions(provider: str = "openai") -> int:  # 変更前: "ge
         次元数
     """
     if provider is None:
-        provider = "openai"  # 変更前: "gemini"
+        provider = "ollama"  # [MIGRATION openai→ollama]
 
-    if provider.lower() == "gemini":
+    if provider.lower() == "ollama":
+        return DEFAULT_OLLAMA_EMBEDDING_DIMS  # 768
+    elif provider.lower() == "gemini":
         return DEFAULT_GEMINI_EMBEDDING_DIMS  # 3072
     elif provider.lower() == "openai":
-        return DEFAULT_OPENAI_EMBEDDING_DIMS  # 3072 (変更前: 1536)
+        return DEFAULT_OPENAI_EMBEDDING_DIMS  # 3072
     elif provider.lower() == "fastembed":
         return 384
     else:

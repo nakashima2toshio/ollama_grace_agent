@@ -1,13 +1,14 @@
 """
 LLMクライアント抽象化レイヤー
 
-OpenAI API / Gemini API / Anthropic API の3プロバイダーに対応する統一インターフェースを提供。
+OpenAI API / Gemini API / Anthropic API / Ollama の4プロバイダーに対応する統一インターフェースを提供。
 
-Migration: Gemini → Anthropic (2026-04-20) → OpenAI (2026-04-25)
+Migration: Gemini → Anthropic (2026-04-20) → OpenAI (2026-04-25) → Ollama (2026-05-20)
   - AnthropicClient クラスを追加
   - generate_with_tools() を追加（ReAct Agent 用）
   - create_llm_client() に "anthropic" プロバイダーを追加
   - LLM_MODELS / LLM_PRICING / LLM_LIMITS に Claude モデルを追加
+  - [MIGRATION openai→ollama] OllamaClient 追加、DEFAULT_LLM_PROVIDER="ollama"
 """
 
 from abc import ABC, abstractmethod
@@ -80,8 +81,27 @@ LLM_MODELS_OPENAI = [
     "gpt-4o-mini",
 ]
 
+# --- Ollama モデル (新規追加) ---
+# [MIGRATION openai→ollama]
+LLM_MODELS_OLLAMA = [
+    "llama3.2",
+    "llama3.2:3b",
+    "llama3.2:1b",
+    "llama3.1",
+    "llama3.1:8b",
+    "llama3.1:70b",
+    "qwen2.5:7b",
+    "qwen2.5:14b",
+    "mistral",
+    "mistral-nemo",
+    "phi3",
+    "phi3:mini",
+    "gemma2",
+    "gemma2:9b",
+]
+
 # 全モデル一覧（後方互換性のため維持）
-LLM_MODELS = LLM_MODELS_ANTHROPIC + LLM_MODELS_GEMINI + LLM_MODELS_OPENAI
+LLM_MODELS = LLM_MODELS_ANTHROPIC + LLM_MODELS_GEMINI + LLM_MODELS_OPENAI + LLM_MODELS_OLLAMA
 
 # ----------------------------------------------------------------
 # 料金設定（USD / 1K tokens）
@@ -96,6 +116,10 @@ LLM_PRICING = {
     "claude-sonnet-4-6"       : {"input": 0.003,   "output": 0.015  },  # デフォルト推奨
     "claude-sonnet-4-5"       : {"input": 0.003,   "output": 0.015  },
     "claude-haiku-4-5-20251001": {"input": 0.0008,  "output": 0.004  },
+
+    # Ollama (ローカル実行のため無料)
+    # [MIGRATION openai→ollama]
+    **{model: {"input": 0.0, "output": 0.0} for model in LLM_MODELS_OLLAMA},
 
     # Gemini (既存)
     "gemini-2.5-flash"        : {"input": 0.0001,  "output": 0.0004 },
@@ -118,6 +142,10 @@ LLM_LIMITS = {
     "claude-sonnet-4-6"       : {"max_tokens": 1000000, "max_output": 64000},  # デフォルト推奨
     "claude-sonnet-4-5"       : {"max_tokens": 200000,  "max_output": 64000},
     "claude-haiku-4-5-20251001": {"max_tokens": 200000,  "max_output": 8192 },
+
+    # Ollama (ローカル実行)
+    # [MIGRATION openai→ollama]
+    **{model: {"max_tokens": 128000, "max_output": 8192} for model in LLM_MODELS_OLLAMA},
 
     # Gemini (既存)
     "gemini-2.5-flash"        : {"max_tokens": 1000000, "max_output": 8192 },
@@ -158,7 +186,7 @@ EMBEDDING_DIMS = {
 # ================================================================
 # [MIGRATION] デフォルトプロバイダーを "gemini" → "anthropic" に変更
 # 環境変数 LLM_PROVIDER で切り替え可能（gemini_grace_agent は LLM_PROVIDER=gemini を設定）
-DEFAULT_LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")  # [MIGRATION anthropic→openai]
+DEFAULT_LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")  # [MIGRATION openai→ollama]
 
 
 # ================================================================
@@ -734,38 +762,224 @@ class AnthropicClient(LLMClient):
 
 
 # ================================================================
+# Ollama クライアント（新規追加）
+# [MIGRATION openai→ollama] 2026-05-20
+# ================================================================
+
+class OllamaClient(LLMClient):
+    """
+    Ollama ローカル LLM クライアント
+
+    OpenAI SDK の base_url を差し替えて Ollama の OpenAI 互換エンドポイントを使用する。
+    API キーは不要（api_key="ollama" はダミー値）。
+
+    OpenAI との主要な差異：
+      - Chat Completions のみ対応（Responses API 非対応）
+      - 構造化出力: beta.parse() / responses.parse() 非対応 → JSON モード + Pydantic parse
+      - max_tokens を使用（max_completion_tokens / max_output_tokens は非対応）
+      - dimensions パラメータ（Embedding）非対応
+    """
+
+    def __init__(
+        self,
+        base_url: Optional[str] = None,
+        default_model: str = "llama3.2",
+        **kwargs,
+    ):
+        if not OpenAI:
+            raise ImportError("openai package is not installed.")
+        self.base_url = base_url or os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+        self.client = OpenAI(base_url=self.base_url, api_key="ollama")
+        self.default_model = default_model
+        logger.info(f"OllamaClient initialized: base_url={self.base_url}, model={default_model}")
+
+    def generate_content(self, prompt: str, model: Optional[str] = None, **kwargs) -> str:
+        model_name = model or self.default_model
+        system = kwargs.pop("system", None)
+        # max_completion_tokens / max_output_tokens を max_tokens に統一
+        max_tokens = (
+            kwargs.pop("max_completion_tokens", None)
+            or kwargs.pop("max_output_tokens", None)
+            or kwargs.pop("max_tokens", 4096)
+        )
+        temperature = kwargs.pop("temperature", None)
+
+        messages = []
+        if system:
+            messages.append({"role": "system", "content": system})
+        messages.append({"role": "user", "content": prompt})
+
+        create_kwargs: Dict[str, Any] = {
+            "model"     : model_name,
+            "messages"  : messages,
+            "max_tokens": max_tokens,
+        }
+        if temperature is not None:
+            create_kwargs["temperature"] = temperature
+
+        response = self.client.chat.completions.create(**create_kwargs)
+        return response.choices[0].message.content
+
+    def generate_structured(
+        self,
+        prompt: str,
+        response_schema: Type[BaseModel],
+        model: Optional[str] = None,
+        **kwargs,
+    ) -> BaseModel:
+        model_name = model or self.default_model
+        system = kwargs.pop("system", "You are a helpful assistant. Output valid JSON only.")
+        max_tokens = (
+            kwargs.pop("max_completion_tokens", None)
+            or kwargs.pop("max_output_tokens", None)
+            or kwargs.pop("max_tokens", 8192)
+        )
+        temperature = kwargs.pop("temperature", 0.1)
+
+        schema_json = json.dumps(
+            response_schema.model_json_schema(), ensure_ascii=False, indent=2
+        )
+        augmented_prompt = (
+            f"{prompt}\n\n"
+            f"以下の JSON スキーマに完全に準拠した JSON のみを出力してください:\n{schema_json}"
+        )
+
+        messages = [
+            {"role": "system", "content": system},
+            {"role": "user",   "content": augmented_prompt},
+        ]
+
+        response = self.client.chat.completions.create(
+            model=model_name,
+            messages=messages,
+            response_format={"type": "json_object"},
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        raw = response.choices[0].message.content
+        try:
+            return response_schema.model_validate_json(raw)
+        except Exception as e:
+            logger.error(f"Ollama JSON parse error: {e}")
+            logger.error(f"Raw response: {raw}")
+            raise
+
+    def count_tokens(self, text: str, model: Optional[str] = None) -> int:
+        encoding = tiktoken.get_encoding("cl100k_base")
+        return len(encoding.encode(text))
+
+    def generate_with_tools(
+        self,
+        messages: List[Dict[str, Any]],
+        tools: List[Dict[str, Any]],
+        system: str = "",
+        model: Optional[str] = None,
+        max_tokens: int = 4096,
+        **kwargs,
+    ) -> tuple:
+        """
+        Tool Use を含む ReAct ループの 1 ステップ。
+        OpenAI Chat Completions 互換形式（tools パラメータ）を使用。
+        対応モデル: llama3.2, llama3.1, qwen2.5, mistral-nemo 等。
+        """
+        model_name = model or self.default_model
+
+        full_messages: List[Dict[str, Any]] = []
+        if system:
+            full_messages.append({"role": "system", "content": system})
+        full_messages.extend(messages)
+
+        create_kwargs: Dict[str, Any] = {
+            "model"     : model_name,
+            "messages"  : full_messages,
+            "max_tokens": max_tokens,
+        }
+        if tools:
+            openai_tools = [
+                {
+                    "type"    : "function",
+                    "function": {
+                        "name"       : t["name"],
+                        "description": t.get("description", ""),
+                        "parameters" : t.get("input_schema", t.get("parameters", {})),
+                    }
+                }
+                for t in tools
+            ]
+            create_kwargs["tools"] = openai_tools
+
+        if "temperature" in kwargs:
+            create_kwargs["temperature"] = kwargs["temperature"]
+
+        response = self.client.chat.completions.create(**create_kwargs)
+        msg = response.choices[0].message
+
+        tool_calls_result = []
+        if msg.tool_calls:
+            for tc in msg.tool_calls:
+                try:
+                    args = json.loads(tc.function.arguments)
+                except Exception:
+                    args = {}
+                tool_calls_result.append({
+                    "name" : tc.function.name,
+                    "input": args,
+                    "id"   : tc.id,
+                })
+
+        text = msg.content or ""
+        finish_reason = response.choices[0].finish_reason or "stop"
+        return text, tool_calls_result, finish_reason
+
+    def build_tool_result_message(
+        self,
+        tool_calls: List[Dict[str, Any]],
+        results: List[str],
+    ) -> List[Dict[str, Any]]:
+        return [
+            {
+                "role"        : "tool",
+                "tool_call_id": tc["id"],
+                "content"     : result,
+            }
+            for tc, result in zip(tool_calls, results)
+        ]
+
+
+# ================================================================
 # ファクトリ関数
 # ================================================================
 
-# [MIGRATION] デフォルト引数: "gemini" → "anthropic"
-def create_llm_client(provider: str = "openai", **kwargs) -> LLMClient:  # [MIGRATION anthropic→openai]
+# [MIGRATION openai→ollama] デフォルト引数: "openai" → "ollama"
+def create_llm_client(provider: str = "ollama", **kwargs) -> LLMClient:  # [MIGRATION openai→ollama]
     """
     LLM クライアントのファクトリ関数
 
     Args:
-        provider: "anthropic" | "openai" | "gemini"
-                  デフォルト: "openai"（openai_grace_agent）
-                  anthropic_grace_agent では LLM_PROVIDER=anthropic を環境変数で指定する
+        provider: "ollama" | "openai" | "anthropic" | "gemini"
+                  デフォルト: "ollama"（ollama_grace_agent）
         **kwargs: 各クライアントの __init__ に渡すパラメータ
-                  例: api_key="sk-ant-...", default_model="claude-sonnet-4-6"
 
     Returns:
         LLMClient インスタンス
 
     Example:
-        # openai_grace_agent（デフォルト）
+        # ollama_grace_agent（デフォルト）
         llm = create_llm_client()
         text = llm.generate_content("こんにちは")
 
         # モデル指定
-        llm = create_llm_client("openai", default_model="gpt-4o-mini")
+        llm = create_llm_client("ollama", default_model="llama3.2")
 
-        # anthropic_grace_agent（後方互換）
+        # 他プロバイダー（後方互換）
+        llm = create_llm_client("openai")
         llm = create_llm_client("anthropic")
     """
     provider = (provider or DEFAULT_LLM_PROVIDER).lower()
 
-    if provider == "anthropic":
+    if provider == "ollama":
+        return OllamaClient(**kwargs)
+    elif provider == "anthropic":
         return AnthropicClient(**kwargs)
     elif provider == "openai":
         return OpenAIClient(**kwargs)
@@ -774,7 +988,7 @@ def create_llm_client(provider: str = "openai", **kwargs) -> LLMClient:  # [MIGR
     else:
         raise ValueError(
             f"Unknown provider: '{provider}'. "
-            "Choose from 'anthropic', 'openai', 'gemini'."
+            "Choose from 'ollama', 'openai', 'anthropic', 'gemini'."
         )
 
 
@@ -788,9 +1002,11 @@ def get_available_llm_models() -> List[str]:
 
 
 def get_available_llm_models_by_provider(provider: str) -> List[str]:
-    """プロバイダー別モデル一覧（新規追加）"""
+    """プロバイダー別モデル一覧"""
     provider = provider.lower()
-    if provider == "anthropic":
+    if provider == "ollama":
+        return LLM_MODELS_OLLAMA
+    elif provider == "anthropic":
         return LLM_MODELS_ANTHROPIC
     elif provider == "openai":
         return LLM_MODELS_OPENAI

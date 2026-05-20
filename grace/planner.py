@@ -9,6 +9,10 @@ GRACE Planner - 計画生成エージェント
     - response_schema=ExecutionPlan → generate_structured() で Structured Outputs に代替
     - max_tokens → max_completion_tokens（gpt-5.4-mini以降の仕様変更）
     - AFC関連バグ回避コードを削除（Anthropic では不要）
+
+[2026-05-20] ollama_grace_agent 移植対応:
+    - create_llm_client("openai") → create_llm_client("ollama")
+    - max_completion_tokens → max_tokens（Ollama は max_completion_tokens 非対応）
 """
 
 import logging
@@ -130,10 +134,9 @@ class Planner:
         self.config = config or get_config()
         self.model_name = model_name or self.config.llm.model
 
-        # [MIGRATION] genai.Client() → AnthropicClient
-        # [MIGRATION] create_llm_client("anthropic") → create_llm_client("openai")
-        # generate_structured() が Structured Outputs による構造化出力を隠蔽する
-        self.llm = create_llm_client("openai", default_model=self.model_name)
+        # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
+        # OllamaClient.generate_structured() が JSON モード+Pydantic parse を隠蔽する
+        self.llm = create_llm_client("ollama", default_model=self.model_name)
 
         # KeywordExtractorの初期化（変更なし）
         try:
@@ -194,7 +197,7 @@ class Planner:
                         prompt=prompt,
                         response_schema=ExecutionPlan,
                         model=self.model_name,
-                        max_completion_tokens=8192,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                        max_tokens=8192,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
                         system="You are an expert planning agent. Always respond using the provided tool.",
                         temperature=self.config.llm.temperature,
                     )
@@ -381,7 +384,7 @@ class Planner:
             complexity_str = self.llm.generate_content(
                 prompt=prompt,
                 model=self.model_name,
-                max_completion_tokens=10,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=10,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
                 temperature=0.1,
             )
 
@@ -441,7 +444,7 @@ class Planner:
                 prompt=refine_prompt,
                 response_schema=ExecutionPlan,
                 model=self.model_name,
-                max_completion_tokens=4096,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=4096,  # [MIGRATION openai→ollama] max_completion_tokens → max_tokens
                 temperature=self.config.llm.temperature,
             )
 

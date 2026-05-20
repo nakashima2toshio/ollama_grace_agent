@@ -60,18 +60,24 @@ from helper.helper_llm import (  # [FIXED] helper_llm → helper.helper_llm
     GeminiClient as GeminiLLMClient,
     OpenAIClient,        # 後方互換性のため再エクスポート
     AnthropicClient,     # [MIGRATION 追加] migration資料 ⑩
+    OllamaClient,        # [MIGRATION openai→ollama] 追加
 )
 
 # -----------------------------------------------------
-# OpenAI API型定義
+# API型定義（Chat Completions 互換）
+# [MIGRATION openai→ollama] Responses API → Chat Completions API
+# EasyInputMessageParam / Response は Responses API 専用型のため、
+# Ollama（Chat Completions のみ対応）では dict ベースの互換型で代替する。
 # -----------------------------------------------------
-from openai.types.responses import (
-    EasyInputMessageParam,
-    Response
-)
 from openai.types.chat import (
     ChatCompletionMessageParam,
 )
+from openai.types.chat.chat_completion import ChatCompletion
+
+# EasyInputMessageParam: Responses API 専用型 → dict 互換の型エイリアスで代替
+EasyInputMessageParam = Dict[str, Any]
+# Response: Responses API 専用型 → Chat Completions の ChatCompletion で代替
+Response = ChatCompletion
 
 # Role型の定義
 RoleType = Literal["user", "assistant", "system", "developer"]
@@ -246,9 +252,20 @@ class ResponseProcessor:
 
     @staticmethod
     def extract_text(response: Response) -> List[str]:
-        """レスポンスからテキストを抽出"""
+        """レスポンスからテキストを抽出（Chat Completions 対応）"""
         texts = []
 
+        # Chat Completions 形式（Ollama / OpenAI）
+        if hasattr(response, 'choices') and response.choices:
+            for choice in response.choices:
+                if hasattr(choice, 'message') and hasattr(choice.message, 'content'):
+                    content = choice.message.content
+                    if content:
+                        texts.append(content)
+            if texts:
+                return texts
+
+        # Responses API 形式（後方互換）
         if hasattr(response, 'output'):
             for item in response.output:
                 if hasattr(item, 'type') and item.type == "message":
@@ -258,7 +275,6 @@ class ResponseProcessor:
                                 if hasattr(content, 'text'):
                                     texts.append(content.text)
 
-        # フォールバック: output_text属性
         if not texts and hasattr(response, 'output_text'):
             texts.append(response.output_text)
 
@@ -332,8 +348,8 @@ class ResponseProcessor:
 # ==================================================
 
 # デフォルトプロバイダー（環境変数で設定可能）
-# [MIGRATION anthropic→openai] デフォルトを "openai" に変更
-DEFAULT_LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")  # "openai" | "anthropic" | "gemini"
+# [MIGRATION openai→ollama] デフォルトを "ollama" に変更
+DEFAULT_LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")  # "ollama" | "openai" | "anthropic" | "gemini"
 
 
 class UnifiedLLMClient:
@@ -512,6 +528,7 @@ __all__ = [
 
     'AnthropicClient',           # 後方互換のため残存
     'GeminiLLMClient',           # 後方互換のため残存
+    'OllamaClient',              # [MIGRATION openai→ollama] 追加
 
     # Gemini 3 Migration: 統合クライアント
     'UnifiedLLMClient',

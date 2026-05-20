@@ -886,6 +886,8 @@ class OllamaClient(LLMClient):
             or kwargs.pop("max_tokens", 4096)
         )
         temperature = kwargs.pop("temperature", None)
+        # [MIGRATION openai→ollama] JSON モード強制オプション（llama3.2 で空レスポンス防止）
+        response_format = kwargs.pop("response_format", None)
 
         messages = []
         if system:
@@ -899,6 +901,8 @@ class OllamaClient(LLMClient):
         }
         if temperature is not None:
             create_kwargs["temperature"] = temperature
+        if response_format is not None:
+            create_kwargs["response_format"] = response_format
 
         response = self.client.chat.completions.create(**create_kwargs)
         return response.choices[0].message.content

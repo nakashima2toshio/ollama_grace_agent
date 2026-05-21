@@ -511,7 +511,10 @@ class LLMSelfEvaluator:
             # --- [IPO LOG] PROCESS OUTPUT (GRACE SELF-EVAL) ---
             logger.info(f"\n{'=' * 20} [GRACE SELF-EVAL IPO: OUTPUT] {'=' * 20}\n{text}\n{'=' * 60}")
 
-            confidence = float(text)
+            # [MIGRATION openai→ollama] llama3.2 は "答えは 0.8です。" のように返すため regex で抽出
+            import re as _re
+            m = _re.search(r"[01]?\.\d+|\b[01]\b", text)
+            confidence = float(m.group()) if m else float(text)
             result = min(1.0, max(0.0, confidence))
 
             logger.debug(f"LLM self-evaluation: {result}")
@@ -761,7 +764,10 @@ class QueryCoverageCalculator:
                 return 0.5
 
             text = text.strip()
-            coverage = float(text)
+            # [MIGRATION openai→ollama] llama3.2 は "答えは 0.6 です。" のように返すため regex で抽出
+            import re as _re
+            m = _re.search(r"[01]?\.\d+|\b[01]\b", text)
+            coverage = float(m.group()) if m else float(text)
             result = min(1.0, max(0.0, coverage))
 
             logger.debug(f"Query coverage: {result}")

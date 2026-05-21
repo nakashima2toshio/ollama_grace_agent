@@ -805,22 +805,20 @@ class Executor:
         )
 
         try:
-            # [MIGRATION] from google import genai / types → create_llm_client("openai")
-            # Gemini: genai.Client().models.generate_content() + GenerateContentConfig + AFC無効化
-            # OpenAI:  create_llm_client("openai").generate_content() で代替
+            # [MIGRATION openai→ollama] create_llm_client("openai") → create_llm_client("ollama")
             import time as _time
 
             if not _LLM_CLIENT_AVAILABLE:
                 raise ImportError("helper_llm.create_llm_client が利用できません")
 
-            llm = create_llm_client("openai", default_model=self.config.llm.model)
+            llm = create_llm_client("ollama", default_model=self.config.llm.model)
             t0 = _time.time()
 
             # temperature=0.0, max_tokens=5 で YES/NO のみ返させる
             answer = llm.generate_content(
                 prompt=prompt,
                 temperature=0.0,
-                max_completion_tokens=5,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
+                max_tokens=5,
             ).strip().upper()
 
             elapsed = _time.time() - t0

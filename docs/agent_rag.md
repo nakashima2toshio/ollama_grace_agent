@@ -1,7 +1,12 @@
 ## agent_rag.py - Streamlit メインアプリケーション ドキュメント
 
-**Version 3.0** | 最終更新: 2026-03-19
+**Version 4.0** | 最終更新: 2026-05-21
 
+> **v4.0 変更点**: LLM バックエンドを Gemini/OpenAI から **Ollama（ローカル LLM）** に移行。  
+> ページタイトルを "Agent RAG(Gemini)" → **"Agent RAG(Anthropic)"** に更新。  
+> モデル選択セレクトボックスが `GeminiConfig.AVAILABLE_MODELS`（= Ollama モデル一覧）を参照するよう変更済み。
+
+---
 
 | Phase | モジュール | subgraph |
 |:---|:---|:---|
@@ -33,24 +38,27 @@
 ## 目次
 
 1. [概要](#概要)
-2. [アーキテクチャ構成図](#1-アーキテクチャ構成図)
-3. [モジュール構成図](#2-モジュール構成図)
-4. [クラス・関数一覧表](#3-クラス関数一覧表)
-5. [クラス・関数 IPO詳細](#4-クラス関数-ipo詳細)
-6. [設定・定数](#5-設定定数)
-7. [使用例](#6-使用例)
-8. [変更履歴](#8-変更履歴)
-9. [付録: 依存関係図](#付録-依存関係図)
+2. [Ollama と利用モデル](#ollama-と利用モデル)
+3. [アーキテクチャ構成図](#1-アーキテクチャ構成図)
+4. [モジュール構成図](#2-モジュール構成図)
+5. [クラス・関数一覧表](#3-クラス関数一覧表)
+6. [クラス・関数 IPO詳細](#4-クラス関数-ipo詳細)
+7. [設定・定数](#5-設定定数)
+8. [使用例](#6-使用例)
+9. [変更履歴](#8-変更履歴)
+10. [付録: 依存関係図](#付録-依存関係図)
 
 ---
 
 ## 概要
 
-`agent_rag.py`は、Agent RAG（Gemini）プロジェクトの Streamlit メインアプリケーションです。サイドバーのメニューからページを選択し、各機能ページを動的に切り替えて表示するルーティング制御を担います。
+`agent_rag.py` は、ollama_grace_agent プロジェクトの Streamlit メインアプリケーションです。サイドバーのメニューからページを選択し、各機能ページを動的に切り替えて表示するルーティング制御を担います。
+
+**LLM バックエンド**: Ollama（ローカル実行） — クラウド API キー不要
 
 実行コマンド：
 ```bash
-streamlit run agent_rag.py --server.port 8501
+uv run streamlit run agent_rag.py --server.port 8501
 ```
 
 ### 主な責務
@@ -67,9 +75,9 @@ streamlit run agent_rag.py --server.port 8501
 |---|------|--------------|------|
 | 1 | ページ設定・ルーティング | `agent_rag.py` (`main()`) | `st.set_page_config` + `st.radio` によるページ切替 |
 | 2 | システム説明ページ | `ui/pages/system_explanation_page.py` | プロジェクト概要の表示 |
-| 3 | Qdrant検索ページ | `ui/pages/qdrant_search_page.py` | ベクトルDB検索 + LLM回答生成 |
-| 4 | Agent(ReAct+Reflection)チャット | `ui/pages/agent_chat_page.py` | 旧型エージェントチャット |
-| 5 | 自律型Agent(GRACE)チャット | `ui/pages/grace_chat_page.py` | Planner+Executor 2フェーズエージェント |
+| 3 | Qdrant検索ページ | `ui/pages/qdrant_search_page.py` | ベクトルDB検索 + Ollama 回答生成 |
+| 4 | Agent(ReAct+Reflection)チャット | `ui/pages/agent_chat_page.py` | ReAct エージェントチャット（Ollama） |
+| 5 | 自律型Agent(GRACE)チャット | `ui/pages/grace_chat_page.py` | Planner+Executor 2フェーズエージェント（Ollama） |
 | 6 | ログビューア | `ui/pages/log_viewer_page.py` | 未回答ログの確認 |
 | 7 | RAGデータ作成ページ | `agent_rag.py` (`show_rag_data_creation_page()`) | ドキュメント表示（インライン定義） |
 | 8 | Qdrant CRUDページ | `agent_rag.py` (`show_qdrant_crud_page()`) | CRUD操作（仮実装） |
@@ -83,6 +91,81 @@ streamlit run agent_rag.py --server.port 8501
 | `show_qdrant_crud_page()` | Qdrant CRUD操作ページの表示（仮実装） |
 | `_load_local_markdown()` | プロジェクト内のMarkdownファイルを読み込むヘルパー関数 |
 | `RAG_DATA_DOCS` | RAGデータ作成関連ドキュメントの定義リスト（定数） |
+
+---
+
+## Ollama と利用モデル
+
+### Ollama とは
+
+**Ollama** はオープンソースのローカル LLM 実行環境です。OpenAI 互換 API（`/v1/chat/completions`）を提供するため、本プロジェクトでは `openai` Python SDK 経由で接続します。
+
+```
+エンドポイント: http://localhost:11434/v1
+api_key:        "ollama"（ダミー文字列。認証なし）
+```
+
+> クラウド API キー（OpenAI / Gemini / Anthropic）は **不要**。
+
+### OllamaClient の接続設定（`helper/helper_llm.py`）
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
+    api_key="ollama",   # ダミー。Ollama は認証不要
+)
+```
+
+環境変数 `OLLAMA_BASE_URL` でリモート Ollama サーバーに向けることもできます（`.env` で設定）。
+
+### 利用可能なモデル一覧（`config.py` / `GeminiConfig.AVAILABLE_MODELS`）
+
+UI のセレクトボックスには以下が表示されます。
+
+| モデル名 | サイズ目安 | 特徴 | 推奨用途 |
+|---------|----------|------|---------|
+| **`llama3.2`** | 約 2 GB | ⭐ **デフォルト**。テキスト生成・Q/A 生成 | 通常の RAG・エージェント |
+| `llama3.2:3b` | 約 2 GB | 軽量版 3B パラメータ | 高速処理・低スペックマシン |
+| `llama3.1` | 約 4.7 GB | 大容量・高精度 | 複雑なタスク |
+| `qwen2.5:7b` | 約 4.4 GB | 多言語対応（中国語・日本語） | 多言語 RAG |
+| `mistral` | 約 4.1 GB | 汎用・高速 | 汎用エージェント |
+| `phi3` | 約 2.2 GB | Microsoft 製・軽量 | 軽量タスク |
+| `gemma2` | 約 5.4 GB | Google 製・軽量 | 実験・比較 |
+
+> **モデルの事前ダウンロード** が必要です:
+> ```bash
+> ollama pull llama3.2
+> ollama pull nomic-embed-text   # Embedding 用
+> ```
+
+### Embedding モデル
+
+| モデル名 | サイズ目安 | 次元数 | 備考 |
+|---------|----------|--------|------|
+| `nomic-embed-text` | 約 274 MB | 768次元 | Ollama ローカル Embedding デフォルト |
+| `fastembed`（内蔵） | - | 384次元 | fastembed ライブラリ経由（オフライン対応） |
+
+### llama3.2 固有の制約と実装上の対策
+
+| 制約 | 対策 |
+|------|------|
+| `beta.chat.completions.parse()` 非対応 | `chat.completions.create()` + JSON モードで代替 |
+| `$ref`/`$defs` を含む複雑な JSON スキーマを解釈できない | `_resolve_schema_refs()` で事前フラット化（`helper_llm.py`） |
+| `response_format={"type": "json_object"}` は配列 `[]` を返せない | `{"qa_pairs": [...]}` でラップしてから抽出 |
+| 数値のみを返さず「答えは 0.8 です。」のように自然言語を付与 | `re.search(r"[01]?\.\d+\|\b[01]\b", text)` で抽出（`confidence.py`） |
+| JSON モードなしだと空文字列を返すことがある | `response_format={"type": "json_object"}` を常に指定 |
+
+詳細: `docs/migration_openai2ollama.md` §16-3 / `docs/llm_api_comparison_v3.md` §4
+
+### プロバイダー設定（`config.py` / `LLMProviderConfig`）
+
+```python
+class LLMProviderConfig:
+    DEFAULT_LLM_PROVIDER: str = "ollama"        # テキスト生成
+    DEFAULT_EMBEDDING_PROVIDER: str = "ollama"  # Embedding
+```
 
 ---
 
@@ -115,9 +198,10 @@ flowchart TB
         P7["show_qdrant_crud_page"]
     end
 
-    subgraph EXTERNAL["外部サービス"]
-        GEMINI["Gemini API"]
-        QDRANT["Qdrant Vector DB"]
+    subgraph EXTERNAL["外部サービス（ローカル）"]
+        OLLAMA["Ollama LLM サーバー\n:11434\nllama3.2（デフォルト）"]
+        QDRANT["Qdrant Vector DB\n:6333\n（Docker）"]
+        REDIS["Redis\n:6379\nCelery ブローカー"]
         FS["ローカルファイルシステム"]
     end
 
@@ -126,18 +210,19 @@ flowchart TB
     SIDEBAR --> ROUTER
     ROUTER --> PAGES
     ROUTER --> INLINE
-    PAGES --> GEMINI
+    PAGES --> OLLAMA
     PAGES --> QDRANT
+    PAGES --> REDIS
     INLINE --> FS
 ```
 
 ### 1.2 データフロー
 
-1. ユーザーがブラウザでアプリにアクセス
+1. ユーザーがブラウザでアプリにアクセス（`http://localhost:8501`）
 2. `main()` が `st.set_page_config` でページ設定を初期化
 3. サイドバーの `st.radio` でユーザーがページを選択
 4. `page_mapping` 辞書から対応する関数を取得して呼び出し
-5. 選択されたページが Gemini API / Qdrant / ローカルファイルと連携して結果を表示
+5. 選択されたページが **Ollama（:11434）/ Qdrant（:6333）/ ローカルファイル** と連携して結果を表示
 
 ---
 
@@ -182,7 +267,7 @@ flowchart TB
 
 | ライブラリ | バージョン | 用途 |
 |-----------|-----------|------|
-| `streamlit` | >= 1.28 | UIフレームワーク |
+| `streamlit` | 1.48.1 | UIフレームワーク |
 | `pathlib` | 標準ライブラリ | ローカルファイルパス操作 |
 
 ### 2.3 内部依存モジュール
@@ -194,6 +279,24 @@ flowchart TB
 | `ui.pages.show_grace_chat_page` | GRACE自律型エージェントチャットページ表示 |
 | `ui.pages.agent_chat_page.show_agent_chat_page` | ReAct+Reflectionエージェントチャットページ表示 |
 | `ui.pages.log_viewer_page.show_log_viewer_page` | 未回答ログビューアページ表示 |
+
+### 2.4 モデル選択の依存関係
+
+`agent_chat_page.py` / `grace_chat_page.py` のセレクトボックスは `config.py` の設定を参照:
+
+```python
+# ui/pages/agent_chat_page.py & grace_chat_page.py
+from config import AgentConfig, GeminiConfig
+
+selected_model = st.selectbox(
+    "モデル選択",
+    options=GeminiConfig.AVAILABLE_MODELS,   # Ollama モデル一覧
+    index=GeminiConfig.AVAILABLE_MODELS.index(AgentConfig.MODEL_NAME)
+    if AgentConfig.MODEL_NAME in GeminiConfig.AVAILABLE_MODELS else 0,
+)
+```
+
+> `GeminiConfig` という名前は旧 Gemini 時代の名残。実態は **Ollama モデル設定クラス**。
 
 ---
 
@@ -235,25 +338,24 @@ def main() -> None
 | 項目 | 内容 |
 |------|------|
 | **Input** | なし（Streamlitセッション状態から取得） |
-| **Process** | 1. `st.set_page_config` でページ設定（タイトル: "Agent RAG(Gemini)", アイコン: 🤖, レイアウト: wide）<br>2. `st.sidebar` 内にタイトル・メニューを描画<br>3. `st.radio` で7つのページ選択肢を表示（`format_func` でラベル変換）<br>4. `page_mapping` 辞書から選択されたページの関数を取得<br>5. 対応する関数を呼び出してメインエリアに描画 |
+| **Process** | 1. `st.set_page_config` でページ設定（タイトル: "Agent RAG(Anthropic)", アイコン: 🤖, レイアウト: wide）<br>2. `st.sidebar` 内にタイトル・メニューを描画<br>3. `st.radio` で7つのページ選択肢を表示（`format_func` でラベル変換）<br>4. `page_mapping` 辞書から選択されたページの関数を取得<br>5. 対応する関数を呼び出してメインエリアに描画 |
 | **Output** | なし（画面描画のみ） |
 
 **ページルーティング定義**:
 
-| キー | 表示ラベル | 対応関数 |
-|------|-----------|---------|
-| `explanation` | 📖 説明 | `show_system_explanation_page` |
-| `qdrant_search` | 🔎 Qdrant検索 | `show_qdrant_search_page` |
-| `agent_chat` | 🤖 Agent(ReAct+Reflection) | `show_agent_chat_page` |
-| `grace_chat` | [最新] 自律型Agent(Plan+Executor) | `show_grace_chat_page` |
-| `log_viewer` | 📊 未回答ログ | `show_log_viewer_page` |
-| `rag_data_creation` | 📄 RAGデータ作成 | `show_rag_data_creation_page` |
-| `qdrant_crud` | 🗄️ QdrantのCRUD | `show_qdrant_crud_page` |
+| キー | 表示ラベル | 対応関数 | LLM |
+|------|-----------|---------|-----|
+| `explanation` | 📖 説明 | `show_system_explanation_page` | - |
+| `qdrant_search` | 🔎 Qdrant検索 | `show_qdrant_search_page` | Ollama（llama3.2） |
+| `agent_chat` | 🤖 Agent(ReAct+Reflection) | `show_agent_chat_page` | Ollama（選択可） |
+| `grace_chat` | [最新] 自律型Agent(Plan+Executor) | `show_grace_chat_page` | Ollama（選択可） |
+| `log_viewer` | 📊 未回答ログ | `show_log_viewer_page` | - |
+| `rag_data_creation` | 📄 RAGデータ作成 | `show_rag_data_creation_page` | - |
+| `qdrant_crud` | 🗄️ QdrantのCRUD | `show_qdrant_crud_page` | - |
 
 **使用例**:
 
 ```python
-# エントリポイント
 if __name__ == "__main__":
     main()
 ```
@@ -325,7 +427,6 @@ def _load_local_markdown(file_path: str) -> str
 **使用例**:
 
 ```python
-# 使用例
 content = _load_local_markdown("readme_usage_tools.md")
 st.markdown(content)
 ```
@@ -360,6 +461,27 @@ RAG_DATA_DOCS = [
 | `path` | `str` | プロジェクトルートからのMarkdownファイルパス |
 | `description` | `str` | ドキュメントの説明文（UIテーブルに表示） |
 
+### 5.2 Ollama 関連設定（`config.py`）
+
+```python
+class GeminiConfig:                          # 名前は旧来の名残。実態は Ollama 設定
+    AVAILABLE_MODELS = [
+        "llama3.2",       # ⭐ デフォルト
+        "llama3.2:3b",
+        "llama3.1",
+        "qwen2.5:7b",
+        "mistral",
+        "phi3",
+        "gemma2",
+    ]
+    DEFAULT_MODEL = "llama3.2"
+    EMBEDDING_MODEL = "nomic-embed-text"     # Ollama Embedding
+
+class LLMProviderConfig:
+    DEFAULT_LLM_PROVIDER = "ollama"          # テキスト生成プロバイダー
+    DEFAULT_EMBEDDING_PROVIDER = "ollama"    # Embedding プロバイダー
+```
+
 ---
 
 ## 6. 使用例
@@ -367,10 +489,35 @@ RAG_DATA_DOCS = [
 ### 6.1 基本的な起動
 
 ```bash
-# ローカル起動
-streamlit run agent_rag.py --server.port 8501
+# ローカル起動（推奨）
+uv run streamlit run agent_rag.py --server.port 8501
 
-# GCPサーバーでの起動（systemd経由）
+# または（仮想環境を手動で有効化している場合）
+streamlit run agent_rag.py --server.port 8501
+```
+
+ブラウザでアクセス: `http://localhost:8501`
+
+### 6.2 起動前の前提条件確認
+
+```bash
+# 1. Ollama サーバーが起動しているか
+curl http://localhost:11434/api/tags
+
+# 2. llama3.2 がダウンロード済みか
+ollama list
+
+# 3. Docker（Qdrant + Redis）が起動しているか
+docker compose -f docker-compose/docker-compose.yml ps
+
+# 4. Celery ワーカーが起動しているか（Q/A生成を使う場合）
+./start_celery.sh status
+```
+
+### 6.3 サーバー管理（systemd / GCP）
+
+```bash
+# systemd 経由で起動（GCPサーバー等）
 sudo systemctl start streamlit-app
 
 # 状態確認
@@ -378,13 +525,6 @@ sudo systemctl status streamlit-app
 
 # ログ確認
 journalctl -u streamlit-app -f
-```
-
-### 6.2 リモートサーバー管理
-
-```bash
-# SSH接続
-ssh -i ~/.ssh/gcp_key_v2 nakashima@34.84.198.115
 
 # 再起動
 sudo systemctl restart streamlit-app
@@ -394,15 +534,30 @@ sudo systemctl daemon-reload
 sudo systemctl restart streamlit-app
 ```
 
+### 6.4 リモートサーバー管理（GCP）
+
+```bash
+# SSH接続
+ssh -i ~/.ssh/gcp_key_v2 nakashima@34.84.198.115
+
+# uv のインストール（初回のみ）
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
+
+# アプリ起動
+uv run streamlit run agent_rag.py --server.port 8501
+```
+
 ---
 
 ## 8. 変更履歴
 
 | バージョン | 変更内容 |
 |-----------|---------|
-| 1.0 | 初版作成。基本的なページルーティング |
+| 1.0 | 初版作成。基本的なページルーティング（Gemini バックエンド） |
 | 2.0 | GRACE自律型エージェントページ追加。ログビューアページ追加 |
 | 3.0 | RAGデータ作成ページ追加。Qdrant CRUDページ追加（仮実装）。メニュー構成を7ページに拡張 |
+| **4.0** | **LLM バックエンドを Ollama（ローカル）に移行**。`GeminiConfig.AVAILABLE_MODELS` を Ollama モデル一覧に変更。`LLMProviderConfig.DEFAULT_LLM_PROVIDER` を `"ollama"` に変更。ページタイトルを "Agent RAG(Anthropic)" に更新。llama3.2 固有バグへの対策実装（`_resolve_schema_refs`, JSON モード, regex float 抽出）。 |
 
 ---
 
@@ -424,6 +579,23 @@ flowchart LR
         LOG_VIEW["log_viewer_page"]
     end
 
+    subgraph CONFIG["config.py"]
+        GEMINI_CFG["GeminiConfig\n(= Ollama モデル設定)"]
+        LLM_CFG["LLMProviderConfig\n(DEFAULT='ollama')"]
+        AGENT_CFG["AgentConfig"]
+    end
+
+    subgraph HELPER["helper/"]
+        LLM["helper_llm.py\nOllamaClient"]
+        EMB["helper_embedding.py\nOllamaEmbedding"]
+    end
+
+    subgraph INFRA["インフラ（ローカル）"]
+        OLLAMA_SRV["Ollama :11434\nllama3.2"]
+        QDRANT_SRV["Qdrant :6333\n(Docker)"]
+        REDIS_SRV["Redis :6379\n(Docker)"]
+    end
+
     subgraph STDLIB["標準ライブラリ"]
         PATHLIB["pathlib.Path"]
     end
@@ -435,4 +607,9 @@ flowchart LR
     AGENT_RAG --> AGENT_CHAT
     AGENT_RAG --> LOG_VIEW
     AGENT_RAG --> PATHLIB
+    UI_PAGES --> CONFIG
+    UI_PAGES --> HELPER
+    HELPER --> OLLAMA_SRV
+    UI_PAGES --> QDRANT_SRV
+    UI_PAGES --> REDIS_SRV
 ```

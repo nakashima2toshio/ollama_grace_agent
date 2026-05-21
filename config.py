@@ -409,20 +409,21 @@ class CohereConfig:
 # ===================================================================
 
 class GeminiConfig:
-    """OpenAI モデル設定（[MIGRATION] GeminiConfig → OpenAI）"""
+    """Ollama モデル設定（[MIGRATION] GeminiConfig → OpenAI → Ollama）"""
 
-    # 利用可能なモデル一覧 [MIGRATION] Gemini → OpenAI
+    # 利用可能なモデル一覧 [MIGRATION openai→ollama]
     AVAILABLE_MODELS: List[str] = [
-        "gpt-5.4-mini",        # デフォルト推奨（最新・高速）
-        "gpt-4o-mini",         # 高速・低コスト
-        "gpt-4o",              # 最高性能
-        "gpt-4.1",             # GPT-4.1
-        "gpt-4.1-mini",        # GPT-4.1 軽量版
-        "o1-mini",             # 推論特化
+        "llama3.2",            # デフォルト推奨（ローカル・高速）
+        "llama3.2:3b",         # 軽量版
+        "llama3.1",            # 大容量
+        "qwen2.5:7b",          # 多言語対応
+        "mistral",             # 汎用
+        "phi3",                # 軽量
+        "gemma2",              # Google製軽量
     ]
 
-    # デフォルトモデル [MIGRATION] "gemini-3-flash-preview" → "gpt-5.4-mini"
-    DEFAULT_MODEL: str = "gpt-5.4-mini"
+    # デフォルトモデル [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
+    DEFAULT_MODEL: str = "llama3.2"
 
     # Embeddingモデル
     EMBEDDING_MODEL: str = "gemini-embedding-001"
@@ -508,9 +509,9 @@ class AgentConfig:
 class LLMProviderConfig:
     """LLMプロバイダー設定"""
 
-    # デフォルトプロバイダー
-    DEFAULT_LLM_PROVIDER: str = "gemini"  # "openai" or "gemini"
-    DEFAULT_EMBEDDING_PROVIDER: str = "gemini"  # "openai" or "gemini"
+    # デフォルトプロバイダー [MIGRATION openai→ollama]
+    DEFAULT_LLM_PROVIDER: str = "ollama"
+    DEFAULT_EMBEDDING_PROVIDER: str = "ollama"
 
     @classmethod
     def get_embedding_dims(cls, provider: Optional[str] = None) -> int:

@@ -1,4 +1,4 @@
-# Agent RAG (Gemini) 環境構築手順書
+# Agent RAG (Ollama) 環境構築手順書
 
 **開発マシン:** MacBook Air M2 / 24GB メモリ / macOS
 
@@ -12,19 +12,19 @@
 graph TD
     User((ユーザー<br>ブラウザ)) -->|http://localhost:8500| Streamlit[Streamlit アプリケーション<br>agent_rag.py<br>Port: 8500]
 
-    Streamlit -->|Q&A生成/Embedding| Gemini(Gemini API<br>クラウド)
+    Streamlit -->|Q&A生成/Embedding| Ollama(Ollama LLM<br>:11434)
     Streamlit -->|ベクトル検索| Qdrant[(Qdrant<br>Port: 6333<br>Docker)]
     Streamlit -.->|タスク登録| Redis[(Redis<br>Port: 6379<br>Docker)]
 
     subgraph Background Jobs
         Celery[[Celery Workers<br>並列処理]]
         Celery -->|タスク取得/結果保存| Redis
-        Celery -->|Q&A生成| Gemini
+        Celery -->|Q&A生成| Ollama
     end
 
     style User fill:#000,stroke:#fff,stroke-width:2px,color:#fff
     style Streamlit fill:#000,stroke:#fff,stroke-width:2px,color:#fff
-    style Gemini fill:#000,stroke:#fff,stroke-width:2px,color:#fff
+    style Ollama fill:#000,stroke:#fff,stroke-width:2px,color:#fff
     style Qdrant fill:#000,stroke:#fff,stroke-width:2px,color:#fff
     style Redis fill:#000,stroke:#fff,stroke-width:2px,color:#fff
     style Celery fill:#000,stroke:#fff,stroke-width:2px,color:#fff
@@ -36,18 +36,18 @@ graph TD
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 1.2 Python 3.11+
+### 1.2 Python 3.13.x（専用）
 
 ```bash
-brew install python@3.11
+brew install python@3.13
 ```
 
 または pyenv を利用:
 
 ```bash
 brew install pyenv
-pyenv install 3.11.9
-pyenv local 3.11.9
+pyenv install 3.13.0
+pyenv local 3.13.0
 ```
 
 ### 1.3 Docker Desktop for Mac
@@ -90,36 +90,36 @@ pip install mecab-python3
 ### 2.1 リポジトリのクローン
 
 ```bash
-git clone https://github.com/nakashima2toshio/gemini_agent_rag.git
-cd gemini_agent_rag
+git clone https://github.com/nakashima2toshio/ollama_grace_agent.git
+cd ollama_grace_agent
 ```
 
-### 2.2 Python 仮想環境の作成
+### 2.2 Python 仮想環境の作成と依存パッケージのインストール
+
+本プロジェクトは `uv` によるパッケージ管理を採用しています。
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+uv sync
 ```
 
-### 2.3 Python ライブラリのインストール
-
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+> `uv sync` は `pyproject.toml` を参照して仮想環境の作成と依存パッケージのインストールを自動で行います。
 
 ---
 
-## 3. requirements.txt
+## 3. 依存パッケージ（pyproject.toml）
 
-以下の内容で `requirements.txt` を作成してください。
+本プロジェクトは `uv` を使用するため `requirements.txt` は使用しません。
+依存パッケージは `pyproject.toml` で管理されています。
 
-```txt
+主な依存パッケージ:
+
+```toml
 # === Web UI ===
 streamlit>=1.35.0
 
-# === Gemini API ===
-google-generativeai>=0.8.0
+# === Ollama ===
+# Ollama は外部インストール（ollama.com）
+ollama>=0.1.0
 
 # === ベクトルDB (Qdrant) ===
 qdrant-client>=1.9.0
@@ -128,9 +128,6 @@ qdrant-client>=1.9.0
 sentence-transformers>=3.0.0
 transformers>=4.40.0
 torch>=2.2.0
-
-# === Rerank（オプション） ===
-cohere>=5.0.0
 
 # === 非同期タスク (Celery + Redis) ===
 celery>=5.4.0
@@ -275,15 +272,14 @@ http://localhost:5555
 
 ### 6.1 `.env` ファイルの作成
 
+本プロジェクトは Ollama（ローカル LLM）を使用するため、**API キーは不要**です。
+
 プロジェクトルートに `.env` を作成:
 
 ```bash
-# === Gemini API ===
-GEMINI_API_KEY=your_gemini_api_key_here
-GOOGLE_API_KEY=your_gemini_api_key_here
-
-# === Cohere API（オプション: Rerank 用） ===
-COHERE_API_KEY=your_cohere_api_key_here
+# === Ollama（ローカル LLM） ===
+# API キー不要。ollama serve でローカル起動するのみ。
+OLLAMA_BASE_URL=http://localhost:11434
 
 # === Qdrant ===
 QDRANT_HOST=localhost
@@ -294,13 +290,7 @@ CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
 ```
 
-### 6.2 API キーの取得先
-
-
-| API            | 取得先                                               |
-| -------------- | ---------------------------------------------------- |
-| Gemini API Key | https://aistudio.google.com/apikey                   |
-| Cohere API Key | https://dashboard.cohere.com/api-keys （オプション） |
+> **注意:** Ollama はローカルで動作するため、Gemini / Google / Cohere 等のクラウド API キーは一切不要です。
 
 ---
 
@@ -316,7 +306,7 @@ docker compose up -d
 ./start_celery.sh start -c 8 --flower
 
 # 3. Streamlit アプリ起動
-streamlit run agent_rag.py --server.port 8501
+uv run streamlit run agent_rag.py --server.port 8501
 ```
 
 ブラウザで以下にアクセス:
@@ -342,14 +332,15 @@ docker compose down
 ## 8. 動作確認チェックリスト
 
 ```
-[ ] Python 3.11+ がインストールされている
-[ ] pip install -r requirements.txt が正常完了
+[ ] Python 3.13.x がインストールされている
+[ ] uv sync が正常完了
 [ ] Docker Desktop が起動している
 [ ] docker compose up -d で Qdrant / Redis が起動
 [ ] curl http://localhost:6333/health が正常応答
-[ ] .env に GEMINI_API_KEY が設定されている
+[ ] ollama serve が起動中
+[ ] ollama list に llama3.2 が表示される
 [ ] ./start_celery.sh status でワーカーが起動中
-[ ] streamlit run agent_rag.py が正常起動
+[ ] uv run streamlit run agent_rag.py が正常起動
 [ ] ブラウザで http://localhost:8501 にアクセス可能
 ```
 
@@ -387,7 +378,7 @@ export PYTHONPATH="$(pwd):$(pwd)/helper"
 
 ```bash
 # MPS 対応版を明示的にインストール
-pip install torch torchvision torchaudio
+uv run pip install torch torchvision torchaudio
 ```
 
 ---
@@ -401,3 +392,4 @@ pip install torch torchvision torchaudio
 | Qdrant    | 6333   | ベクトルDB REST API          |
 | Redis     | 6379   | Celery ブローカー / 結果保存 |
 | Flower    | 5555   | Celery タスクモニタリング    |
+| Ollama    | 11434  | ローカル LLM API             |

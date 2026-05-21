@@ -39,27 +39,30 @@
 
 ### アーキテクチャ図
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        ユーザー（ブラウザ）                     │
-│                    http://localhost:8501                     │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-                ┌───────────▼───────────┐
-                │   Streamlit アプリ     │
-                │     agent_rag.py      │
-                └───┬───────┬───────┬───┘
-                    │       │       │
-          ┌─────────▼─┐ ┌───▼───┐ ┌─▼──────────────┐
-          │  Ollama    │ │Qdrant │ │     Redis       │
-          │  LLM/Emb   │ │VectorDB│ │ Celery Broker  │
-          │ :11434     │ │ :6333 │ │    :6379        │
-          └────────────┘ └───────┘ └────────┬────────┘
-                                            │
-                                   ┌────────▼────────┐
-                                   │  Celery Workers │
-                                   │（Q/A生成・登録） │
-                                   └─────────────────┘
+```mermaid
+flowchart TB
+    USER["ユーザー（ブラウザ）\nhttp://localhost:8501"]
+
+    subgraph APP["Streamlit アプリ"]
+        STREAMLIT["agent_rag.py"]
+    end
+
+    subgraph LOCAL["ローカルサービス"]
+        OLLAMA["Ollama\nLLM / Embedding\n:11434"]
+        QDRANT["Qdrant\nVector DB\n:6333"]
+        REDIS["Redis\nCelery Broker\n:6379"]
+    end
+
+    subgraph BG["バックグラウンド"]
+        CELERY["Celery Workers\nQ/A生成・登録"]
+    end
+
+    USER --> STREAMLIT
+    STREAMLIT --> OLLAMA
+    STREAMLIT --> QDRANT
+    STREAMLIT --> REDIS
+    REDIS --> CELERY
+    CELERY --> OLLAMA
 ```
 
 ### コンポーネント概要

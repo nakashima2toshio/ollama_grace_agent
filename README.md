@@ -1,14 +1,17 @@
-# 自律型Agent + RAG (OpenAI API版) プロジェクト
-## (1) 自律型Agent　（OpenAI API利用、スクラッチで作成）
-### (1-1) 計画策定（Plan）→ 実行（Execute）→ 信頼度評価（Confidence）
-### → 介入判定（Intervention）→ リプラン（Replan）
+# 自律型Agent + RAG (Ollama API版) プロジェクト
+#### (1) 自律型Agent　（Ollama API利用、スクラッチで作成）
+- (1-1) 計画策定（Plan）
+- → 実行（Execute）
+- → 信頼度評価（Confidence） 
+- → 介入判定（Intervention）
+- → リプラン（Replan）
 
 ![lp_image.png](assets/lp_img.png)
 
 ## (2) Chunking（意味ある文章に分割する）
-### (2-1) 評価用データ：HuggingFaceからダウンロード：
-### (2-2) RAG: Chunkデータの作成
-### (2-3) RAG: Qdrant(ベクターDB)への登録、検索
+- (2-1) 評価用データ：HuggingFaceからダウンロード：
+- (2-2) RAG: Chunkデータの作成
+- (2-3) RAG: Qdrant(ベクターDB)への登録、検索
 
 ![chunk_image.png](assets/img_csv_text_to_chunks_text_csv.png)
 

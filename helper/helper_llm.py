@@ -252,6 +252,30 @@ class LLMClient(ABC):
         pass
 
 
+def _resolve_schema_refs(schema: dict) -> dict:
+    """
+    JSON Schema の $ref / $defs を解決してフラットな構造に変換する。
+    llama3.2 などの小型モデルは $ref を含む複雑なスキーマを解釈できず
+    スキーマ定義をそのまま返してしまうため、展開したシンプルなスキーマを使用する。
+    [MIGRATION openai→ollama] chunking/async_api_client.py から移植
+    """
+    defs = schema.get("$defs", {})
+
+    def resolve(obj, depth=0):
+        if depth > 10:
+            return obj
+        if isinstance(obj, dict):
+            if "$ref" in obj:
+                ref_name = obj["$ref"].split("/")[-1]
+                return resolve(defs.get(ref_name, obj), depth + 1)
+            return {k: resolve(v, depth + 1) for k, v in obj.items() if k not in ("$defs", "title")}
+        if isinstance(obj, list):
+            return [resolve(item, depth + 1) for item in obj]
+        return obj
+
+    return resolve(schema)
+
+
 # ================================================================
 # Ollama クライアント（新規追加: ollama_grace_agent）
 # OpenAI 互換 API (http://localhost:11434/v1) を使用
@@ -923,12 +947,16 @@ class OllamaClient(LLMClient):
         )
         temperature = kwargs.pop("temperature", 0.1)
 
-        schema_json = json.dumps(
-            response_schema.model_json_schema(), ensure_ascii=False, indent=2
-        )
+        # [MIGRATION openai→ollama] $ref/$defs を解決してフラットなスキーマを使用
+        # llama3.2 は $ref を含む複雑なスキーマを解釈できずスキーマ定義をオウム返しする
+        raw_schema = response_schema.model_json_schema()
+        flat_schema = _resolve_schema_refs(raw_schema)
+        schema_json = json.dumps(flat_schema, ensure_ascii=False, indent=2)
         augmented_prompt = (
             f"{prompt}\n\n"
-            f"以下の JSON スキーマに完全に準拠した JSON のみを出力してください:\n{schema_json}"
+            "以下のJSONスキーマに完全に従い、スキーマ定義自体ではなく実際のデータをJSONで出力してください。\n"
+            "余分なテキスト・説明・マークダウンは一切出力しないでください。JSONのみを出力してください。\n\n"
+            f"スキーマ:\n{schema_json}"
         )
 
         messages = [

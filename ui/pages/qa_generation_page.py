@@ -19,7 +19,7 @@ import streamlit as st
 # サービスモジュールからインポート
 from services.file_service import load_qa_output_history
 from services.qa_service import run_advanced_qa_generation
-from config import DATASET_CONFIGS, ModelConfig
+from config import DATASET_CONFIGS, GeminiConfig
 
 
 def show_qa_generation_page():
@@ -167,11 +167,10 @@ def show_qa_generation_page():
 
         qa_model = st.selectbox(
             "モデル",
-            options=ModelConfig.AVAILABLE_MODELS,
-            # [MIGRATION anthropic→openai] DEFAULT_MODEL を使用（gpt-4o-mini）
-            index=ModelConfig.AVAILABLE_MODELS.index(ModelConfig.DEFAULT_MODEL)
-                  if ModelConfig.DEFAULT_MODEL in ModelConfig.AVAILABLE_MODELS else 0,
-            help="Q/A生成に使用するモデル",
+            options=GeminiConfig.AVAILABLE_MODELS,
+            index=GeminiConfig.AVAILABLE_MODELS.index(GeminiConfig.DEFAULT_MODEL)
+                  if GeminiConfig.DEFAULT_MODEL in GeminiConfig.AVAILABLE_MODELS else 0,
+            help="Q/A生成に使用するモデル（Ollama ローカルモデル）",
         )
 
         analyze_coverage = st.checkbox(

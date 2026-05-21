@@ -476,6 +476,77 @@ class GeminiConfig:
         """モデルの料金を取得"""
         return cls.MODEL_PRICING.get(model, {"input": 0.001, "output": 0.004})
 
+    # モデル別制約テーブル
+    # - needs_schema_resolve: $ref/$defs を _resolve_schema_refs() で展開が必要
+    # - supports_tool_calls:  OpenAI 互換 tools パラメータによる function calling 対応
+    # - supports_json_object: response_format={"type":"json_object"} 対応
+    # - notes: 既知の制限・注意事項
+    MODEL_CONSTRAINTS: Dict[str, Dict] = {
+        "llama3.2": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "$ref/$defs 非解釈・配列直返し不可・空文字列注意",
+        },
+        "llama3.2:3b": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "llama3.2 と同等の制約",
+        },
+        "llama3.1": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "",
+        },
+        "gemma4:e4b": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "128k context / tool calling 対応 / $ref 展開推奨",
+        },
+        "qwen2.5:7b": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "多言語対応・日本語精度高",
+        },
+        "mistral": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "context 32k",
+        },
+        "phi3": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : False,
+            "supports_json_object": True,
+            "notes": "tool calling 非対応・軽量用途向け",
+        },
+        "gemma2": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : False,
+            "supports_json_object": True,
+            "notes": "tool calling 非対応・context 8k",
+        },
+    }
+
+    @classmethod
+    def get_model_constraints(cls, model: str) -> Dict:
+        """モデルの制約情報を取得（未登録モデルはデフォルト値を返す）"""
+        return cls.MODEL_CONSTRAINTS.get(model, {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "",
+        })
+
+    @classmethod
+    def supports_tool_calls(cls, model: str) -> bool:
+        """モデルが tool calling をサポートするかチェック"""
+        return cls.get_model_constraints(model).get("supports_tool_calls", True)
+
     @classmethod
     def supports_thinking_level(cls, model: str) -> bool:
         """モデルがthinking_levelをサポートするかチェック（Ollama models: False）"""

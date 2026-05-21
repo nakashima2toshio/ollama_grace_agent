@@ -255,8 +255,9 @@ class LLMClient(ABC):
 def _resolve_schema_refs(schema: dict) -> dict:
     """
     JSON Schema の $ref / $defs を解決してフラットな構造に変換する。
-    llama3.2 などの小型モデルは $ref を含む複雑なスキーマを解釈できず
-    スキーマ定義をそのまま返してしまうため、展開したシンプルなスキーマを使用する。
+    Ollama ローカルモデル（llama3.2, gemma4:e4b 等）は $ref を含む複雑な
+    スキーマを解釈できずスキーマ定義をそのまま返してしまうため、
+    展開したシンプルなスキーマを使用する。全 Ollama モデルに適用する。
     [MIGRATION openai→ollama] chunking/async_api_client.py から移植
     """
     defs = schema.get("$defs", {})
@@ -995,9 +996,20 @@ class OllamaClient(LLMClient):
         """
         Tool Use を含む ReAct ループの 1 ステップ。
         OpenAI Chat Completions 互換形式（tools パラメータ）を使用。
-        対応モデル: llama3.2, llama3.1, qwen2.5, mistral-nemo 等。
+        対応モデル: llama3.2, llama3.1, gemma4:e4b, qwen2.5, mistral 等。
+        非対応モデル（phi3, gemma2）は tools パラメータを送信しない。
+        GeminiConfig.MODEL_CONSTRAINTS["supports_tool_calls"] で制御。
         """
         model_name = model or self.default_model
+
+        # tool calling 非対応モデルは tools パラメータを除去してテキスト生成にフォールバック
+        try:
+            from config import GeminiConfig
+            if tools and not GeminiConfig.supports_tool_calls(model_name):
+                logger.warning(f"Model {model_name} does not support tool_calls. Falling back to text generation.")
+                tools = []
+        except ImportError:
+            pass
 
         full_messages: List[Dict[str, Any]] = []
         if system:

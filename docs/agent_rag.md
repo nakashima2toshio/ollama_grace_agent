@@ -124,19 +124,21 @@ client = OpenAI(
 
 UI のセレクトボックスには以下が表示されます。
 
-| モデル名 | サイズ目安 | 特徴 | 推奨用途 |
-|---------|----------|------|---------|
-| **`llama3.2`** | 約 2 GB | ⭐ **デフォルト**。テキスト生成・Q/A 生成 | 通常の RAG・エージェント |
-| `llama3.2:3b` | 約 2 GB | 軽量版 3B パラメータ | 高速処理・低スペックマシン |
-| `llama3.1` | 約 4.7 GB | 大容量・高精度 | 複雑なタスク |
-| `qwen2.5:7b` | 約 4.4 GB | 多言語対応（中国語・日本語） | 多言語 RAG |
-| `mistral` | 約 4.1 GB | 汎用・高速 | 汎用エージェント |
-| `phi3` | 約 2.2 GB | Microsoft 製・軽量 | 軽量タスク |
-| `gemma2` | 約 5.4 GB | Google 製・軽量 | 実験・比較 |
+| モデル名 | サイズ目安 | tool_calls | 特徴 | 推奨用途 |
+|---------|----------|:----------:|------|---------|
+| **`llama3.2`** | 約 2 GB | ✅ | ⭐ **デフォルト**。テキスト生成・Q/A 生成 | 通常の RAG・エージェント |
+| `llama3.2:3b` | 約 2 GB | ✅ | 軽量版 3B パラメータ | 高速処理・低スペックマシン |
+| `llama3.1` | 約 4.7 GB | ✅ | 大容量・高精度 | 複雑なタスク |
+| `gemma4:e4b` | 約 3.3 GB | ✅ | Google Gemma 4・4B・128k context | 日本語 RAG・エージェント |
+| `qwen2.5:7b` | 約 4.4 GB | ✅ | 多言語対応（中国語・日本語） | 多言語 RAG |
+| `mistral` | 約 4.1 GB | ✅ | 汎用・高速 | 汎用エージェント |
+| `phi3` | 約 2.2 GB | ❌ | Microsoft 製・軽量 | 軽量テキスト生成 |
+| `gemma2` | 約 5.4 GB | ❌ | Google 製・旧世代軽量 | 実験・比較 |
 
 > **モデルの事前ダウンロード** が必要です:
 > ```bash
 > ollama pull llama3.2
+> ollama pull gemma4:e4b          # Gemma 4 4B
 > ollama pull nomic-embed-text   # Embedding 用
 > ```
 
@@ -469,10 +471,11 @@ class GeminiConfig:                          # 名前は旧来の名残。実態
         "llama3.2",       # ⭐ デフォルト
         "llama3.2:3b",
         "llama3.1",
+        "gemma4:e4b",     # Google Gemma 4 4B（tool calling 対応）
         "qwen2.5:7b",
         "mistral",
-        "phi3",
-        "gemma2",
+        "phi3",           # tool calling 非対応
+        "gemma2",         # tool calling 非対応
     ]
     DEFAULT_MODEL = "llama3.2"
     EMBEDDING_MODEL = "nomic-embed-text"     # Ollama Embedding

@@ -56,6 +56,9 @@
 # journalctl -u streamlit-app -f
 
 
+import argparse
+import os
+
 import streamlit as st
 
 # UIページをインポート
@@ -150,8 +153,38 @@ def show_qdrant_crud_page():
     )
 
 
+def _resolve_startup_model() -> str:
+    """
+    起動時のデフォルトモデルを決定する（初回のみ実行）。
+    優先順位: CLI引数 --model > 環境変数 OLLAMA_DEFAULT_MODEL > "llama3.2"
+    """
+    from config import GeminiConfig
+    if "startup_model" in st.session_state:
+        return st.session_state["startup_model"]
+
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--model", default=None, help="起動時のデフォルトOllamaモデル名")
+    args, _ = parser.parse_known_args()
+
+    model = (
+        args.model
+        or os.getenv("OLLAMA_DEFAULT_MODEL")
+        or GeminiConfig.DEFAULT_MODEL
+    )
+    if model not in GeminiConfig.AVAILABLE_MODELS:
+        import streamlit as _st
+        _st.warning(f"指定モデル '{model}' は AVAILABLE_MODELS に未登録です。'llama3.2' を使用します。")
+        model = "llama3.2"
+
+    st.session_state["startup_model"] = model
+    return model
+
+
 def main():
     """メインアプリケーション - 画面選択"""
+
+    # 起動時デフォルトモデルを確定（CLI引数 > 環境変数 > config デフォルト）
+    _resolve_startup_model()
 
     # ページ設定
     st.set_page_config(page_title="Agent RAG(Anthropic)", page_icon="🤖", layout="wide")

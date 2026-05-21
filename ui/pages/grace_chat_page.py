@@ -124,12 +124,13 @@ def show_grace_chat_page():
     with st.sidebar:
         st.header("⚙️ GRACE エージェント設定")
 
-        # モデル選択
+        # モデル選択（起動時デフォルト: CLI --model > 環境変数 > config デフォルト）
+        _default_model = st.session_state.get("startup_model", AgentConfig.MODEL_NAME)
         selected_model = st.selectbox(
             "使用モデル (Model)",
             options=GeminiConfig.AVAILABLE_MODELS,
-            index=GeminiConfig.AVAILABLE_MODELS.index(AgentConfig.MODEL_NAME)
-            if AgentConfig.MODEL_NAME in GeminiConfig.AVAILABLE_MODELS else 0
+            index=GeminiConfig.AVAILABLE_MODELS.index(_default_model)
+            if _default_model in GeminiConfig.AVAILABLE_MODELS else 0
         )
 
         # コレクション一覧の取得（表示用・参考情報）

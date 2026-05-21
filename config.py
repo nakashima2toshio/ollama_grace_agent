@@ -416,46 +416,51 @@ class GeminiConfig:
         "llama3.2",            # デフォルト推奨（ローカル・高速）
         "llama3.2:3b",         # 軽量版
         "llama3.1",            # 大容量
+        "gemma4:e4b",          # Google Gemma 4 4B（ローカル）
         "qwen2.5:7b",          # 多言語対応
         "mistral",             # 汎用
         "phi3",                # 軽量
         "gemma2",              # Google製軽量
     ]
 
-    # デフォルトモデル [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
-    DEFAULT_MODEL: str = "llama3.2"
+    # デフォルトモデル: 環境変数 OLLAMA_DEFAULT_MODEL → CLI引数(startup_model) → "llama3.2"
+    DEFAULT_MODEL: str = os.getenv("OLLAMA_DEFAULT_MODEL", "llama3.2")
 
-    # Embeddingモデル
-    EMBEDDING_MODEL: str = "gemini-embedding-001"
+    # Embeddingモデル（Ollama / nomic-embed-text）
+    EMBEDDING_MODEL: str = "nomic-embed-text"
 
-    # Embedding次元数（3072: Gemini 3最大精度）
-    EMBEDDING_DIMS: int = 3072
+    # Embedding次元数（768: nomic-embed-text）
+    EMBEDDING_DIMS: int = 768
 
     # 思考レベル
     DEFAULT_THINKING_LEVEL: str = "low"  # "low" or "high"
 
-    # 温度設定（Gemini 3推奨: 1.0）
-    DEFAULT_TEMPERATURE: float = 1.0
+    # 温度設定
+    DEFAULT_TEMPERATURE: float = 0.7
 
-    # モデル料金（1000トークンあたりのドル）
+    # モデル料金（ローカル実行のため全て 0.0）
     MODEL_PRICING: Dict[str, Dict[str, float]] = {
-        "gemini-3-flash-preview": {"input": 0.0005, "output": 0.003},  # $0.50/$3.00 per 1M tokens
-        "gemini-3-pro-preview": {"input": 0.002, "output": 0.012},
-        "gemini-3-pro-image-preview": {"input": 0.002, "output": 0.012},
-        "gemini-2.5-flash-preview": {"input": 0.00015, "output": 0.0006},
-        "gemini-2.5-pro-preview": {"input": 0.00125, "output": 0.005},
-        "gemini-2.0-flash": {"input": 0.0001, "output": 0.0004},
-        "gemini-embedding-001": {"input": 0.0, "output": 0.0},  # 無料枠あり
+        "llama3.2":    {"input": 0.0, "output": 0.0},
+        "llama3.2:3b": {"input": 0.0, "output": 0.0},
+        "llama3.1":    {"input": 0.0, "output": 0.0},
+        "gemma4:e4b":  {"input": 0.0, "output": 0.0},
+        "qwen2.5:7b":  {"input": 0.0, "output": 0.0},
+        "mistral":     {"input": 0.0, "output": 0.0},
+        "phi3":        {"input": 0.0, "output": 0.0},
+        "gemma2":      {"input": 0.0, "output": 0.0},
+        "nomic-embed-text": {"input": 0.0, "output": 0.0},
     }
 
-    # モデル制限
+    # モデル制限（Ollama デフォルト context: 128k）
     MODEL_LIMITS: Dict[str, Dict[str, int]] = {
-        "gemini-3-flash-preview": {"max_input_tokens": 1000000, "max_output_tokens": 8192},
-        "gemini-3-pro-preview": {"max_input_tokens": 1000000, "max_output_tokens": 64000},
-        "gemini-3-pro-image-preview": {"max_input_tokens": 65000, "max_output_tokens": 32000},
-        "gemini-2.5-flash-preview": {"max_input_tokens": 1000000, "max_output_tokens": 64000},
-        "gemini-2.5-pro-preview": {"max_input_tokens": 1000000, "max_output_tokens": 64000},
-        "gemini-2.0-flash": {"max_input_tokens": 1000000, "max_output_tokens": 8192},
+        "llama3.2":    {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "llama3.2:3b": {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "llama3.1":    {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "gemma4:e4b":  {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "qwen2.5:7b":  {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "mistral":     {"max_input_tokens": 32000,  "max_output_tokens": 8192},
+        "phi3":        {"max_input_tokens": 128000, "max_output_tokens": 4096},
+        "gemma2":      {"max_input_tokens": 8192,   "max_output_tokens": 8192},
     }
 
     @classmethod
@@ -471,10 +476,81 @@ class GeminiConfig:
         """モデルの料金を取得"""
         return cls.MODEL_PRICING.get(model, {"input": 0.001, "output": 0.004})
 
+    # モデル別制約テーブル
+    # - needs_schema_resolve: $ref/$defs を _resolve_schema_refs() で展開が必要
+    # - supports_tool_calls:  OpenAI 互換 tools パラメータによる function calling 対応
+    # - supports_json_object: response_format={"type":"json_object"} 対応
+    # - notes: 既知の制限・注意事項
+    MODEL_CONSTRAINTS: Dict[str, Dict] = {
+        "llama3.2": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "$ref/$defs 非解釈・配列直返し不可・空文字列注意",
+        },
+        "llama3.2:3b": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "llama3.2 と同等の制約",
+        },
+        "llama3.1": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "",
+        },
+        "gemma4:e4b": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "128k context / tool calling 対応 / $ref 展開推奨",
+        },
+        "qwen2.5:7b": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "多言語対応・日本語精度高",
+        },
+        "mistral": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "context 32k",
+        },
+        "phi3": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : False,
+            "supports_json_object": True,
+            "notes": "tool calling 非対応・軽量用途向け",
+        },
+        "gemma2": {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : False,
+            "supports_json_object": True,
+            "notes": "tool calling 非対応・context 8k",
+        },
+    }
+
+    @classmethod
+    def get_model_constraints(cls, model: str) -> Dict:
+        """モデルの制約情報を取得（未登録モデルはデフォルト値を返す）"""
+        return cls.MODEL_CONSTRAINTS.get(model, {
+            "needs_schema_resolve": True,
+            "supports_tool_calls" : True,
+            "supports_json_object": True,
+            "notes": "",
+        })
+
+    @classmethod
+    def supports_tool_calls(cls, model: str) -> bool:
+        """モデルが tool calling をサポートするかチェック"""
+        return cls.get_model_constraints(model).get("supports_tool_calls", True)
+
     @classmethod
     def supports_thinking_level(cls, model: str) -> bool:
-        """モデルがthinking_levelをサポートするかチェック"""
-        return model.startswith("gemini-3")
+        """モデルがthinking_levelをサポートするかチェック（Ollama models: False）"""
+        return False
 
 
 # ===================================================================

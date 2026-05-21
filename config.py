@@ -416,6 +416,7 @@ class GeminiConfig:
         "llama3.2",            # デフォルト推奨（ローカル・高速）
         "llama3.2:3b",         # 軽量版
         "llama3.1",            # 大容量
+        "gemma4:e4b",          # Google Gemma 4 4B（ローカル）
         "qwen2.5:7b",          # 多言語対応
         "mistral",             # 汎用
         "phi3",                # 軽量
@@ -425,37 +426,41 @@ class GeminiConfig:
     # デフォルトモデル [MIGRATION openai→ollama] "gpt-5.4-mini" → "llama3.2"
     DEFAULT_MODEL: str = "llama3.2"
 
-    # Embeddingモデル
-    EMBEDDING_MODEL: str = "gemini-embedding-001"
+    # Embeddingモデル（Ollama / nomic-embed-text）
+    EMBEDDING_MODEL: str = "nomic-embed-text"
 
-    # Embedding次元数（3072: Gemini 3最大精度）
-    EMBEDDING_DIMS: int = 3072
+    # Embedding次元数（768: nomic-embed-text）
+    EMBEDDING_DIMS: int = 768
 
     # 思考レベル
     DEFAULT_THINKING_LEVEL: str = "low"  # "low" or "high"
 
-    # 温度設定（Gemini 3推奨: 1.0）
-    DEFAULT_TEMPERATURE: float = 1.0
+    # 温度設定
+    DEFAULT_TEMPERATURE: float = 0.7
 
-    # モデル料金（1000トークンあたりのドル）
+    # モデル料金（ローカル実行のため全て 0.0）
     MODEL_PRICING: Dict[str, Dict[str, float]] = {
-        "gemini-3-flash-preview": {"input": 0.0005, "output": 0.003},  # $0.50/$3.00 per 1M tokens
-        "gemini-3-pro-preview": {"input": 0.002, "output": 0.012},
-        "gemini-3-pro-image-preview": {"input": 0.002, "output": 0.012},
-        "gemini-2.5-flash-preview": {"input": 0.00015, "output": 0.0006},
-        "gemini-2.5-pro-preview": {"input": 0.00125, "output": 0.005},
-        "gemini-2.0-flash": {"input": 0.0001, "output": 0.0004},
-        "gemini-embedding-001": {"input": 0.0, "output": 0.0},  # 無料枠あり
+        "llama3.2":    {"input": 0.0, "output": 0.0},
+        "llama3.2:3b": {"input": 0.0, "output": 0.0},
+        "llama3.1":    {"input": 0.0, "output": 0.0},
+        "gemma4:e4b":  {"input": 0.0, "output": 0.0},
+        "qwen2.5:7b":  {"input": 0.0, "output": 0.0},
+        "mistral":     {"input": 0.0, "output": 0.0},
+        "phi3":        {"input": 0.0, "output": 0.0},
+        "gemma2":      {"input": 0.0, "output": 0.0},
+        "nomic-embed-text": {"input": 0.0, "output": 0.0},
     }
 
-    # モデル制限
+    # モデル制限（Ollama デフォルト context: 128k）
     MODEL_LIMITS: Dict[str, Dict[str, int]] = {
-        "gemini-3-flash-preview": {"max_input_tokens": 1000000, "max_output_tokens": 8192},
-        "gemini-3-pro-preview": {"max_input_tokens": 1000000, "max_output_tokens": 64000},
-        "gemini-3-pro-image-preview": {"max_input_tokens": 65000, "max_output_tokens": 32000},
-        "gemini-2.5-flash-preview": {"max_input_tokens": 1000000, "max_output_tokens": 64000},
-        "gemini-2.5-pro-preview": {"max_input_tokens": 1000000, "max_output_tokens": 64000},
-        "gemini-2.0-flash": {"max_input_tokens": 1000000, "max_output_tokens": 8192},
+        "llama3.2":    {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "llama3.2:3b": {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "llama3.1":    {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "gemma4:e4b":  {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "qwen2.5:7b":  {"max_input_tokens": 128000, "max_output_tokens": 8192},
+        "mistral":     {"max_input_tokens": 32000,  "max_output_tokens": 8192},
+        "phi3":        {"max_input_tokens": 128000, "max_output_tokens": 4096},
+        "gemma2":      {"max_input_tokens": 8192,   "max_output_tokens": 8192},
     }
 
     @classmethod
@@ -473,8 +478,8 @@ class GeminiConfig:
 
     @classmethod
     def supports_thinking_level(cls, model: str) -> bool:
-        """モデルがthinking_levelをサポートするかチェック"""
-        return model.startswith("gemini-3")
+        """モデルがthinking_levelをサポートするかチェック（Ollama models: False）"""
+        return False
 
 
 # ===================================================================

@@ -167,6 +167,16 @@ class OllamaConfig(BaseModel):
     """
     base_url: str = "http://localhost:11434/v1"
     llm_model: str = "llama3.2"
+    available_models: list = Field(default_factory=lambda: [
+        "llama3.2",       # デフォルト推奨（ローカル・高速）
+        "llama3.2:3b",    # 軽量版
+        "llama3.1",       # 大容量
+        "gemma4:e4b",     # Google Gemma 4 4B
+        "qwen2.5:7b",     # 多言語対応
+        "mistral",        # 汎用
+        "phi3",           # 軽量
+        "gemma2",         # Google製軽量
+    ])
     embedding_model: str = "nomic-embed-text"
     embedding_dims: int = 768
 
@@ -186,7 +196,6 @@ class GraceConfig(BaseModel):
     qdrant: QdrantConfig = Field(default_factory=QdrantConfig)
     web_search: WebSearchConfig = Field(default_factory=WebSearchConfig)
     tools: ToolsConfig = Field(default_factory=ToolsConfig)
-    ollama: OllamaConfig = Field(default_factory=OllamaConfig)  # 新規追加
 
 
 # =============================================================================

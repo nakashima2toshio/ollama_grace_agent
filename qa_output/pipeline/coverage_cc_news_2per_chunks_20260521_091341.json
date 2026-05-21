@@ -1,0 +1,1608 @@
+{
+  "coverage_rate": 0.0,
+  "covered_chunks": 0,
+  "total_chunks": 69,
+  "uncovered_chunks": [
+    {
+      "chunk_id": "cc_news_2per_chunk_0",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Joining Stafford are NYCB resident choreographer and soloist Justin Peck and ballet masters Craig Hall and Rebecca Krohn, both former dancers with the company...."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_1",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "members of this group haven t had much leadership experience,..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_2",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "their close familiarity with the company (Krohn left the stage for her new role just two months ago) should..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_3",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "ease, the dancers The team..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_4",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "will be..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_5",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "day-to-day..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_6",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "artistic..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_7",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Ballet and Boston Ballet took a break from their usual rehearsals to perform some Super Bowl-themed choreography. Dressed in their Eagles green, the PAB dancers performed a fast-paced routine full of ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_8",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "\"Sharing their own video on Facebook,\" which stars principal Paul Craig and..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_9",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "have already started to show the world what they're working with...."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_10",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "This is officially our new favorite way to get in on the football fun..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_11",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "dance shoes Looking for your next audition shoe? Shot at and in collaboration with Broadway Dance Center, Sé Dan´ has launched a new collection of shoes working with some pretty famous faces of the mu..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_12",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "her repertoire is vast, spanning..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_13",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "After dancing Stravinsky Violin Concerto with Amar Ramasar on Saturday, Krohn will return to the NYCB studios on Monday in a new role: ballet master. We had the chance to talk to the thoughtful and el..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_14",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "and I knew that I wanted to be at the New York C tance As soon as I knew I wanted to be a professional dancer, I knew that I wanted to be in New York City Ballet always..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_15",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "I moved to New York when I was 14 to train at the School of American Ballet, and I got my apprenticeship with the company when I was 17, so it was really a dream come true. Krohn and Adrian Danchig-Wa..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_16",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "セマンティックチャンキングとは、 意味の分かれ目や関連性からトピックを抽出すること。..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_17",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "テキストから意図的な表現を特定し、その構造を分析。 テキストから情報を抽出するための手法やツール、方法。 Dances at a Gathering... there are so many, it it &#8230;..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_18",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "&#x22;always really loved the Balanchine black and white ballets, and there are some Robbins ballets that &quot;are always so fulfilling.&#x22;..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_19",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "&#x22;Can you think of a favorite moment with the company?&#x22; &#x21:A after almost 20 years there are &#x22;countless things.&#x22; &#x22;In general I would say the time that I &#x22;have had onsta..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_20",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "&#x22;It..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_21",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "one thing to be a friend with someone and another thing is completely different you can do for another person..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_22",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "I feel so connected when I am out there..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_23",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "o also share the stage with them. There is just an amazing sense of trust and spontaneity ; I feel so connected when I am out there..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_24",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "That is something..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_25",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "I ll never forget..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_26",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "nan..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_27",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "What the..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_28",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "main way..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_29",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "your experience the changed..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_30",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "the years..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_31",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "the..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_32",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "As..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_33",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "I I..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_34",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "want..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_35",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "look up to I wanted to reach out and connect to them more to offer support and advice Krohn and Amara Ramasar in Balanchine Photo by Paul Kolnik..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_36",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Did you always know that you wanted to stay on with the company? It had been in the back of my mind for a number of years, but I didn\\u00b7really address it formally until a year ago. I spoke to Peter..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_37",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "研究方法 実験設計 <u>研究内容</u>(第一章)</span> 研究目的 (第一章) <a href=\"https://www.example.com\">リソースページ</a>..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_38",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "研究対象 (第二章)..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_39",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "It 's i n - -t r e a l It \"s\" i m p..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_40",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "nan..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_41",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "&u &n..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_42",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "&t &a..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_43",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "p..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_44",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "e..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_45",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "r..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_46",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "t)..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_47",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "a..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_48",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "セマンティックチャンキング プロトコル \"\" メッセージ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_49",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "バリュー..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_50",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "ル n u n..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_51",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "a d..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_52",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "i..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_53",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "s t h e..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_54",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "a..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_55",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "q u a l..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_56",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "nan..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_57",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "ペット o r..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_58",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "d i n..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_59",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "a b..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_60",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "e -..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_61",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "d a n..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_62",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "c e r y..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_63",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "nan..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_64",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "c ositive and move forward. Roy Kaiser to Become Nevada Ballet Theatre become Nevada Ballet Nevada Ballet..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_65",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "theatre's New Artistic Director In 2014 the dance world was surprised when longtime Pennsylvania ballet artistic director Roy Kaiser stepped down..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_66",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Kaiser、昨日発表されたことがわかった。フリーソリース、フリーコラテード、アマタノバ が、 Nevada Ballet Theatre の新しい芸術監督として就任します。 ジェームズ・カnelフィールドは去りました。 NBTの46年間の歴史に初めて第四代目アーティストディレクターを務めるカイザー The company will be gaining a highly experienced ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_67",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Pennsylvania Ballet added 90 new ballets and 35 world premieres to their repertoire under his leadership...."
+    },
+    {
+      "chunk_id": "cc_news_2per_chunk_68",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Roy Kaiser with Pennsylvania Ballet Dancers. Photo by Alexander Iziliaev, Courtesy Nevada Ballet Theatre...."
+    }
+  ],
+  "max_similarities": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "threshold": 0.7,
+  "multi_threshold": {
+    "strict": {
+      "threshold": 0.8,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 69,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_2per_chunk_0",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_1",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_2",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_3",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_4",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_5",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_6",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_7",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_8",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_9",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_10",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_11",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_12",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_13",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_14",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_15",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_16",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_17",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_18",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_19",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_20",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_21",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_22",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_23",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_24",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_25",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_26",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_27",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_28",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_29",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_30",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_31",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_32",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_33",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_34",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_35",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_36",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_37",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_38",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_39",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_40",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_41",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_42",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_43",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_44",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_45",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_46",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_47",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_48",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_49",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_50",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_51",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_52",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_53",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_54",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_55",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_56",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_57",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_58",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_59",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_60",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_61",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_62",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_63",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_64",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_65",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_66",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_67",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_68",
+          "similarity": 0.0,
+          "gap": 0.8
+        }
+      ]
+    },
+    "standard": {
+      "threshold": 0.7,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 69,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_2per_chunk_0",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_1",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_2",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_3",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_4",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_5",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_6",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_7",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_8",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_9",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_10",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_11",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_12",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_13",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_14",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_15",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_16",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_17",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_18",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_19",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_20",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_21",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_22",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_23",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_24",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_25",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_26",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_27",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_28",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_29",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_30",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_31",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_32",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_33",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_34",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_35",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_36",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_37",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_38",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_39",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_40",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_41",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_42",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_43",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_44",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_45",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_46",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_47",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_48",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_49",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_50",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_51",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_52",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_53",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_54",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_55",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_56",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_57",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_58",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_59",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_60",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_61",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_62",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_63",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_64",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_65",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_66",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_67",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_68",
+          "similarity": 0.0,
+          "gap": 0.7
+        }
+      ]
+    },
+    "lenient": {
+      "threshold": 0.6,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 69,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_2per_chunk_0",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_1",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_2",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_3",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_4",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_5",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_6",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_7",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_8",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_9",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_10",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_11",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_12",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_13",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_14",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_15",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_16",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_17",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_18",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_19",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_20",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_21",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_22",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_23",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_24",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_25",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_26",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_27",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_28",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_29",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_30",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_31",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_32",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_33",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_34",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_35",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_36",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_37",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_38",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_39",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_40",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_41",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_42",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_43",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_44",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_45",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_46",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_47",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_48",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_49",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_50",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_51",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_52",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_53",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_54",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_55",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_56",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_57",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_58",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_59",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_60",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_61",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_62",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_63",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_64",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_65",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_66",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_67",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_chunk_68",
+          "similarity": 0.0,
+          "gap": 0.6
+        }
+      ]
+    }
+  },
+  "chunk_analysis": {
+    "by_length": {
+      "short": {
+        "count": 67,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "medium": {
+        "count": 2,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      }
+    },
+    "by_position": {
+      "beginning": {
+        "count": 23,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "middle": {
+        "count": 24,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "end": {
+        "count": 22,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      }
+    },
+    "summary": {
+      "total_chunks": 69,
+      "total_qa_pairs": 142,
+      "threshold_used": 0.7,
+      "insights": [
+        "shortチャンクのカバレージが低い（0.0%）",
+        "mediumチャンクのカバレージが低い（0.0%）",
+        "文書beginning部分のカバレージが低い（0.0%）",
+        "文書middle部分のカバレージが低い（0.0%）",
+        "文書end部分のカバレージが低い（0.0%）"
+      ]
+    }
+  },
+  "dataset_type": "cc_news_2per_chunks",
+  "optimal_thresholds": {
+    "strict": 0.8,
+    "standard": 0.7,
+    "lenient": 0.6
+  }
+}

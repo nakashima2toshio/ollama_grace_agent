@@ -277,6 +277,81 @@ def _resolve_schema_refs(schema: dict) -> dict:
     return resolve(schema)
 
 
+def _parse_text_tool_calls(text: str) -> list:
+    """
+    テキスト形式のツール呼び出しをパースする。
+    gemma4:e4b 等は tool_calls を構造化レスポンスではなくテキストで返すため、
+    msg.content からツール呼び出し情報を抽出して構造化形式に変換する。
+
+    対応フォーマット:
+      1. Gemma4 形式: Action:tool_name{key:<|"|>value<|"|>}
+      2. JSON 辞書形式: {"name": "tool_name", "parameters": {"key": "value"}}
+      3. 簡易 KV 形式: Action:tool_name Args: {"key": "value"}
+    """
+    import re
+    import uuid
+
+    result = []
+
+    # --- フォーマット1: Gemma4 ネイティブ形式 ---
+    # Action:tool_name{key:<|"|>value<|"|>, ...}
+    gemma_block = re.findall(r'Action:(\w+)\{([^}]*)\}', text)
+    for tool_name, args_str in gemma_block:
+        args: dict = {}
+        # <|"|>value<|"|> トークン形式
+        for km in re.finditer(r'(\w+):<[|]"[|]>([^<]*)<[|]"[|]>', args_str):
+            args[km.group(1)] = km.group(2).strip()
+        # fallback: key:"value" 形式
+        if not args:
+            for km in re.finditer(r'(\w+):\s*"([^"]*)"', args_str):
+                args[km.group(1)] = km.group(2)
+        # fallback: key:value（クォートなし）
+        if not args:
+            for km in re.finditer(r'(\w+):\s*([^\s,}]+)', args_str):
+                args[km.group(1)] = km.group(2).strip()
+        if tool_name:
+            result.append({
+                "name" : tool_name,
+                "input": args,
+                "id"   : f"call_{uuid.uuid4().hex[:8]}",
+            })
+    if result:
+        return result
+
+    # --- フォーマット2: JSON 辞書形式 ---
+    # {"name": "tool_name", "parameters": {...}} or {"tool": "...", "args": {...}}
+    for m in re.finditer(r'\{[^{}]*"name"\s*:\s*"(\w+)"[^{}]*\}', text):
+        try:
+            obj = json.loads(m.group(0))
+            tool_name = obj.get("name") or obj.get("tool")
+            args = obj.get("parameters") or obj.get("args") or obj.get("arguments") or {}
+            if tool_name and isinstance(args, dict):
+                result.append({
+                    "name" : tool_name,
+                    "input": args,
+                    "id"   : f"call_{uuid.uuid4().hex[:8]}",
+                })
+        except Exception:
+            pass
+    if result:
+        return result
+
+    # --- フォーマット3: Action:tool_name Args: {...} 形式 ---
+    for m in re.finditer(r'Action:\s*(\w+)\s+Args:\s*(\{[^}]*\})', text, re.DOTALL):
+        tool_name = m.group(1)
+        try:
+            args = json.loads(m.group(2))
+        except Exception:
+            args = {}
+        result.append({
+            "name" : tool_name,
+            "input": args,
+            "id"   : f"call_{uuid.uuid4().hex[:8]}",
+        })
+
+    return result
+
+
 # ================================================================
 # Ollama クライアント（新規追加: ollama_grace_agent）
 # OpenAI 互換 API (http://localhost:11434/v1) を使用
@@ -1054,8 +1129,19 @@ class OllamaClient(LLMClient):
                     "id"   : tc.id,
                 })
 
+        # gemma4:e4b 等は tool_calls を構造化レスポンスではなくテキストで返す
+        # (finish_reason="stop", msg.tool_calls=None)
+        # msg.content からテキスト形式のツール呼び出しをパースしてフォールバック
         text = msg.content or ""
         finish_reason = response.choices[0].finish_reason or "stop"
+
+        if not tool_calls_result and text and tools:
+            parsed = _parse_text_tool_calls(text)
+            if parsed:
+                tool_calls_result = parsed
+                finish_reason = "tool_calls"
+                logger.debug(f"Text-based tool calls parsed: {[t['name'] for t in parsed]}")
+
         return text, tool_calls_result, finish_reason
 
     def build_tool_result_message(

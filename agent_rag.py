@@ -161,7 +161,7 @@ def show_qdrant_crud_page():
 def _resolve_startup_model() -> str:
     """
     起動時のデフォルトモデルを決定する（初回のみ実行）。
-    優先順位: CLI引数 --model > 環境変数 OLLAMA_DEFAULT_MODEL > "llama3.2"
+    優先順位: CLI引数 --model > 環境変数 OLLAMA_DEFAULT_MODEL > "llama3.2"でなく、"gemma4:e4b"
     """
     from config import GeminiConfig
     if "startup_model" in st.session_state:
@@ -179,7 +179,7 @@ def _resolve_startup_model() -> str:
     if model not in GeminiConfig.AVAILABLE_MODELS:
         import streamlit as _st
         _st.warning(f"指定モデル '{model}' は AVAILABLE_MODELS に未登録です。'llama3.2' を使用します。")
-        model = "llama3.2"
+        model = "gemma4:e4b"  # "llama3.2"
 
     st.session_state["startup_model"] = model
     return model

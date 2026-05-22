@@ -281,7 +281,7 @@ class OllamaEmbedding(EmbeddingClient):
 
 
 class GeminiEmbedding(EmbeddingClient):
-    """Gemini Embeddings API実装（3072次元: 後方互換として残存）
+    """Gemini Embeddings API実装（3072次元: 後方互換として残存）"""
 
 class GeminiEmbedding(EmbeddingClient):
     """Gemini Embeddings API実装（3072次元: 後方互換として残存）"""

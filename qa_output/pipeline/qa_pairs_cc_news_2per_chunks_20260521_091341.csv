@@ -1,0 +1,147 @@
+question,answer,chunk_id,topic,dataset_type
+Justin Peckは誰ですか?,NYCB resident choreographer and soloist,cc_news_2per_chunk_0,Justin Peck,cc_news_2per_chunks
+NYCBとは何ですか?,New York City Ballet,cc_news_2per_chunk_0,NYCB,cc_news_2per_chunks
+このグループでは、リーダーシップ経験が何らかの形で存在しているか?,存在します,cc_news_2per_chunk_1,グループのリーダーシップ経験,cc_news_2per_chunks
+製品の特性はどのようなものであるか?,特定のものです,cc_news_2per_chunk_1,製品の特性,cc_news_2per_chunks
+この製品には何らかの種類の暗号化が使用されているか?,使用されます,cc_news_2per_chunk_1,暗号化方式,cc_news_2per_chunks
+Krohnが会社にどのように関わっている?,Krohnは、会社で新しい役割を務めている。,cc_news_2per_chunk_2,会社,cc_news_2per_chunks
+製品の詳細について教えてください.,製品の詳細については、別のチャンクを参照してください。,cc_news_2per_chunk_2,製品,cc_news_2per_chunks
+製品の特性は何ですか?,製品には特定の機能や特性があります。,cc_news_2per_chunk_3,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは標準的なサイズです。,cc_news_2per_chunk_3,サイズ,cc_news_2per_chunks
+製品の使用方法について教えてください,製品を使用するには、次のステップを実行してください。,cc_news_2per_chunk_3,製品の特性,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、サイズや機能などが含まれます。,cc_news_2per_chunk_4,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、ขนาดや重量などが示されます。,cc_news_2per_chunk_4,サイズ,cc_news_2per_chunks
+製品の機能について教えてください?,製品の機能については、より詳細な情報をご覧いただけます。,cc_news_2per_chunk_4,製品の特性,cc_news_2per_chunks
+日常生活でどのように使いますか?,日常生活では、製品の特性を利用して便利な機能を活用できます。,cc_news_2per_chunk_5,製品の特性,cc_news_2per_chunks
+サイズは何くらいですか?,製品のサイズは、さまざまなサイズが用意されています。,cc_news_2per_chunk_5,サイズ,cc_news_2per_chunks
+どのような利点がありますか?,製品には様々な利点があり、日常生活で便利な機能を提供します。,cc_news_2per_chunk_5,製品の特性,cc_news_2per_chunks
+製品の色について何ができる?,製品にはさまざまな色が使用できます。,cc_news_2per_chunk_6,製品の色,cc_news_2per_chunks
+製品のサイズに関する情報はどこから取得できる?,製品のサイズに関する情報は、製品のパッケージや製品のウェブサイトで確認できます。,cc_news_2per_chunk_6,製品のサイズ,cc_news_2per_chunks
+スーパーボウルについて教えてください,スーパーボウルはアメリカのプロフットボールリーグNFLの決勝大会です。,cc_news_2per_chunk_7,Super Bowl,cc_news_2per_chunks
+バレエについて何が言及されていますか,バレエは、パートナーと一緒に舞台を共有するアーティストです。,cc_news_2per_chunk_7,Ballet,cc_news_2per_chunks
+製品の特性は何ですか?,製品には特定の機能が搭載されています。,cc_news_2per_chunk_8,製品の特性,cc_news_2per_chunks
+製品の使用方法について教えてください?,製品を使用する際は、以下のステップに従ってください。,cc_news_2per_chunk_8,製品の使用方法,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性はサイズと材料で構成されています。,cc_news_2per_chunk_9,製品の特性,cc_news_2per_chunks
+サイズは何を表しますか?,サイズは製品の寸法や大きさを表します。,cc_news_2per_chunk_9,サイズ,cc_news_2per_chunks
+dance shoes は何ですか?,ショットアウトされました、そしてブロードウェイダンスセンターと協力して、ミュージカル劇世界の有名人と共同で新しいコレクションをリリースしました。,cc_news_2per_chunk_11,dance shoes,cc_news_2per_chunks
+Audition shoe はどのようなタイプの靴ですか?,2.5 または 3 ' のヒールがあり、トップの業界専門家が愛しています。,cc_news_2per_chunk_11,audition shoe,cc_news_2per_chunks
+ブロードウェイダンスセンターは何ですか?,ショットアウトされました、そしてブロードウェイダンスセンターと協力して、ミュージカル劇世界の有名人と共同で新しいコレクションをリリースしました。,cc_news_2per_chunk_11,Broadway Dance Center,cc_news_2per_chunks
+製品の特性について教えてください,製品にはさまざまな特性がありますが、主な特性はサイズであり、サイズは重要です。,cc_news_2per_chunk_12,サイズ,cc_news_2per_chunks
+製品のサイズについて何ですか?,製品のサイズは、製品全体の寸法を表します。,cc_news_2per_chunk_12,サイズ,cc_news_2per_chunks
+製品の特性の中で最も重要なものは何ですか?,製品の特性の中で最も重要なものはサイズです。,cc_news_2per_chunk_12,サイズ,cc_news_2per_chunks
+私は 一个 Stravinsky Violin Concerto 〗ただ,フールスタラクカトンタ・イーァセガス,cc_news_2per_chunk_13,私は Stravinsky Violin Concerto,cc_news_2per_chunks
+日本 きただ,一个今大んにタールスタラクカトンタ・イーァセガス,cc_news_2per_chunk_13,日本,cc_news_2per_chunks
+私は NYCB んだ,一个今大んにタールスタラクカトンタ・イーァセガス,cc_news_2per_chunk_13,私は NYCB,cc_news_2per_chunks
+私は ラーョグ人。,アーョグ人市昨无本んだ,cc_news_2per_chunk_14,New York City Ballet,cc_news_2per_chunks
+きは 一业䶦しにーョグ人。,ーョグ人市昨无本んだ,cc_news_2per_chunk_14,Professional Dancer,cc_news_2per_chunks
+日だ 主た、きれを読です,一日だなた、ですのただきれを読です,cc_news_2per_chunk_15,NYCB,cc_news_2per_chunks
+一日だ きれを読です,一日だなた、ですのただきれを読です,cc_news_2per_chunk_15,NYCB,cc_news_2per_chunks
+セマンティックチャンキングとは何ですか?,意味の分かれ目や関連性からトピックを抽出すること.,cc_news_2per_chunk_16,トピック1,cc_news_2per_chunks
+セマンティックチャンキングの重要性はどのように評価しますか?,非常に重要です。詳細で正確な回答が必要です。,cc_news_2per_chunk_16,トピック2,cc_news_2per_chunks
+セマンティックチャンキングの対象となるトピックは何ですか?,意味分かれ目や関連性からトピックを抽出します。,cc_news_2per_chunk_16,トピック3,cc_news_2per_chunks
+テキストから情報を抽出するための手法やツールは何ですか?,特定の方法やツールを使用します。,cc_news_2per_chunk_17,製品の特性,cc_news_2per_chunks
+安全上の注意点は何ですか?,製品の使用による潜在的なリスクを考慮してください。,cc_news_2per_chunk_17,安全上の注意,cc_news_2per_chunks
+バランシンとは何ですか?,バランシンは、モダン・ダンスの重要な分野です。,cc_news_2per_chunk_18,バランシン,cc_news_2per_chunks
+ロビンスとはどんな作品が有名ですか?,ロビンスは、カリフォルニア・スプリングとジプシー・クイーンなどの有名な作品を制作しています。,cc_news_2per_chunk_18,ロビンス,cc_news_2per_chunks
+私は 为 だたですに きまたですに,查たですでたでたでただとつなですでたきま,cc_news_2per_chunk_19,省にのるです,cc_news_2per_chunks
+居ですっだですでたでたきま,个グタークントルレウンターカリガベョ,cc_news_2per_chunk_19,居です,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、材料、サイズ、色などが含まれます。,cc_news_2per_chunk_20,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、幅、高さ、重量などが示されます。,cc_news_2per_chunk_20,サイズ,cc_news_2per_chunks
+友情とは何か?,友情は、他人との関係で感情的なつながりや理解が生まれることです。,cc_news_2per_chunk_21,友情,cc_news_2per_chunks
+情報の重要性は何に依存するか?,情報の重要性は特定の状況や目的によって異なります。,cc_news_2per_chunk_21,情報の重要性,cc_news_2per_chunks
+"製品の特性は何ですか?
+","製品には安全なデザインと高品質の材料が使われています。
+",cc_news_2per_chunk_22,製品の特性,cc_news_2per_chunks
+"安全上の注意点は何ですか?
+","製品を使用するときは、適切な操作方法を守ってください。
+",cc_news_2per_chunk_22,安全上の注意,cc_news_2per_chunks
+信頼性とは何か?,信頼性とは、情報やアプリケーションの正確さと安定性を表すもの。,cc_news_2per_chunk_23,信頼性,cc_news_2per_chunks
+スピリットとは何か?,スピリットとは、人々が共有する感情的な結束や一致感を表すもの。,cc_news_2per_chunk_23,スピリット,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、材料、サイズ、機能などが含まれます。,cc_news_2per_chunk_25,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、幅、高さ、長さを表します。,cc_news_2per_chunk_25,サイズ,cc_news_2per_chunks
+製品の色は何ですか?,製品の色は青色です。,cc_news_2per_chunk_27,製品の色,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,製品のサイズは小型です。,cc_news_2per_chunk_27,製品のサイズ,cc_news_2per_chunks
+製品の特性について教えてください,製品は、安定性と信頼性が高く、使用者に便利な機能を提供します。,cc_news_2per_chunk_28,製品の特性,cc_news_2per_chunks
+安全上の注意点について教えてください,製品には、安全上の注意点があります。使用者は注意してください。,cc_news_2per_chunk_28,安全上の注意,cc_news_2per_chunks
+製品の使用方法について教えてください,製品の使用方法は、公式ドキュメントやサポートサイトで確認できます。,cc_news_2per_chunk_28,製品の特性,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、サイズや材料などが含まれます。,cc_news_2per_chunk_29,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、寸法や重量などが示されます。,cc_news_2per_chunk_29,サイズ,cc_news_2per_chunks
+製品の材料は何ですか?,製品の材料は、さまざまな種類の素材を使用して作られています。,cc_news_2per_chunk_29,材料,cc_news_2per_chunks
+製品の特性は何ですか?,製品の機能や仕様,cc_news_2per_chunk_30,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品の寸法や重量,cc_news_2per_chunk_30,製品のサイズ,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,製品の寸法や重量,cc_news_2per_chunk_30,製品のサイズ,cc_news_2per_chunks
+暗号化方式は何ですか?,暗号化方式,cc_news_2per_chunk_31,暗号化方式,cc_news_2per_chunks
+鍵長はどれくらいですか?,鍵長,cc_news_2per_chunk_31,鍵長,cc_news_2per_chunks
+利用モードは何ですか?,利用モード,cc_news_2per_chunk_31,利用モード,cc_news_2per_chunks
+製品の色はどのようなものが適切ですか?,製品の色は、ブランドイメージや製品の種類に合わせて選択することが適切です。,cc_news_2per_chunk_32,製品の色,cc_news_2per_chunks
+製品のサイズはどれくらいが適切ですか?,製品のサイズは、ユーザーのニーズと製品の種類に合わせて選択することが適切です。,cc_news_2per_chunk_32,製品のサイズ,cc_news_2per_chunks
+製品の色は何ですか?,製品の色は、製品のデザインやブランドイメージに合わせて決められます。,cc_news_2per_chunk_34,製品の色,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,製品のサイズは、製品の種類や用途に応じて異なります。,cc_news_2per_chunk_34,製品のサイズ,cc_news_2per_chunks
+KrohnとAmara Ramasarは誰ですか?,KrohnとAmara Ramasarはアメリカのダンス団体であるNew York City Balletの創設者です。,cc_news_2per_chunk_35,Balanchine,cc_news_2per_chunks
+バランシネは誰ですか?,バランシネはロシア生まれのフランス人バレエ指揮者で、モデrn・ダンスを確立した人物です。,cc_news_2per_chunk_35,Krohn and Amara Ramasar,cc_news_2per_chunks
+バレエ団「ニューヨークシティバレエ」がどのような創設者を持っている?,バレエ団「ニューヨークシティバレエ」は、KrohnとAmara Ramasarによって創設されました。,cc_news_2per_chunk_35,Krohn and Amara Ramasar,cc_news_2per_chunks
+会社への忠誠心については、どのような考え方が適切ですか?,会社への忠誠心は重要ですが、それが自分の個人的な価値観や信念と一致しているかを確認することが重要です。,cc_news_2per_chunk_36,会社への忠誠心,cc_news_2per_chunks
+職場での考え方については、どのようなアプローチが適切ですか?,職場での考え方は、個人の自由性とチームのコラボレーションをバランスすることが重要です。,cc_news_2per_chunk_36,職場での考え方,cc_news_2per_chunks
+この会社への忠誠心については、どのような課題が生じる可能性がありますか?,会社への忠誠心は、個人の自由性や個人的な価値観と一致しない場合、不快感やコラボレーション障害につながる可能性があります。,cc_news_2per_chunk_36,会社への忠誠心,cc_news_2per_chunks
+研究方法について教えてください。,実験設計を使用します。,cc_news_2per_chunk_37,研究方法,cc_news_2per_chunks
+研究内容について説明してください。,<u>研究内容（第一章）</u>,cc_news_2per_chunk_37,研究内容,cc_news_2per_chunks
+研究目的は何ですか？,研究目的は第一章で説明されています。,cc_news_2per_chunk_37,研究目的,cc_news_2per_chunks
+研究対象について説明してください,この章では、研究対象について説明します。,cc_news_2per_chunk_38,研究対象,cc_news_2per_chunks
+重要度について説明してください,この章は非常に重要です。,cc_news_2per_chunk_38,重要度,cc_news_2per_chunks
+複雑さについて説明してください,この章の複雑さは中等です。,cc_news_2per_chunk_38,複雑さ,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性はサイズと材料で構成されています。,cc_news_2per_chunk_39,製品の特性,cc_news_2per_chunks
+サイズは何種類ありますか?,サイズは小型、中型、大型に分けられます。,cc_news_2per_chunk_39,サイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、材料、サイズ、機能などが含まれます。,cc_news_2per_chunk_41,製品の特性,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,製品のサイズは、幅、高さ、重量などが示されます。,cc_news_2per_chunk_41,サイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品には特定の機能があります。,cc_news_2per_chunk_42,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは標準的なサイズです。,cc_news_2per_chunk_42,サイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品には安全上の注意が含まれています。,cc_news_2per_chunk_43,製品の特性,cc_news_2per_chunks
+安全上の注意は何ですか?,製品には暗号化方式があります。,cc_news_2per_chunk_43,安全上の注意,cc_news_2per_chunks
+製品の使用モードは何ですか?,製品の使用モードは利用モードです。,cc_news_2per_chunk_43,製品の特性,cc_news_2per_chunks
+製品の特性は何ですか?,製品には特定の機能や特性があります。,cc_news_2per_chunk_44,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは標準的なサイズです。,cc_news_2per_chunk_44,サイズ,cc_news_2per_chunks
+製品の使用方法について教えてください,製品を使用するには、以下のステップを実行してください。,cc_news_2per_chunk_44,製品の特性,cc_news_2per_chunks
+製品の色は何ですか?,色は製品のデザインやブランドイメージに合わせたものです。,cc_news_2per_chunk_45,製品の色,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,サイズは製品の種類や目的によって異なります。,cc_news_2per_chunk_45,製品のサイズ,cc_news_2per_chunks
+製品の色は何ですか?,色は製品のデザインに合わせて決まります。,cc_news_2per_chunk_46,製品の色,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,サイズは製品の種類によって異なります。,cc_news_2per_chunk_46,製品のサイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、製品の機能や性能などを表します。,cc_news_2per_chunk_47,製品の特性,cc_news_2per_chunks
+安全上の注意点は何ですか?,安全上の注意点は、製品が安全に使用できるようにするための重要な情報です。,cc_news_2per_chunk_47,安全上の注意,cc_news_2per_chunks
+セマンティックチャンキングプロトコルの目的は何ですか?,情報の抽出と処理を支援するために使用される技術です。,cc_news_2per_chunk_48,セマンティックチャンキング,cc_news_2per_chunks
+メッセージは何に使用されますか?,人工知能や機械学習などのアプリケーションで情報の抽出と処理を支援するために使用されます。,cc_news_2per_chunk_48,メッセージ,cc_news_2per_chunks
+セマンティックチャンキングプロトコルはどのような複雑さを持っていますか?,中等度の複雑さです。,cc_news_2per_chunk_48,複雑さ,cc_news_2per_chunks
+バリューとは何ですか?,バリューは、製品の特性や機能を表すものです。,cc_news_2per_chunk_49,製品の特性,cc_news_2per_chunks
+安全上の注意点はどれですか?,製品の使用時には、安全上の注意点を考慮することが重要です。,cc_news_2per_chunk_49,安全上の注意,cc_news_2per_chunks
+製品の特性は何ですか?,製品には特定の機能や特性があります。,cc_news_2per_chunk_51,製品の特性,cc_news_2per_chunks
+製品のサイズについて教えてください,製品のサイズは標準的な寸法です。,cc_news_2per_chunk_51,サイズ,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは幅高さ×長さです。,cc_news_2per_chunk_51,サイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、材料、サイズ、機能などです。,cc_news_2per_chunk_52,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、幅、高さ、重量などです。,cc_news_2per_chunk_52,サイズ,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,製品のサイズは、具体的な値を示すものではありませんが、寸法や重量などの測定値で表されます。,cc_news_2per_chunk_52,サイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、製品の機能や性能について説明します。,cc_news_2per_chunk_54,製品の特性,cc_news_2per_chunks
+安全上の注意点は何ですか?,安全上の注意点は、製品を使用する際に気をつけるべき事項です。,cc_news_2per_chunk_54,安全上の注意,cc_news_2per_chunks
+製品の特性は何ですか?,製品には特定の機能があります。,cc_news_2per_chunk_55,製品の特性,cc_news_2per_chunks
+製品のサイズはどれくらいですか?,製品のサイズは標準です。,cc_news_2per_chunk_55,サイズ,cc_news_2per_chunks
+ペットは何ですか?,動物,cc_news_2per_chunk_57,ペット,cc_news_2per_chunks
+製品とは何か?,商品,cc_news_2per_chunk_57,製品,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、サイズや材料などが含まれます。,cc_news_2per_chunk_58,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、幅、高さ、重量などが含まれます。,cc_news_2per_chunk_58,サイズ,cc_news_2per_chunks
+製品の特性とはどのような意味を持ちますか?,製品の特性とは、製品が持つ機能や特徴を指します。,cc_news_2per_chunk_59,製品の特性,cc_news_2per_chunks
+サイズは何に等しい?,サイズは寸法や大きさに等しくなります。,cc_news_2per_chunk_59,サイズ,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、材料、サイズ、色などが含まれます。,cc_news_2per_chunk_60,製品の特性,cc_news_2per_chunks
+安全上の注意は何ですか?,安全上の注意は、使用方法や注意事項を確認することです。,cc_news_2per_chunk_60,安全上の注意,cc_news_2per_chunks
+製品の特性は何ですか?,製品の特性は、サイズや材料などが含まれます。,cc_news_2per_chunk_61,製品の特性,cc_news_2per_chunks
+製品のサイズは何ですか?,製品のサイズは、幅、高さ、重量などが示されます。,cc_news_2per_chunk_61,サイズ,cc_news_2per_chunks
+製品のサイズは何より大きいか?,サイズ,cc_news_2per_chunk_62,製品のサイズ,cc_news_2per_chunks
+製品の色はどれが最も適切か?,色,cc_news_2per_chunk_62,製品の色,cc_news_2per_chunks
+Roy Kaiserは何ですか?,ロイ・カイザーはネバダ・バレエ劇団の創設者です。,cc_news_2per_chunk_64,Nevada Ballet Theatre,cc_news_2per_chunks
+Nevada Ballet Theatreはどのような劇場ですか?,ネバダ・バレエ劇団は、ネバダ州リノで開催されるバレエ劇場です。,cc_news_2per_chunk_64,Nevada Ballet Theatre,cc_news_2per_chunks
+Roy Kaiserは何を目指しているのか?,ロイ・カイザーはバレエの創始者として、バレエを普及させることを目指しています。,cc_news_2per_chunk_64,Roy Kaiser,cc_news_2per_chunks
+Roy Kaiserは何をしていた?,ロイ・ケーザーはペンシルベニア・バレエの芸術監督だった。,cc_news_2per_chunk_65,Roy Kaiser,cc_news_2per_chunks
+2014年にロイ・ケーザーが退任した後、ペンシルベニア・バレエは何をしていた?,2014年にロイ・ケーザーが退任した後、ペンシルベニア・バレエは新しい芸術監督を迎えることになりました。,cc_news_2per_chunk_65,Pennsylvania ballet,cc_news_2per_chunks
+ペンシルベニア・バレエの芸術監督としてのロイ・ケーザーの役割について?,ペンシルベニア・バレエの芸術監督として、ロイ・ケーザーはバレエの発展と改善に多大な貢献をしてきました。,cc_news_2per_chunk_65,Roy Kaiser,cc_news_2per_chunks
+私は 中文子。,叉溌为 46年日的代公国ンターだ,cc_news_2per_chunk_66,NBT,cc_news_2per_chunks
+本京し、 きかを機とるは日期タース,和尿一丈、 两大子中機とるだ,cc_news_2per_chunk_66,Kaiser,cc_news_2per_chunks
+两大子中機とる、 一丈タース,和尿一丈、 两大子中機とるだ,cc_news_2per_chunk_66,Kaiser,cc_news_2per_chunks
+私は 竮子の 90丈日。,消这ター・ンタリスダルェーマスクメガ,cc_news_2per_chunk_67,柒二対武,cc_news_2per_chunks
+日本は 一三。,一三ルーェタリスダルクカセブント・ホ,cc_news_2per_chunk_67,日本,cc_news_2per_chunks

@@ -15,11 +15,11 @@ make_qa_register_qdrant.py - Q/A生成からQdrant登録までを完結する統
 
 # 2. Q/A生成 + Qdrant登録（基本）
 python qa_qdrant/make_qa_register_qdrant.py \
---input-file output_chunked/cc_news_1per_chunks.csv \
---collection cc_news_1per \
+--input-file chunks_output/cc_news_2per_chunks.csv \
+--collection cc_news_2per \
 --use-celery \
---model gpt-5.4-mini \
---concurrency 8 \
+--model llama3.2 \
+--concurrency 2 \
 --recreate
 
 # wikipedia_jaへの対応：
@@ -27,8 +27,8 @@ python qa_qdrant/make_qa_register_qdrant.py \
 --input-file output_chunked/wikipedia_ja_1per_chunks.csv \
 --collection wikipedia_ja_1per \
 --use-celery \
---model gpt-5.4-mini \
---concurrency 8 \
+--model llama3.2 \
+--concurrency 2 \
 --recreate
 
 

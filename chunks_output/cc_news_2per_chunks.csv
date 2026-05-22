@@ -1,0 +1,70 @@
+chunk_id,text,tokens,chunk_idx,dataset_type,type,sentence_count,source_file
+cc_news_2per_chunk_0,"Joining Stafford are NYCB resident choreographer and soloist Justin Peck and ballet masters Craig Hall and Rebecca Krohn, both former dancers with the company.",32,0,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_1,"members of this group haven t had much leadership experience,",11,1,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_2,their close familiarity with the company (Krohn left the stage for her new role just two months ago) should,23,2,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_3,"ease, the dancers The team",6,3,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_4,will be,2,4,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_5,day-to-day,3,5,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_6,artistic,2,6,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_7,"Ballet and Boston Ballet took a break from their usual rehearsals to perform some Super Bowl-themed choreography. Dressed in their Eagles green, the PAB dancers performed a fast-paced routine full of fouetté turns, sky-high jumps and some swan arms (because they But Boston Ballet also decided to get in on the fun—at least according to reports—and were already having a pretty great season with five Super Bowl wins, they're used to seeing their team in the big game",97,7,cc_news_2per,llm_chunk,2,cc_news_2per.csv
+cc_news_2per_chunk_8,"""Sharing their own video on Facebook,"" which stars principal Paul Craig and",14,8,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_9,have already started to show the world what they're working with.,13,9,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_10,This is officially our new favorite way to get in on the football fun,14,10,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_11,"dance shoes Looking for your next audition shoe? Shot at and in collaboration with Broadway Dance Center, Sé Dan´ has launched a new collection of shoes working with some pretty famous faces of the musical theater world! Offered in two different styles and either 2.5 or 3 ' heels, top industry professionals are loving eotard ballets",69,11,cc_news_2per,llm_chunk,4,cc_news_2per.csv
+cc_news_2per_chunk_12,"her repertoire is vast, spanning",6,12,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_13,"After dancing Stravinsky Violin Concerto with Amar Ramasar on Saturday, Krohn will return to the NYCB studios on Monday in a new role: ballet master. We had the chance to talk to the thoughtful and eloquent dancer about her time with the company and goals for the future. As soon as I knew I wanted to be a professional dancer, I knew that I wanted to be in New York City I knew that I wanted",89,13,cc_news_2per,llm_chunk,3,cc_news_2per.csv
+cc_news_2per_chunk_14,"and I knew that I wanted to be at the New York C tance As soon as I knew I wanted to be a professional dancer, I knew that I wanted to be in New York City Ballet always",41,14,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_15,"I moved to New York when I was 14 to train at the School of American Ballet, and I got my apprenticeship with the company when I was 17, so it was really a dream come true. Krohn and Adrian Danchig-Waring in Balanchine Video Courtesy NYCB What have been your favorite ballets or roles to dance? Balanchine Stravinsky Violin Concerto, which I will dance for my final show, has always been a favorite, as well as Balanchine Movements for Piano and Orchestra タイトル",114,15,cc_news_2per,llm_chunk,3,cc_news_2per.csv
+cc_news_2per_chunk_16,セマンティックチャンキングとは、 意味の分かれ目や関連性からトピックを抽出すること。,40,16,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_17,"テキストから意図的な表現を特定し、その構造を分析。 テキストから情報を抽出するための手法やツール、方法。 Dances at a Gathering... there are so many, it it &#8230;",67,17,cc_news_2per,llm_chunk,4,cc_news_2per.csv
+cc_news_2per_chunk_18,"&#x22;always really loved the Balanchine black and white ballets, and there are some Robbins ballets that &quot;are always so fulfilling.&#x22;",37,18,cc_news_2per,llm_chunk,2,cc_news_2per.csv
+cc_news_2per_chunk_19,&#x22;Can you think of a favorite moment with the company?&#x22; &#x21:A after almost 20 years there are &#x22;countless things.&#x22; &#x22;In general I would say the time that I &#x22;have had onstage with some of my friends and dancing partners has been so special.&#x22;,79,19,cc_news_2per,llm_chunk,4,cc_news_2per.csv
+cc_news_2per_chunk_20,&#x22;It,5,20,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_21,one thing to be a friend with someone and another thing is completely different you can do for another person,20,21,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_22,I feel so connected when I am out there,9,22,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_23,o also share the stage with them. There is just an amazing sense of trust and spontaneity ; I feel so connected when I am out there,30,23,cc_news_2per,llm_chunk,2,cc_news_2per.csv
+cc_news_2per_chunk_24,That is something,3,24,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_25,I ll never forget,4,25,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_26,,0,26,cc_news_2per,llm_chunk,0,cc_news_2per.csv
+cc_news_2per_chunk_27,What the,2,27,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_28,main way,2,28,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_29,your experience the changed,4,29,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_30,the years,2,30,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_31,the,1,31,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_32,As,1,32,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_33,I I,2,33,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_34,want,1,34,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_35,look up to I wanted to reach out and connect to them more to offer support and advice Krohn and Amara Ramasar in Balanchine Photo by Paul Kolnik,34,35,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_36,"Did you always know that you wanted to stay on with the company? It had been in the back of my mind for a number of years, but I didn\u00b7really address it formally until a year ago. I spoke to Peter (Martins), just to kind of let him know what I had been thinking. I wanted to hear how he felt about",74,36,cc_news_2per,llm_chunk,4,cc_news_2per.csv
+cc_news_2per_chunk_37,"研究方法 実験設計 <u>研究内容</u>(第一章)</span> 研究目的 (第一章) <a href=""https://www.example.com"">リソースページ</a>",63,37,cc_news_2per,llm_chunk,3,cc_news_2per.csv
+cc_news_2per_chunk_38,研究対象 (第二章),13,38,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_39,"It 's i n - -t r e a l It ""s"" i m p",19,39,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_40,,0,40,cc_news_2per,llm_chunk,0,cc_news_2per.csv
+cc_news_2per_chunk_41,&u &n,4,41,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_42,&t &a,3,42,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_43,p,1,43,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_44,e,1,44,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_45,r,1,45,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_46,t),2,46,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_47,a,1,47,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_48,"セマンティックチャンキング プロトコル """" メッセージ",23,48,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_49,バリュー,4,49,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_50,ル n u n,4,50,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_51,a d,2,51,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_52,i,1,52,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_53,s t h e,4,53,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_54,a,1,54,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_55,q u a l,4,55,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_56,,0,56,cc_news_2per,llm_chunk,0,cc_news_2per.csv
+cc_news_2per_chunk_57,ペット o r,4,57,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_58,d i n,3,58,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_59,a b,2,59,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_60,e -,2,60,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_61,d a n,3,61,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_62,c e r y,4,62,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_63,,0,63,cc_news_2per,llm_chunk,0,cc_news_2per.csv
+cc_news_2per_chunk_64,c ositive and move forward. Roy Kaiser to Become Nevada Ballet Theatre become Nevada Ballet Nevada Ballet,19,64,cc_news_2per,llm_chunk,2,cc_news_2per.csv
+cc_news_2per_chunk_65,theatre's New Artistic Director In 2014 the dance world was surprised when longtime Pennsylvania ballet artistic director Roy Kaiser stepped down,26,65,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_66,"Kaiser、昨日発表されたことがわかった。フリーソリース、フリーコラテード、アマタノバ が、 Nevada Ballet Theatre の新しい芸術監督として就任します。 ジェームズ・カnelフィールドは去りました。 NBTの46年間の歴史に初めて第四代目アーティストディレクターを務めるカイザー The company will be gaining a highly experienced lead Following his rise through the ranks to principal dancer at Pennsylvania Ballet, Kaiser worked as a ballet master and eventually took the reigns as the company",159,66,cc_news_2per,llm_chunk,4,cc_news_2per.csv
+cc_news_2per_chunk_67,Pennsylvania Ballet added 90 new ballets and 35 world premieres to their repertoire under his leadership.,22,67,cc_news_2per,llm_chunk,1,cc_news_2per.csv
+cc_news_2per_chunk_68,"Roy Kaiser with Pennsylvania Ballet Dancers. Photo by Alexander Iziliaev, Courtesy Nevada Ballet Theatre.",20,68,cc_news_2per,llm_chunk,2,cc_news_2per.csv

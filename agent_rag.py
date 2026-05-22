@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # ---------------------------------------------------
+#
+# ---------------------------------------------------
+# uv run streamlit run agent_rag.py -- --model gemma4:e4b
+# uv run streamlit run agent_rag.py
+# ---------------------------------------------------
 # # GCP サーバーで実行
 # ---------------------------------------------------
 # ssh -i ~/.ssh/gcp_key_v2 nakashima@34.84.198.115
@@ -187,11 +192,11 @@ def main():
     _resolve_startup_model()
 
     # ページ設定
-    st.set_page_config(page_title="Agent RAG(Anthropic)", page_icon="🤖", layout="wide")
+    st.set_page_config(page_title="Agent RAG(Ollama)", page_icon="🤖", layout="wide")
 
     # サイドバー：画面選択
     with st.sidebar:
-        st.title("Agent RAG (Anthropic)")
+        st.title("Agent RAG (Ollama)")
         st.divider()
 
         # メニュー見出し

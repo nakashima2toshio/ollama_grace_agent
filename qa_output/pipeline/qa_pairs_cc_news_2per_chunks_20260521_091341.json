@@ -1,0 +1,996 @@
+[
+  {
+    "question": "Justin Peckは誰ですか?",
+    "answer": "NYCB resident choreographer and soloist",
+    "chunk_id": "cc_news_2per_chunk_0",
+    "topic": "Justin Peck",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "NYCBとは何ですか?",
+    "answer": "New York City Ballet",
+    "chunk_id": "cc_news_2per_chunk_0",
+    "topic": "NYCB",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "このグループでは、リーダーシップ経験が何らかの形で存在しているか?",
+    "answer": "存在します",
+    "chunk_id": "cc_news_2per_chunk_1",
+    "topic": "グループのリーダーシップ経験",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性はどのようなものであるか?",
+    "answer": "特定のものです",
+    "chunk_id": "cc_news_2per_chunk_1",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "この製品には何らかの種類の暗号化が使用されているか?",
+    "answer": "使用されます",
+    "chunk_id": "cc_news_2per_chunk_1",
+    "topic": "暗号化方式",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "Krohnが会社にどのように関わっている?",
+    "answer": "Krohnは、会社で新しい役割を務めている。",
+    "chunk_id": "cc_news_2per_chunk_2",
+    "topic": "会社",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の詳細について教えてください.",
+    "answer": "製品の詳細については、別のチャンクを参照してください。",
+    "chunk_id": "cc_news_2per_chunk_2",
+    "topic": "製品",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には特定の機能や特性があります。",
+    "chunk_id": "cc_news_2per_chunk_3",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは標準的なサイズです。",
+    "chunk_id": "cc_news_2per_chunk_3",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の使用方法について教えてください",
+    "answer": "製品を使用するには、次のステップを実行してください。",
+    "chunk_id": "cc_news_2per_chunk_3",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、サイズや機能などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_4",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、ขนาดや重量などが示されます。",
+    "chunk_id": "cc_news_2per_chunk_4",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の機能について教えてください?",
+    "answer": "製品の機能については、より詳細な情報をご覧いただけます。",
+    "chunk_id": "cc_news_2per_chunk_4",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "日常生活でどのように使いますか?",
+    "answer": "日常生活では、製品の特性を利用して便利な機能を活用できます。",
+    "chunk_id": "cc_news_2per_chunk_5",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "サイズは何くらいですか?",
+    "answer": "製品のサイズは、さまざまなサイズが用意されています。",
+    "chunk_id": "cc_news_2per_chunk_5",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "どのような利点がありますか?",
+    "answer": "製品には様々な利点があり、日常生活で便利な機能を提供します。",
+    "chunk_id": "cc_news_2per_chunk_5",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色について何ができる?",
+    "answer": "製品にはさまざまな色が使用できます。",
+    "chunk_id": "cc_news_2per_chunk_6",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズに関する情報はどこから取得できる?",
+    "answer": "製品のサイズに関する情報は、製品のパッケージや製品のウェブサイトで確認できます。",
+    "chunk_id": "cc_news_2per_chunk_6",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "スーパーボウルについて教えてください",
+    "answer": "スーパーボウルはアメリカのプロフットボールリーグNFLの決勝大会です。",
+    "chunk_id": "cc_news_2per_chunk_7",
+    "topic": "Super Bowl",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "バレエについて何が言及されていますか",
+    "answer": "バレエは、パートナーと一緒に舞台を共有するアーティストです。",
+    "chunk_id": "cc_news_2per_chunk_7",
+    "topic": "Ballet",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には特定の機能が搭載されています。",
+    "chunk_id": "cc_news_2per_chunk_8",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の使用方法について教えてください?",
+    "answer": "製品を使用する際は、以下のステップに従ってください。",
+    "chunk_id": "cc_news_2per_chunk_8",
+    "topic": "製品の使用方法",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性はサイズと材料で構成されています。",
+    "chunk_id": "cc_news_2per_chunk_9",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "サイズは何を表しますか?",
+    "answer": "サイズは製品の寸法や大きさを表します。",
+    "chunk_id": "cc_news_2per_chunk_9",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "dance shoes は何ですか?",
+    "answer": "ショットアウトされました、そしてブロードウェイダンスセンターと協力して、ミュージカル劇世界の有名人と共同で新しいコレクションをリリースしました。",
+    "chunk_id": "cc_news_2per_chunk_11",
+    "topic": "dance shoes",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "Audition shoe はどのようなタイプの靴ですか?",
+    "answer": "2.5 または 3 ' のヒールがあり、トップの業界専門家が愛しています。",
+    "chunk_id": "cc_news_2per_chunk_11",
+    "topic": "audition shoe",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "ブロードウェイダンスセンターは何ですか?",
+    "answer": "ショットアウトされました、そしてブロードウェイダンスセンターと協力して、ミュージカル劇世界の有名人と共同で新しいコレクションをリリースしました。",
+    "chunk_id": "cc_news_2per_chunk_11",
+    "topic": "Broadway Dance Center",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性について教えてください",
+    "answer": "製品にはさまざまな特性がありますが、主な特性はサイズであり、サイズは重要です。",
+    "chunk_id": "cc_news_2per_chunk_12",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズについて何ですか?",
+    "answer": "製品のサイズは、製品全体の寸法を表します。",
+    "chunk_id": "cc_news_2per_chunk_12",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性の中で最も重要なものは何ですか?",
+    "answer": "製品の特性の中で最も重要なものはサイズです。",
+    "chunk_id": "cc_news_2per_chunk_12",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "私は 一个 Stravinsky Violin Concerto 〗ただ",
+    "answer": "フールスタラクカトンタ・イーァセガス",
+    "chunk_id": "cc_news_2per_chunk_13",
+    "topic": "私は Stravinsky Violin Concerto",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "日本 きただ",
+    "answer": "一个今大んにタールスタラクカトンタ・イーァセガス",
+    "chunk_id": "cc_news_2per_chunk_13",
+    "topic": "日本",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "私は NYCB んだ",
+    "answer": "一个今大んにタールスタラクカトンタ・イーァセガス",
+    "chunk_id": "cc_news_2per_chunk_13",
+    "topic": "私は NYCB",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "私は ラーョグ人。",
+    "answer": "アーョグ人市昨无本んだ",
+    "chunk_id": "cc_news_2per_chunk_14",
+    "topic": "New York City Ballet",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "きは 一业䶦しにーョグ人。",
+    "answer": "ーョグ人市昨无本んだ",
+    "chunk_id": "cc_news_2per_chunk_14",
+    "topic": "Professional Dancer",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "日だ 主た、きれを読です",
+    "answer": "一日だなた、ですのただきれを読です",
+    "chunk_id": "cc_news_2per_chunk_15",
+    "topic": "NYCB",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "一日だ きれを読です",
+    "answer": "一日だなた、ですのただきれを読です",
+    "chunk_id": "cc_news_2per_chunk_15",
+    "topic": "NYCB",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "セマンティックチャンキングとは何ですか?",
+    "answer": "意味の分かれ目や関連性からトピックを抽出すること.",
+    "chunk_id": "cc_news_2per_chunk_16",
+    "topic": "トピック1",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "セマンティックチャンキングの重要性はどのように評価しますか?",
+    "answer": "非常に重要です。詳細で正確な回答が必要です。",
+    "chunk_id": "cc_news_2per_chunk_16",
+    "topic": "トピック2",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "セマンティックチャンキングの対象となるトピックは何ですか?",
+    "answer": "意味分かれ目や関連性からトピックを抽出します。",
+    "chunk_id": "cc_news_2per_chunk_16",
+    "topic": "トピック3",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "テキストから情報を抽出するための手法やツールは何ですか?",
+    "answer": "特定の方法やツールを使用します。",
+    "chunk_id": "cc_news_2per_chunk_17",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意点は何ですか?",
+    "answer": "製品の使用による潜在的なリスクを考慮してください。",
+    "chunk_id": "cc_news_2per_chunk_17",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "バランシンとは何ですか?",
+    "answer": "バランシンは、モダン・ダンスの重要な分野です。",
+    "chunk_id": "cc_news_2per_chunk_18",
+    "topic": "バランシン",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "ロビンスとはどんな作品が有名ですか?",
+    "answer": "ロビンスは、カリフォルニア・スプリングとジプシー・クイーンなどの有名な作品を制作しています。",
+    "chunk_id": "cc_news_2per_chunk_18",
+    "topic": "ロビンス",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "私は 为 だたですに きまたですに",
+    "answer": "查たですでたでたでただとつなですでたきま",
+    "chunk_id": "cc_news_2per_chunk_19",
+    "topic": "省にのるです",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "居ですっだですでたでたきま",
+    "answer": "个グタークントルレウンターカリガベョ",
+    "chunk_id": "cc_news_2per_chunk_19",
+    "topic": "居です",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、材料、サイズ、色などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_20",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、幅、高さ、重量などが示されます。",
+    "chunk_id": "cc_news_2per_chunk_20",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "友情とは何か?",
+    "answer": "友情は、他人との関係で感情的なつながりや理解が生まれることです。",
+    "chunk_id": "cc_news_2per_chunk_21",
+    "topic": "友情",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "情報の重要性は何に依存するか?",
+    "answer": "情報の重要性は特定の状況や目的によって異なります。",
+    "chunk_id": "cc_news_2per_chunk_21",
+    "topic": "情報の重要性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?\n",
+    "answer": "製品には安全なデザインと高品質の材料が使われています。\n",
+    "chunk_id": "cc_news_2per_chunk_22",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意点は何ですか?\n",
+    "answer": "製品を使用するときは、適切な操作方法を守ってください。\n",
+    "chunk_id": "cc_news_2per_chunk_22",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "信頼性とは何か?",
+    "answer": "信頼性とは、情報やアプリケーションの正確さと安定性を表すもの。",
+    "chunk_id": "cc_news_2per_chunk_23",
+    "topic": "信頼性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "スピリットとは何か?",
+    "answer": "スピリットとは、人々が共有する感情的な結束や一致感を表すもの。",
+    "chunk_id": "cc_news_2per_chunk_23",
+    "topic": "スピリット",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、材料、サイズ、機能などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_25",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、幅、高さ、長さを表します。",
+    "chunk_id": "cc_news_2per_chunk_25",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色は何ですか?",
+    "answer": "製品の色は青色です。",
+    "chunk_id": "cc_news_2per_chunk_27",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "製品のサイズは小型です。",
+    "chunk_id": "cc_news_2per_chunk_27",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性について教えてください",
+    "answer": "製品は、安定性と信頼性が高く、使用者に便利な機能を提供します。",
+    "chunk_id": "cc_news_2per_chunk_28",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意点について教えてください",
+    "answer": "製品には、安全上の注意点があります。使用者は注意してください。",
+    "chunk_id": "cc_news_2per_chunk_28",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の使用方法について教えてください",
+    "answer": "製品の使用方法は、公式ドキュメントやサポートサイトで確認できます。",
+    "chunk_id": "cc_news_2per_chunk_28",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、サイズや材料などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_29",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、寸法や重量などが示されます。",
+    "chunk_id": "cc_news_2per_chunk_29",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の材料は何ですか?",
+    "answer": "製品の材料は、さまざまな種類の素材を使用して作られています。",
+    "chunk_id": "cc_news_2per_chunk_29",
+    "topic": "材料",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の機能や仕様",
+    "chunk_id": "cc_news_2per_chunk_30",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品の寸法や重量",
+    "chunk_id": "cc_news_2per_chunk_30",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "製品の寸法や重量",
+    "chunk_id": "cc_news_2per_chunk_30",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "暗号化方式は何ですか?",
+    "answer": "暗号化方式",
+    "chunk_id": "cc_news_2per_chunk_31",
+    "topic": "暗号化方式",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "鍵長はどれくらいですか?",
+    "answer": "鍵長",
+    "chunk_id": "cc_news_2per_chunk_31",
+    "topic": "鍵長",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "利用モードは何ですか?",
+    "answer": "利用モード",
+    "chunk_id": "cc_news_2per_chunk_31",
+    "topic": "利用モード",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色はどのようなものが適切ですか?",
+    "answer": "製品の色は、ブランドイメージや製品の種類に合わせて選択することが適切です。",
+    "chunk_id": "cc_news_2per_chunk_32",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいが適切ですか?",
+    "answer": "製品のサイズは、ユーザーのニーズと製品の種類に合わせて選択することが適切です。",
+    "chunk_id": "cc_news_2per_chunk_32",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色は何ですか?",
+    "answer": "製品の色は、製品のデザインやブランドイメージに合わせて決められます。",
+    "chunk_id": "cc_news_2per_chunk_34",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "製品のサイズは、製品の種類や用途に応じて異なります。",
+    "chunk_id": "cc_news_2per_chunk_34",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "KrohnとAmara Ramasarは誰ですか?",
+    "answer": "KrohnとAmara Ramasarはアメリカのダンス団体であるNew York City Balletの創設者です。",
+    "chunk_id": "cc_news_2per_chunk_35",
+    "topic": "Balanchine",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "バランシネは誰ですか?",
+    "answer": "バランシネはロシア生まれのフランス人バレエ指揮者で、モデrn・ダンスを確立した人物です。",
+    "chunk_id": "cc_news_2per_chunk_35",
+    "topic": "Krohn and Amara Ramasar",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "バレエ団「ニューヨークシティバレエ」がどのような創設者を持っている?",
+    "answer": "バレエ団「ニューヨークシティバレエ」は、KrohnとAmara Ramasarによって創設されました。",
+    "chunk_id": "cc_news_2per_chunk_35",
+    "topic": "Krohn and Amara Ramasar",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "会社への忠誠心については、どのような考え方が適切ですか?",
+    "answer": "会社への忠誠心は重要ですが、それが自分の個人的な価値観や信念と一致しているかを確認することが重要です。",
+    "chunk_id": "cc_news_2per_chunk_36",
+    "topic": "会社への忠誠心",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "職場での考え方については、どのようなアプローチが適切ですか?",
+    "answer": "職場での考え方は、個人の自由性とチームのコラボレーションをバランスすることが重要です。",
+    "chunk_id": "cc_news_2per_chunk_36",
+    "topic": "職場での考え方",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "この会社への忠誠心については、どのような課題が生じる可能性がありますか?",
+    "answer": "会社への忠誠心は、個人の自由性や個人的な価値観と一致しない場合、不快感やコラボレーション障害につながる可能性があります。",
+    "chunk_id": "cc_news_2per_chunk_36",
+    "topic": "会社への忠誠心",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "研究方法について教えてください。",
+    "answer": "実験設計を使用します。",
+    "chunk_id": "cc_news_2per_chunk_37",
+    "topic": "研究方法",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "研究内容について説明してください。",
+    "answer": "<u>研究内容（第一章）</u>",
+    "chunk_id": "cc_news_2per_chunk_37",
+    "topic": "研究内容",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "研究目的は何ですか？",
+    "answer": "研究目的は第一章で説明されています。",
+    "chunk_id": "cc_news_2per_chunk_37",
+    "topic": "研究目的",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "研究対象について説明してください",
+    "answer": "この章では、研究対象について説明します。",
+    "chunk_id": "cc_news_2per_chunk_38",
+    "topic": "研究対象",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "重要度について説明してください",
+    "answer": "この章は非常に重要です。",
+    "chunk_id": "cc_news_2per_chunk_38",
+    "topic": "重要度",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "複雑さについて説明してください",
+    "answer": "この章の複雑さは中等です。",
+    "chunk_id": "cc_news_2per_chunk_38",
+    "topic": "複雑さ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性はサイズと材料で構成されています。",
+    "chunk_id": "cc_news_2per_chunk_39",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "サイズは何種類ありますか?",
+    "answer": "サイズは小型、中型、大型に分けられます。",
+    "chunk_id": "cc_news_2per_chunk_39",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、材料、サイズ、機能などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_41",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "製品のサイズは、幅、高さ、重量などが示されます。",
+    "chunk_id": "cc_news_2per_chunk_41",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には特定の機能があります。",
+    "chunk_id": "cc_news_2per_chunk_42",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは標準的なサイズです。",
+    "chunk_id": "cc_news_2per_chunk_42",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には安全上の注意が含まれています。",
+    "chunk_id": "cc_news_2per_chunk_43",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意は何ですか?",
+    "answer": "製品には暗号化方式があります。",
+    "chunk_id": "cc_news_2per_chunk_43",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の使用モードは何ですか?",
+    "answer": "製品の使用モードは利用モードです。",
+    "chunk_id": "cc_news_2per_chunk_43",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には特定の機能や特性があります。",
+    "chunk_id": "cc_news_2per_chunk_44",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは標準的なサイズです。",
+    "chunk_id": "cc_news_2per_chunk_44",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の使用方法について教えてください",
+    "answer": "製品を使用するには、以下のステップを実行してください。",
+    "chunk_id": "cc_news_2per_chunk_44",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色は何ですか?",
+    "answer": "色は製品のデザインやブランドイメージに合わせたものです。",
+    "chunk_id": "cc_news_2per_chunk_45",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "サイズは製品の種類や目的によって異なります。",
+    "chunk_id": "cc_news_2per_chunk_45",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色は何ですか?",
+    "answer": "色は製品のデザインに合わせて決まります。",
+    "chunk_id": "cc_news_2per_chunk_46",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "サイズは製品の種類によって異なります。",
+    "chunk_id": "cc_news_2per_chunk_46",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、製品の機能や性能などを表します。",
+    "chunk_id": "cc_news_2per_chunk_47",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意点は何ですか?",
+    "answer": "安全上の注意点は、製品が安全に使用できるようにするための重要な情報です。",
+    "chunk_id": "cc_news_2per_chunk_47",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "セマンティックチャンキングプロトコルの目的は何ですか?",
+    "answer": "情報の抽出と処理を支援するために使用される技術です。",
+    "chunk_id": "cc_news_2per_chunk_48",
+    "topic": "セマンティックチャンキング",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "メッセージは何に使用されますか?",
+    "answer": "人工知能や機械学習などのアプリケーションで情報の抽出と処理を支援するために使用されます。",
+    "chunk_id": "cc_news_2per_chunk_48",
+    "topic": "メッセージ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "セマンティックチャンキングプロトコルはどのような複雑さを持っていますか?",
+    "answer": "中等度の複雑さです。",
+    "chunk_id": "cc_news_2per_chunk_48",
+    "topic": "複雑さ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "バリューとは何ですか?",
+    "answer": "バリューは、製品の特性や機能を表すものです。",
+    "chunk_id": "cc_news_2per_chunk_49",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意点はどれですか?",
+    "answer": "製品の使用時には、安全上の注意点を考慮することが重要です。",
+    "chunk_id": "cc_news_2per_chunk_49",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には特定の機能や特性があります。",
+    "chunk_id": "cc_news_2per_chunk_51",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズについて教えてください",
+    "answer": "製品のサイズは標準的な寸法です。",
+    "chunk_id": "cc_news_2per_chunk_51",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは幅高さ×長さです。",
+    "chunk_id": "cc_news_2per_chunk_51",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、材料、サイズ、機能などです。",
+    "chunk_id": "cc_news_2per_chunk_52",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、幅、高さ、重量などです。",
+    "chunk_id": "cc_news_2per_chunk_52",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "製品のサイズは、具体的な値を示すものではありませんが、寸法や重量などの測定値で表されます。",
+    "chunk_id": "cc_news_2per_chunk_52",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、製品の機能や性能について説明します。",
+    "chunk_id": "cc_news_2per_chunk_54",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意点は何ですか?",
+    "answer": "安全上の注意点は、製品を使用する際に気をつけるべき事項です。",
+    "chunk_id": "cc_news_2per_chunk_54",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品には特定の機能があります。",
+    "chunk_id": "cc_news_2per_chunk_55",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズはどれくらいですか?",
+    "answer": "製品のサイズは標準です。",
+    "chunk_id": "cc_news_2per_chunk_55",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "ペットは何ですか?",
+    "answer": "動物",
+    "chunk_id": "cc_news_2per_chunk_57",
+    "topic": "ペット",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品とは何か?",
+    "answer": "商品",
+    "chunk_id": "cc_news_2per_chunk_57",
+    "topic": "製品",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、サイズや材料などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_58",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、幅、高さ、重量などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_58",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性とはどのような意味を持ちますか?",
+    "answer": "製品の特性とは、製品が持つ機能や特徴を指します。",
+    "chunk_id": "cc_news_2per_chunk_59",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "サイズは何に等しい?",
+    "answer": "サイズは寸法や大きさに等しくなります。",
+    "chunk_id": "cc_news_2per_chunk_59",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、材料、サイズ、色などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_60",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "安全上の注意は何ですか?",
+    "answer": "安全上の注意は、使用方法や注意事項を確認することです。",
+    "chunk_id": "cc_news_2per_chunk_60",
+    "topic": "安全上の注意",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の特性は何ですか?",
+    "answer": "製品の特性は、サイズや材料などが含まれます。",
+    "chunk_id": "cc_news_2per_chunk_61",
+    "topic": "製品の特性",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何ですか?",
+    "answer": "製品のサイズは、幅、高さ、重量などが示されます。",
+    "chunk_id": "cc_news_2per_chunk_61",
+    "topic": "サイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品のサイズは何より大きいか?",
+    "answer": "サイズ",
+    "chunk_id": "cc_news_2per_chunk_62",
+    "topic": "製品のサイズ",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "製品の色はどれが最も適切か?",
+    "answer": "色",
+    "chunk_id": "cc_news_2per_chunk_62",
+    "topic": "製品の色",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "Roy Kaiserは何ですか?",
+    "answer": "ロイ・カイザーはネバダ・バレエ劇団の創設者です。",
+    "chunk_id": "cc_news_2per_chunk_64",
+    "topic": "Nevada Ballet Theatre",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "Nevada Ballet Theatreはどのような劇場ですか?",
+    "answer": "ネバダ・バレエ劇団は、ネバダ州リノで開催されるバレエ劇場です。",
+    "chunk_id": "cc_news_2per_chunk_64",
+    "topic": "Nevada Ballet Theatre",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "Roy Kaiserは何を目指しているのか?",
+    "answer": "ロイ・カイザーはバレエの創始者として、バレエを普及させることを目指しています。",
+    "chunk_id": "cc_news_2per_chunk_64",
+    "topic": "Roy Kaiser",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "Roy Kaiserは何をしていた?",
+    "answer": "ロイ・ケーザーはペンシルベニア・バレエの芸術監督だった。",
+    "chunk_id": "cc_news_2per_chunk_65",
+    "topic": "Roy Kaiser",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "2014年にロイ・ケーザーが退任した後、ペンシルベニア・バレエは何をしていた?",
+    "answer": "2014年にロイ・ケーザーが退任した後、ペンシルベニア・バレエは新しい芸術監督を迎えることになりました。",
+    "chunk_id": "cc_news_2per_chunk_65",
+    "topic": "Pennsylvania ballet",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエの芸術監督としてのロイ・ケーザーの役割について?",
+    "answer": "ペンシルベニア・バレエの芸術監督として、ロイ・ケーザーはバレエの発展と改善に多大な貢献をしてきました。",
+    "chunk_id": "cc_news_2per_chunk_65",
+    "topic": "Roy Kaiser",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "私は 中文子。",
+    "answer": "叉溌为 46年日的代公国ンターだ",
+    "chunk_id": "cc_news_2per_chunk_66",
+    "topic": "NBT",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "本京し、 きかを機とるは日期タース",
+    "answer": "和尿一丈、 两大子中機とるだ",
+    "chunk_id": "cc_news_2per_chunk_66",
+    "topic": "Kaiser",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "两大子中機とる、 一丈タース",
+    "answer": "和尿一丈、 两大子中機とるだ",
+    "chunk_id": "cc_news_2per_chunk_66",
+    "topic": "Kaiser",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "私は 竮子の 90丈日。",
+    "answer": "消这ター・ンタリスダルェーマスクメガ",
+    "chunk_id": "cc_news_2per_chunk_67",
+    "topic": "柒二対武",
+    "dataset_type": "cc_news_2per_chunks"
+  },
+  {
+    "question": "日本は 一三。",
+    "answer": "一三ルーェタリスダルクカセブント・ホ",
+    "chunk_id": "cc_news_2per_chunk_67",
+    "topic": "日本",
+    "dataset_type": "cc_news_2per_chunks"
+  }
+]

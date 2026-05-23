@@ -101,7 +101,7 @@ flowchart TB
     end
 
     subgraph EXTERNAL["外部サービス層"]
-        OLLAMA_LLM["Ollama LLM\nllama3.2\n:11434"]
+        OLLAMA_LLM["Ollama LLM\ngemma4:e4b\n:11434"]
         OLLAMA_EMB["Ollama Embedding\nnomic-embed-text\n768次元"]
         QDRANT["Qdrant Vector DB<br/>コサイン類似度"]
         REDIS["Redis<br/>Celeryブローカー"]
@@ -468,7 +468,7 @@ flowchart TB
 ```python
 async def chunks_all_async(
     text: str,
-    model: str = "llama3.2",
+    model: str = "gemma4:e4b",
     max_workers: int = 8,
     block_size: int = 1000,
     checkpoint_manager: Optional[CheckpointManager] = None,
@@ -482,7 +482,7 @@ async def chunks_all_async(
 | パラメータ           | 型                          | デフォルト  | 説明                             |
 | -------------------- | --------------------------- | ----------- | -------------------------------- |
 | `text`               | str                         | -           | 分割対象テキスト                 |
-| `model`              | str                         | "llama3.2"  | 使用するOllama LLMモデル         |
+| `model`              | str                         | "gemma4:e4b"  | 使用するOllama LLMモデル         |
 | `max_workers`        | int                         | 8           | 非同期並列ワーカー数             |
 | `block_size`         | int                         | 1000        | Step1ブロックサイズ（文字数）    |
 | `checkpoint_manager` | Optional[CheckpointManager] | None        | チェックポイント管理             |
@@ -515,7 +515,7 @@ from chunking.csv_text_to_chunks_text_csv import chunks_all_async
 text = open("data/document.txt", "r").read()
 chunks = asyncio.run(chunks_all_async(
     text=text,
-    model="llama3.2",
+    model="gemma4:e4b",
     max_workers=8,
     block_size=1000,
     output_file="chunks_output/result.csv"
@@ -900,7 +900,7 @@ uv run streamlit run agent_rag.py
 python -m chunking.csv_text_to_chunks_text_csv \
   --input-file OUTPUT/cc_news_1per.csv \
   --output chunks_output \
-  --model llama3.2 \
+  --model gemma4:e4b \
   --workers 8 \
   --block-size 500
 
@@ -975,7 +975,7 @@ Ollama LLM / Embedding関連の設定。
 
 ```python
 class GeminiConfig:
-    DEFAULT_MODEL = "llama3.2"
+    DEFAULT_MODEL = "gemma4:e4b"
     EMBEDDING_MODEL = "nomic-embed-text"
     EMBEDDING_DIMS = 768
     DEFAULT_THINKING_LEVEL = "low"
@@ -985,7 +985,7 @@ class GeminiConfig:
 
 | キー              | デフォルト値     | 説明                   |
 | ----------------- | ---------------- | ---------------------- |
-| `DEFAULT_MODEL`   | "llama3.2"       | デフォルトLLMモデル    |
+| `DEFAULT_MODEL`   | "gemma4:e4b"       | デフォルトLLMモデル    |
 | `EMBEDDING_MODEL` | "nomic-embed-text" | Embeddingモデル        |
 | `EMBEDDING_DIMS`  | 768              | Embedding次元数        |
 
@@ -1037,7 +1037,7 @@ Celery並列処理設定。
 # python -m chunking.csv_text_to_chunks_text_csv \
 #   --input-file OUTPUT/wikipedia_ja_1per.csv \
 #   --output chunks_output \
-#   --model llama3.2 \
+#   --model gemma4:e4b \
 #   --workers 8
 
 # Step 2: Q/A生成 + Qdrant登録
@@ -1062,7 +1062,7 @@ text = load_text_from_csv("OUTPUT/cc_news_1per.csv")
 # チャンク分割
 chunks = asyncio.run(chunks_all_async(
     text=text,
-    model="llama3.2",
+    model="gemma4:e4b",
     max_workers=8,
     output_file="chunks_output/result.csv"
 ))
@@ -1258,6 +1258,7 @@ __all__ = [
 | 1.5        | Gemini API対応、SemanticCoverageクラスによるチャンク分割                                                                                                                                                                                       |
 | 2.0        | フォーマット仕様書準拠で全面再構成。LLMベース3段階チャンク分割（csv_text_to_chunks_text_csv.py）導入。Gemini Embedding（gemini-embedding-001, 3072次元）に統一。make_qa_register_qdrant.py統合パイプライン追加。IPO詳細追加。                   |
 | 2.1        | Ollama（ローカルLLM）に全面移行。llama3.2 / nomic-embed-text（768次元）。openai==1.100.2（Ollama OpenAI互換）使用。Python 3.13.x対応。uv管理に移行。                                                                                           |
+| 2.2        | デフォルトモデルを llama3.2 → gemma4:e4b に変更（2026-05-23）                                                                                                                                                                                   |
 
 ---
 
@@ -1269,7 +1270,7 @@ flowchart LR
     MAKE_QA["make_qa_register_qdrant.py"]
 
     subgraph OLLAMA["openai（Ollama OpenAI互換）"]
-        OLLAMA_LLM[openai.AsyncOpenAI<br/>LLM生成\nllama3.2]
+        OLLAMA_LLM[openai.AsyncOpenAI<br/>LLM生成\ngemma4:e4b]
         OLLAMA_EMB[Embedding API<br/>nomic-embed-text\n768次元]
     end
 
@@ -1320,7 +1321,7 @@ flowchart LR
 | カテゴリ       | 技術                                                        |
 | -------------- | ----------------------------------------------------------- |
 | **言語**       | Python 3.13.x                                               |
-| **LLM**        | Ollama / llama3.2（ローカル）                               |
+| **LLM**        | Ollama / gemma4:e4b（ローカル）                               |
 | **Embedding**  | Ollama / nomic-embed-text（768次元）                        |
 | **ベクトルDB** | Qdrant（コサイン類似度、Hybrid Search対応）                 |
 | **並列処理**   | Celery + Redis / asyncio                                    |

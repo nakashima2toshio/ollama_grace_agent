@@ -11,6 +11,7 @@ Main Components:
 - confidence: Confidence score calculation (Phase 2)
 - intervention: Human-in-the-loop intervention logic (Phase 3)
 - replan: Adaptive replanning strategies (Phase 4)
+- benchmark: Performance measurement across LLM providers (Phase 5)
 """
 
 __version__ = "0.1.0"
@@ -106,6 +107,16 @@ from grace.replan import (
     create_replan_orchestrator,
 )
 
+# Benchmark (Phase 5)
+from grace.benchmark import (
+    BENCHMARK_QUERIES,
+    CSV_HEADERS,
+    BENCHMARK_CSV_PATH,
+    BenchmarkSession,
+    BenchmarkLogger,
+    BenchmarkRunner,
+)
+
 __all__ = [
     # Version
     "__version__",
@@ -183,4 +194,12 @@ __all__ = [
     "ReplanOrchestrator",
     "create_replan_manager",
     "create_replan_orchestrator",
+
+    # Benchmark (Phase 5)
+    "BENCHMARK_QUERIES",
+    "CSV_HEADERS",
+    "BENCHMARK_CSV_PATH",
+    "BenchmarkSession",
+    "BenchmarkLogger",
+    "BenchmarkRunner",
 ]

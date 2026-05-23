@@ -338,7 +338,7 @@ docker compose down
 [ ] docker compose up -d で Qdrant / Redis が起動
 [ ] curl http://localhost:6333/health が正常応答
 [ ] ollama serve が起動中
-[ ] ollama list に llama3.2 が表示される
+[ ] ollama list に gemma4:e4b が表示される
 [ ] ./start_celery.sh status でワーカーが起動中
 [ ] uv run streamlit run agent_rag.py が正常起動
 [ ] ブラウザで http://localhost:8501 にアクセス可能

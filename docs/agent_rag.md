@@ -126,10 +126,10 @@ UI のセレクトボックスには以下が表示されます。
 
 | モデル名 | サイズ目安 | tool_calls | 特徴 | 推奨用途 |
 |---------|----------|:----------:|------|---------|
-| **`llama3.2`** | 約 2 GB | ✅ | ⭐ **デフォルト**。テキスト生成・Q/A 生成 | 通常の RAG・エージェント |
+| **`llama3.2`** | 約 2 GB | ✅ | テキスト生成・Q/A 生成 | 通常の RAG・エージェント |
 | `llama3.2:3b` | 約 2 GB | ✅ | 軽量版 3B パラメータ | 高速処理・低スペックマシン |
 | `llama3.1` | 約 4.7 GB | ✅ | 大容量・高精度 | 複雑なタスク |
-| `gemma4:e4b` | 約 3.3 GB | ✅ | Google Gemma 4・4B・128k context | 日本語 RAG・エージェント |
+| **`gemma4:e4b`** | 約 3.3 GB | ✅ | ⭐ **デフォルト**。Google Gemma 4・4B・128k context | 日本語 RAG・エージェント |
 | `qwen2.5:7b` | 約 4.4 GB | ✅ | 多言語対応（中国語・日本語） | 多言語 RAG |
 | `mistral` | 約 4.1 GB | ✅ | 汎用・高速 | 汎用エージェント |
 | `phi3` | 約 2.2 GB | ❌ | Microsoft 製・軽量 | 軽量テキスト生成 |
@@ -137,7 +137,7 @@ UI のセレクトボックスには以下が表示されます。
 
 > **モデルの事前ダウンロード** が必要です:
 > ```bash
-> ollama pull llama3.2
+> ollama pull gemma4:e4b
 > ollama pull gemma4:e4b          # Gemma 4 4B
 > ollama pull nomic-embed-text   # Embedding 用
 > ```
@@ -149,7 +149,7 @@ UI のセレクトボックスには以下が表示されます。
 | `nomic-embed-text` | 約 274 MB | 768次元 | Ollama ローカル Embedding デフォルト |
 | `fastembed`（内蔵） | - | 384次元 | fastembed ライブラリ経由（オフライン対応） |
 
-### llama3.2 固有の制約と実装上の対策
+### Ollama モデルの制約（llama3.2 / gemma4:e4b 共通）
 
 | 制約 | 対策 |
 |------|------|
@@ -201,7 +201,7 @@ flowchart TB
     end
 
     subgraph EXTERNAL["外部サービス（ローカル）"]
-        OLLAMA["Ollama LLM サーバー\n:11434\nllama3.2（デフォルト）"]
+        OLLAMA["Ollama LLM サーバー\n:11434\ngemma4:e4b（デフォルト）"]
         QDRANT["Qdrant Vector DB\n:6333\n（Docker）"]
         REDIS["Redis\n:6379\nCelery ブローカー"]
         FS["ローカルファイルシステム"]
@@ -348,7 +348,7 @@ def main() -> None
 | キー | 表示ラベル | 対応関数 | LLM |
 |------|-----------|---------|-----|
 | `explanation` | 📖 説明 | `show_system_explanation_page` | - |
-| `qdrant_search` | 🔎 Qdrant検索 | `show_qdrant_search_page` | Ollama（llama3.2） |
+| `qdrant_search` | 🔎 Qdrant検索 | `show_qdrant_search_page` | Ollama（gemma4:e4b） |
 | `agent_chat` | 🤖 Agent(ReAct+Reflection) | `show_agent_chat_page` | Ollama（選択可） |
 | `grace_chat` | [最新] 自律型Agent(Plan+Executor) | `show_grace_chat_page` | Ollama（選択可） |
 | `log_viewer` | 📊 未回答ログ | `show_log_viewer_page` | - |
@@ -468,16 +468,16 @@ RAG_DATA_DOCS = [
 ```python
 class GeminiConfig:                          # 名前は旧来の名残。実態は Ollama 設定
     AVAILABLE_MODELS = [
-        "llama3.2",       # ⭐ デフォルト
+        "llama3.2",
         "llama3.2:3b",
         "llama3.1",
-        "gemma4:e4b",     # Google Gemma 4 4B（tool calling 対応）
+        "gemma4:e4b",     # ⭐ デフォルト
         "qwen2.5:7b",
         "mistral",
         "phi3",           # tool calling 非対応
         "gemma2",         # tool calling 非対応
     ]
-    DEFAULT_MODEL = "llama3.2"
+    DEFAULT_MODEL = "gemma4:e4b"
     EMBEDDING_MODEL = "nomic-embed-text"     # Ollama Embedding
 
 class LLMProviderConfig:
@@ -507,7 +507,7 @@ streamlit run agent_rag.py --server.port 8501
 # 1. Ollama サーバーが起動しているか
 curl http://localhost:11434/api/tags
 
-# 2. llama3.2 がダウンロード済みか
+# 2. gemma4:e4b がダウンロード済みか
 ollama list
 
 # 3. Docker（Qdrant + Redis）が起動しているか
@@ -561,6 +561,7 @@ uv run streamlit run agent_rag.py --server.port 8501
 | 2.0 | GRACE自律型エージェントページ追加。ログビューアページ追加 |
 | 3.0 | RAGデータ作成ページ追加。Qdrant CRUDページ追加（仮実装）。メニュー構成を7ページに拡張 |
 | **4.0** | **LLM バックエンドを Ollama（ローカル）に移行**。`GeminiConfig.AVAILABLE_MODELS` を Ollama モデル一覧に変更。`LLMProviderConfig.DEFAULT_LLM_PROVIDER` を `"ollama"` に変更。ページタイトルを "Agent RAG(Anthropic)" に更新。llama3.2 固有バグへの対策実装（`_resolve_schema_refs`, JSON モード, regex float 抽出）。 |
+| **4.1** | デフォルトモデルを llama3.2 → gemma4:e4b に変更（2026-05-23） |
 
 ---
 
@@ -594,7 +595,7 @@ flowchart LR
     end
 
     subgraph INFRA["インフラ（ローカル）"]
-        OLLAMA_SRV["Ollama :11434\nllama3.2"]
+        OLLAMA_SRV["Ollama :11434\ngemma4:e4b"]
         QDRANT_SRV["Qdrant :6333\n(Docker)"]
         REDIS_SRV["Redis :6379\n(Docker)"]
     end

@@ -7,7 +7,7 @@
 # Agent RAG システム
 
 本システムは、「自律型 RAG エージェント」および統合管理プラットフォームです。
-システムの特徴（ReAct + Reflection、フルスクラッチ実装、Ollama / llama3.2（ローカル）対応）です。
+システムの特徴（ReAct + Reflection、フルスクラッチ実装、Ollama / gemma4:e4b（ローカル）対応）です。
 StreamlitベースのUIを通じて、データの取得・ベクトル化から、Qdrant データベース管理、
 そして高度なエージェント対話まで、RAG パイプライン全体を一気通貫で管理・運用することができます。
 
@@ -86,7 +86,7 @@ StreamlitベースのUIを通じて、データの取得・ベクトル化から
 
 ### 1.1 本モジュールの目的
 
-`agent_rag.py` は、**Ollama / llama3.2（ローカル）** に対応したRAG（Retrieval-Augmented Generation）システムの統合管理ツールです。
+`agent_rag.py` は、**Ollama / gemma4:e4b（ローカル）** に対応したRAG（Retrieval-Augmented Generation）システムの統合管理ツールです。
 
 **一言で言うと**: Ollama活用型RAG Q&A生成・Qdrant管理、および **ReAct型エージェント** による対話を実現する統合Streamlitアプリケーション
 
@@ -109,10 +109,10 @@ StreamlitベースのUIを通じて、データの取得・ベクトル化から
 | 画面             | アイコン | 機能概要                                                                                                   |
 | ---------------- | -------- | ---------------------------------------------------------------------------------------------------------- |
 | 説明             | 📖       | システムのデータフロー・ディレクトリ構造を表示                                                             |
-| エージェント対話 | 🤖       | **ReAct Agent** (llama3.2) との対話。ナレッジベース検索 + **Reflection (自己推敲)** による高品質な回答。 |
+| エージェント対話 | 🤖       | **ReAct Agent** (gemma4:e4b) との対話。ナレッジベース検索 + **Reflection (自己推敲)** による高品質な回答。 |
 | 未回答ログ       | 📊       | エージェントが回答できなかった質問のログ分析                                                               |
 | RAGデータDL      | 📥       | HuggingFace/ローカルファイルからデータ取得・前処理                                                         |
-| Q/A生成          | 🤖       | **llama3.2** によるQ&Aペア自動生成（Celery並列処理対応）                                           |
+| Q/A生成          | 🤖       | **gemma4:e4b** によるQ&Aペア自動生成（Celery並列処理対応）                                           |
 | CSVデータ登録    | 📥       | **Ollama Embedding / nomic-embed-text（768次元）** でベクトル化・登録・コレクション統合                                       |
 | Qdrantデータ管理 | 🗄️     | Qdrantコレクション内容の閲覧 (Show-Qdrant)                                                                 |
 | Qdrant検索       | 🔎       | セマンティック検索単体のテスト・AI応答生成                                                                 |
@@ -230,7 +230,7 @@ graph TB
     end
 
     subgraph External
-        Ollama[Ollama\nllama3.2\n:11434]
+        Ollama[Ollama\ngemma4:e4b\n:11434]
         Qdrant[Qdrant Vector DB]
     end
 
@@ -317,7 +317,7 @@ graph TB
 
 #### `agent_chat_page.py` (エージェント対話)
 
-* **機能**: llama3.2 を用いたチャットインターフェース。
+* **機能**: gemma4:e4b を用いたチャットインターフェース。
 * **特徴**:
   * **ReActループ**: 思考(Thought)と行動(Action)の可視化。
   * **Reflection**: 回答案生成後に自己評価・修正を行い、ハルシネーションの低減とスタイル統一を実現。
@@ -875,3 +875,11 @@ graph TD
     Tools --> |Search| QdrantSvc
     QdrantSvc --> |Query| QdrantDB
 ```
+
+---
+
+## 変更履歴
+
+| バージョン | 内容 |
+| :--------- | :--- |
+| v2.2       | デフォルトモデルを llama3.2 → gemma4:e4b に変更 |

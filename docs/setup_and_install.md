@@ -1,7 +1,7 @@
 # セットアップ・インストール手順書
 
 **プロジェクト**: ollama_grace_agent（GRACE Agent + RAG システム）  
-**LLM**: Ollama（ローカル実行）デフォルトモデル: `llama3.2`  
+**LLM**: Ollama（ローカル実行）デフォルトモデル: `gemma4:e4b`  
 **作成日**: 2026-05-21
 
 ---
@@ -70,7 +70,7 @@ flowchart TB
 | コンポーネント | 役割 | 実行場所 |
 |--------------|------|---------|
 | Streamlit | Web UI（agent_rag.py） | Python プロセス |
-| Ollama | LLM・Embedding サーバー（llama3.2） | ローカルプロセス |
+| Ollama | LLM・Embedding サーバー（gemma4:e4b） | ローカルプロセス |
 | Qdrant | ベクトル DB（RAG 検索） | Docker コンテナ |
 | Redis | Celery タスクブローカー・結果保存 | Docker コンテナ |
 | Celery | Q/A 生成などのバックグラウンドタスク | Python プロセス |
@@ -96,7 +96,7 @@ flowchart TB
 | RAM | 8 GB | 16 GB 以上 |
 | ディスク空き | 10 GB | 20 GB 以上 |
 
-> llama3.2 モデルは約 2 GB。nomic-embed-text は約 274 MB。
+> gemma4:e4b モデルは約 3.3 GB。nomic-embed-text は約 274 MB。
 
 ### 必須ソフトウェア一覧
 
@@ -237,7 +237,10 @@ ollama --version   # → ollama version 0.x.x
 #### 必要モデルのダウンロード
 
 ```bash
-# テキスト生成モデル（デフォルト・約 2 GB）
+# テキスト生成モデル（デフォルト・推奨・約 3.3 GB）
+ollama pull gemma4:e4b
+
+# テキスト生成モデル（llama3.2・約 2 GB）
 ollama pull llama3.2
 
 # Embedding モデル（約 274 MB）
@@ -248,6 +251,7 @@ ollama pull nomic-embed-text
 ```bash
 ollama list
 # NAME                  ID            SIZE    MODIFIED
+# gemma4:e4b            ...           3.3 GB  ...
 # llama3.2:latest       ...           2.0 GB  ...
 # nomic-embed-text:...  ...           274 MB  ...
 ```
@@ -389,7 +393,7 @@ ollama serve
 接続確認:
 ```bash
 curl http://localhost:11434/api/tags
-# → {"models":[{"name":"llama3.2:latest",...},...]}
+# → {"models":[{"name":"gemma4:e4b",...},...]}
 ```
 
 ---
@@ -591,7 +595,7 @@ docker compose -f docker-compose/docker-compose.yml down
 
 ```
 [ ] ollama serve が起動中（curl http://localhost:11434/api/tags が応答）
-[ ] ollama list に llama3.2 が表示される
+[ ] ollama list に gemma4:e4b が表示される
 [ ] ollama list に nomic-embed-text が表示される
 [ ] docker compose ps で qdrant が Up (healthy)
 [ ] docker compose ps で redis が Up (healthy)
@@ -626,11 +630,11 @@ ps aux | grep ollama
 pkill ollama; ollama serve
 ```
 
-### `model 'llama3.2' does not exist` エラー
+### `model 'gemma4:e4b' does not exist` エラー
 
 ```bash
 # モデルをダウンロード
-ollama pull llama3.2
+ollama pull gemma4:e4b
 ollama pull nomic-embed-text
 ```
 
@@ -681,7 +685,7 @@ uv sync
 
 ### `ExecutionPlan` ValidationError（GRACE Agent エラー）
 
-llama3.2 は `$ref`/`$defs` を含む複雑な JSON スキーマを解釈できません。  
+llama3.2 / gemma4:e4b 等のOllama小型モデル は `$ref`/`$defs` を含む複雑な JSON スキーマを解釈できません。  
 `helper/helper_llm.py` の `_resolve_schema_refs()` が自動解決します。  
 詳細: `docs/migration_openai2ollama.md` §1-4 参照。
 
@@ -696,7 +700,7 @@ Celery ワーカーが起動していない可能性があります:
 
 ### `could not convert string to float` エラー（信頼度スコア）
 
-`grace/confidence.py` で llama3.2 が自然言語付きで数値を返した場合のエラー。  
+`grace/confidence.py` で llama3.2 / gemma4:e4b 等のOllama小型モデル が自然言語付きで数値を返した場合のエラー。  
 正規表現による抽出（`re.search(r"[01]?\.\d+|\b[01]\b", text)`）が実装済みです。  
 エラーが継続する場合は `docs/llm_api_comparison_v3.md` §16-3 を参照。
 

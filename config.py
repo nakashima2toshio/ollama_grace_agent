@@ -423,8 +423,8 @@ class GeminiConfig:
         "gemma2",              # Google製軽量
     ]
 
-    # デフォルトモデル: 環境変数 OLLAMA_DEFAULT_MODEL → CLI引数(startup_model) → "llama3.2"
-    DEFAULT_MODEL: str = os.getenv("OLLAMA_DEFAULT_MODEL", "llama3.2")
+    # デフォルトモデル: 環境変数 OLLAMA_DEFAULT_MODEL → CLI引数(startup_model) → "gemma4:e4b"
+    DEFAULT_MODEL: str = os.getenv("OLLAMA_DEFAULT_MODEL", "gemma4:e4b")
 
     # Embeddingモデル（Ollama / nomic-embed-text）
     EMBEDDING_MODEL: str = "nomic-embed-text"

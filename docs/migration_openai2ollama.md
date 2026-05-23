@@ -58,7 +58,7 @@ client = OpenAI(
 ```python
 # Ollama
 response = client.chat.completions.create(
-    model="llama3.2",
+    model="gemma4:e4b",
     messages=[
         {"role": "system", "content": "あなたは..."},
         {"role": "user",   "content": prompt}
@@ -119,7 +119,7 @@ messages = [
     )},
 ]
 response = client.chat.completions.create(
-    model="llama3.2",
+    model="gemma4:e4b",
     messages=messages,
     max_tokens=4096,
     temperature=0.1,
@@ -223,7 +223,7 @@ vector = response.data[0].embedding  # 768次元
 
 | 用途目安 | OpenAI（移植元） | Ollama（移植先） |
 |---|---|---|
-| **推奨デフォルト** | `gpt-4o-mini` | **`llama3.2`** |
+| **推奨デフォルト** | `gpt-4o-mini` | **`gemma4:e4b`** |
 | 最高性能 | `gpt-4o` | `llama3.1:70b` |
 | Embedding | `text-embedding-3-large` (3072次) | `nomic-embed-text` (768次) |
 | Tool Use 対応 | 全モデル | `llama3.2`, `qwen2.5:7b`, `mistral-nemo` |
@@ -264,7 +264,7 @@ self.llm = create_llm_client("ollama", default_model=self.model_name)
 result: ExecutionPlan = llm.generate_structured(
     prompt=prompt,
     response_schema=ExecutionPlan,
-    model="llama3.2",
+    model="gemma4:e4b",
     max_tokens=4096,
     temperature=0.1,
 )
@@ -289,7 +289,7 @@ JSON 出力が必要な場合は明示的に渡すこと。
 ```python
 text = llm.generate_content(
     prompt=prompt,
-    model="llama3.2",
+    model="gemma4:e4b",
     max_tokens=4096,
     temperature=0.1,
     response_format={"type": "json_object"},
@@ -310,14 +310,14 @@ python a30_qdrant_registration.py --recreate --limit 100
 # config/grace_config.yml 変更後
 llm:
   provider: "ollama"
-  model: "llama3.2"
+  model: "gemma4:e4b"
 embedding:
   provider: "ollama"
   model: "nomic-embed-text"
   dimensions: 768
 ollama:
   base_url: "http://localhost:11434/v1"
-  llm_model: "llama3.2"
+  llm_model: "gemma4:e4b"
   embedding_model: "nomic-embed-text"
   embedding_dims: 768
 ```
@@ -325,7 +325,7 @@ ollama:
 ### コツ⑦ Tool Use 対応モデルを確認する
 
 ```bash
-ollama pull llama3.2         # 推奨デフォルト
+ollama pull gemma4:e4b       # 推奨デフォルト
 ollama pull llama3.1:8b      # 性能・速度バランス
 ollama pull qwen2.5:7b       # 日本語対応良好
 ollama pull mistral-nemo     # 文書処理向け
@@ -349,16 +349,16 @@ QDRANT_URL=http://localhost:6333
 |---|---|---|---|---|
 | **1** | `helper/helper_llm.py` | クラス追加・修正 | `OllamaClient` 追加、`_resolve_schema_refs()` 追加、`generate_structured()` にフラットスキーマ適用、`generate_content()` に `response_format` kwarg 追加、`DEFAULT_LLM_PROVIDER="ollama"` | ✅ |
 | **1** | `helper/helper_embedding.py` | クラス追加 | `OllamaEmbedding` 追加、デフォルト `"ollama"` | ✅ |
-| **1** | `grace/config.py` | 設定変更 | `LLMConfig.model="llama3.2"`、`EmbeddingConfig.dims=768`、`OllamaConfig` 追加 | ✅ |
+| **1** | `grace/config.py` | 設定変更 | `LLMConfig.model="gemma4:e4b"`、`EmbeddingConfig.dims=768`、`OllamaConfig` 追加 | ✅ |
 | **1** | `config/grace_config.yml` | 設定変更 | llm/embedding プロバイダー・モデルを更新 | ✅ |
-| **1** | `config.py` | 設定変更 | `GeminiConfig.AVAILABLE_MODELS` を Ollama モデル一覧に更新、`DEFAULT_MODEL="llama3.2"`、`LLMProviderConfig.DEFAULT_LLM_PROVIDER="ollama"` | ✅ |
+| **1** | `config.py` | 設定変更 | `GeminiConfig.AVAILABLE_MODELS` を Ollama モデル一覧に更新、`DEFAULT_MODEL="gemma4:e4b"`、`LLMProviderConfig.DEFAULT_LLM_PROVIDER="ollama"` | ✅ |
 | **2** | `grace/planner.py` | API 置換 | `create_llm_client("openai")` → `("ollama")`、`max_completion_tokens` → `max_tokens` | ✅ |
 | **2** | `grace/confidence.py` | API 置換・パース修正 | LLM/Embedding クライアントを Ollama に変更、`float(text)` → regex による数値抽出（2箇所） | ✅ |
 | **2** | `grace/tools.py` | API 置換 | `create_llm_client` を Ollama に変更 | ✅ |
 | **2** | `grace/executor.py` | API 置換 | `_evaluate_rag_relevance()` の `create_llm_client("openai")` → `("ollama")`、`max_completion_tokens` → `max_tokens` | ✅ |
 | **2** | `grace/replan.py` | 間接変更 | 依存先の変更に追従 | ✅ |
 | **2** | `grace/schemas.py` | 変更不要 | Pydantic 定義のみ・API 依存なし | ✔️ |
-| **3** | `services/agent_service.py` | ループ更新 | `create_llm_client("ollama")`、デフォルトモデル `"llama3.2"` | ✅ |
+| **3** | `services/agent_service.py` | ループ更新 | `create_llm_client("ollama")`、デフォルトモデル `"gemma4:e4b"` | ✅ |
 | **4** | `helper/helper_api.py` | API 分離 | Responses API 型 → Chat Completions 互換型に置換 | ✅ |
 | **5** | `chunking/async_api_client.py` | 全面移植 | `_resolve_schema_refs()` 追加、Ollama エンドポイント、JSON モード、`max_tokens` | ✅ |
 | **5** | `chunking/csv_text_to_chunks_text_csv.py` | モデル変更 | デフォルトモデル `"llama3.2"`、`OPENAI_API_KEY` チェック削除 | ✅ |

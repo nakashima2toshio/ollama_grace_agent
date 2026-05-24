@@ -205,11 +205,11 @@ def get_collection_embedding_params(
                 size = config.size
 
         if size == 1536:
-            return {"model": "text-embedding-3-small", "dims": 1536}
+            return {"model": "text-embedding-3-small", "dims": 1536, "provider": "openai"}
         elif size == 3072:
-            return {"model": "text-embedding-3-large", "dims": 3072}  # [MIGRATION] gemini-embedding-001 → text-embedding-3-large
+            return {"model": "text-embedding-3-large", "dims": 3072, "provider": "openai"}
         elif size == 768:
-            return {"model": "text-embedding-3-small", "dims": 768}
+            return {"model": "nomic-embed-text", "dims": 768, "provider": "ollama"}
         elif size > 0:
             # 未知の次元数の場合はサイズだけ更新してモデルはデフォルト（または汎用）
             return {"model": "unknown-embedding-model", "dims": size}
@@ -820,18 +820,22 @@ def embed_query_for_search(
     次元数(dims)またはモデル名(model)に基づいてプロバイダーを自動選択します。
     [MIGRATION] デフォルトを gemini-embedding-001 → text-embedding-3-large に変更
     """
-    # デフォルトはOpenAI
-    provider = "openai"
+    # デフォルトはOllama
+    provider = "ollama"
 
     # 次元数による判定
-    if dims == 1536:
+    if dims == 768:
+        provider = "ollama"
+    elif dims == 1536:
         provider = "openai"
-    elif dims == 3072 or dims == 768:
-        provider = "gemini"
+    elif dims == 3072:
+        provider = "openai"
 
     # モデル名による判定 (次元数が指定されていない場合のフォールバック)
     elif model:
-        if "text-embedding-3" in model or "text-embedding-ada" in model:
+        if model == "nomic-embed-text" or "nomic" in model:
+            provider = "ollama"
+        elif "text-embedding-3" in model or "text-embedding-ada" in model:
             provider = "openai"
         elif "gemini" in model:
             provider = "gemini"

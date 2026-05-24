@@ -1,0 +1,735 @@
+{
+  "coverage_rate": 0.0,
+  "covered_chunks": 0,
+  "total_chunks": 29,
+  "uncovered_chunks": [
+    {
+      "chunk_id": "cc_news_2per_768_chunk_0",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Daughter Duo is Dancing in The Same Company There's a surprising twist to Regina Willoughby's last season with Columbia City Ballet: It's also her 18-year-old daughter Melina's first season with the c..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_1",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "New York City Ballet Announces Interim Leadership Team The New York City Ballet Board of Directors announced on Saturday the interim team that has been appointed to run the artistic side of the compan..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_2",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "While there's no word yet on the length of their tenure, we'll continue to keep you updated as the story surrounding Martins unfolds...."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_3",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Watch Pennsylvania Ballet & Boston Ballet Face Off for the Super Bowl The Philadelphia Eagles and the New England Patriots aren't the only teams bringing Super Bowl entertainment this week. To celebra..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_4",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "But Boston Ballet also decided to get in on the fun—with five Super Bowl wins, they're used to seeing their team in the big game. Sharing their own video on Facebook, which stars principal Paul Craig ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_5",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "dance shoes Looking for your next audition shoe? Shot at and in collaboration with Broadway Dance Center, Só Dança has launched a new collection of shoes working with some pretty famous faces of the m..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_6",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Rebecca Krohn on Her Retirement from New York City Ballet New York City Ballet principal dancer Rebecca Krohn will take her final bow with the company this Saturday night. Krohn joined NYCB as an appr..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_7",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Krohn and Adrian Danchig-Waring in Balanchine's Stravinsky Violin Concerto. Video Courtesy NYCB. What have been your favorite ballets or roles to dance? Balanchine's Stravinsky Violin Concerto, which ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_8",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "What parts of your life outside of ballet do you most look forward to cultivating now that you'll have more time on your hands? I'm looking forward to having more time to enjoy museums in the city. Wh..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_9",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Krohn and Company in Balanchine's \"Serenade.\" Photo by Paul Kolnik, Courtesy NYCB...."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_10",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Do you have a piece of advice for young dancers who are just starting out? What's so special about ballet is the discipline that it instills. It's important for young dancers to really understand that..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_11",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "My other piece of advice is that you have to treat each day as a new start. Some days you might not feel good about yourself, or things in your body might not be working well—every day is different. B..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_12",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Roy Kaiser to Become Nevada Ballet Theatre's New Artistic Director In 2014 the dance world was surprised when longtime Pennsylvania Ballet artistic director Roy Kaiser stepped down. It was announced y..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_13",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "What It's Like Inside NYCB After Peter Martins New York City Ballet continues its first year without Peter Martin s at the helm as our spring season opens tonight. When he retired at the start of the ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_14",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Nutcracker Secrets and Surprises Litera ry Roots E. T. A...."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_15",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Hoffmann, a German writer, penned the eerie and dark tale \"Nutcracker and Mouse King\" in 1816. About 30 years later, the French writer Alexandre Dumas took the Nutcracker story into his own hands, lig..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_16",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Snowflakes of the original cast, \"The Nutcracker\" at the Mariinsky Theatre, 1892. Photo by Walter E. Owen, Courtesy Dance Magazine Archives. From Page to Stage In 1892 St. Petersburg, choreographer Ma..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_17",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "rare instrument Tchaikovsky heard in France. \"He had one sent to him essentially in secret,\" says Fullington. Balanchine was given a budget of $40,000 for his 1954 premiere and, according to Aloff, he..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_18",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "1892 \"Nutcracker\" costume sketch by Ivan Vsevolozhsky of the Sugar Plum Fairy's retinue. Courtesy Peter Koppers. Choreographic notations suggest that the Cavalier's variation was originally danced by ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_19",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "NYCB's Unity Phelan and Silas Farley in Karinska's Hot Chocolate costumes. Photo by Paul Kolnik, Courtesy New York City Ballet...."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_20",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Inside the Beijing Dance Academy In one of 60 spacious dance studios at the Beijing Dance Academy, Pei Yu Meng practices a tricky step from Jorma Elo's Over Glow. She's standing among other students, ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_21",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "BDA does participate in exchange programs with ballet schools around the world. A Typical Day Students begin their days with an early 8 am technique class. Following the Vaganova method, classes are s..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_22",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "ement,\" he says. \"But learning these styles over time has opened dancers' eyes to new possibilities.\" Life After Graduation BDA students enter professional life somewhat older than in the West, with g..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_23",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Isabella Boylston and James Whiteside Get Hilariously Candid Though American Ballet Theatre principals James Whiteside and Isabella Boylston have long displayed their envy-worthy friendship on Instagr..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_24",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Check out the highlights in this video below; for the full 24-minute version, click here. Ballet Performances This Week What's going on in ballet this week? We've pulled together some highlights. The ..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_25",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "World Premieres at Richmond Ballet and Ballet Arizona Richmond Ballet's New Works Festival March 20-25 features pieces by four choreographers who have never worked with Richmond Ballet before: Frances..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_26",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Meanwhile the Phoenix-based company's spring season opens with Today's Masters 2018, March 22-25. The program includes a company premiere by Alejandro Cerrudo and world premieres by Nayon Iovino and a..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_27",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "to Elvis Presley (pElvis, anyone?) San Francisco Ballet Honors Robbins Mysterious; romantic; witty; electrifying. That's how SFB describes their upcoming tribute to Jerome Robbins, March 20-25. The co..."
+    },
+    {
+      "chunk_id": "cc_news_2per_768_chunk_28",
+      "similarity": 0.0,
+      "gap": 0.7,
+      "text_preview": "Reid and Harriet Designs at the Guggenheim March 25-27, costume design duo Reid Bartelme and Harriet Jung take the stage as part of Guggenheim Works & Process. The partnership is known for creatively ..."
+    }
+  ],
+  "max_similarities": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "threshold": 0.7,
+  "multi_threshold": {
+    "strict": {
+      "threshold": 0.8,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 29,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_2per_768_chunk_0",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_1",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_2",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_3",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_4",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_5",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_6",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_7",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_8",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_9",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_10",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_11",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_12",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_13",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_14",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_15",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_16",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_17",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_18",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_19",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_20",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_21",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_22",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_23",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_24",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_25",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_26",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_27",
+          "similarity": 0.0,
+          "gap": 0.8
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_28",
+          "similarity": 0.0,
+          "gap": 0.8
+        }
+      ]
+    },
+    "standard": {
+      "threshold": 0.7,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 29,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_2per_768_chunk_0",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_1",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_2",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_3",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_4",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_5",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_6",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_7",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_8",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_9",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_10",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_11",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_12",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_13",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_14",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_15",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_16",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_17",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_18",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_19",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_20",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_21",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_22",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_23",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_24",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_25",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_26",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_27",
+          "similarity": 0.0,
+          "gap": 0.7
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_28",
+          "similarity": 0.0,
+          "gap": 0.7
+        }
+      ]
+    },
+    "lenient": {
+      "threshold": 0.6,
+      "covered_chunks": 0,
+      "coverage_rate": 0.0,
+      "uncovered_count": 29,
+      "uncovered_chunks": [
+        {
+          "chunk_id": "cc_news_2per_768_chunk_0",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_1",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_2",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_3",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_4",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_5",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_6",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_7",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_8",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_9",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_10",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_11",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_12",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_13",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_14",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_15",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_16",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_17",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_18",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_19",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_20",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_21",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_22",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_23",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_24",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_25",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_26",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_27",
+          "similarity": 0.0,
+          "gap": 0.6
+        },
+        {
+          "chunk_id": "cc_news_2per_768_chunk_28",
+          "similarity": 0.0,
+          "gap": 0.6
+        }
+      ]
+    }
+  },
+  "chunk_analysis": {
+    "by_length": {
+      "long": {
+        "count": 12,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "short": {
+        "count": 10,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "medium": {
+        "count": 7,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      }
+    },
+    "by_position": {
+      "beginning": {
+        "count": 10,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "middle": {
+        "count": 10,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      },
+      "end": {
+        "count": 9,
+        "covered": 0,
+        "avg_similarity": 0.0,
+        "coverage_rate": 0.0
+      }
+    },
+    "summary": {
+      "total_chunks": 29,
+      "total_qa_pairs": 80,
+      "threshold_used": 0.7,
+      "insights": [
+        "longチャンクのカバレージが低い（0.0%）",
+        "shortチャンクのカバレージが低い（0.0%）",
+        "mediumチャンクのカバレージが低い（0.0%）",
+        "文書beginning部分のカバレージが低い（0.0%）",
+        "文書middle部分のカバレージが低い（0.0%）",
+        "文書end部分のカバレージが低い（0.0%）"
+      ]
+    }
+  },
+  "dataset_type": "cc_news_2per_768_chunks",
+  "optimal_thresholds": {
+    "strict": 0.8,
+    "standard": 0.7,
+    "lenient": 0.6
+  }
+}

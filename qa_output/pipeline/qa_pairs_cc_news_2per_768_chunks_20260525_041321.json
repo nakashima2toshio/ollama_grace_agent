@@ -1,0 +1,562 @@
+[
+  {
+    "question": "レジーナ・ウィロービーはいつ、どのような形で舞台から引退するのですか？",
+    "answer": "レジーナ・ウィロービーは40歳で、今年の3月に舞台から引退する予定です。彼女の引退シーズンは、娘のメリーナが会社でキャリアをスタートさせる時期と重なります。",
+    "chunk_id": "cc_news_2per_768_chunk_0",
+    "topic": "引退とキャリア開始",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "レジーナとメリーナが一緒に舞台に立つのはどのような状況ですか？",
+    "answer": "彼女たちは、コロンビア・シティ・バレエの同じシーズンで共演しています。特に『ノートルダムの鐘』では、レジーナがスノー・クイーンを、メリーナがスノー・コーポルスの役を演じ、共にアラビアン・ディヴァーティスマンに登場します。",
+    "chunk_id": "cc_news_2per_768_chunk_0",
+    "topic": "共演の状況と役割",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "レジーナは、娘のメリーナのバレエへの進展についてどのように感じていますか？",
+    "answer": "レジーナは、メリーナがバレエをこれほど深く追求することになり、「とても超現実的だ」と感じており、自分が想像していた以上の進展だと述べています。",
+    "chunk_id": "cc_news_2per_768_chunk_0",
+    "topic": "母の感想と共演",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ニューヨーク・シティ・バレエが暫定的に芸術面を統括するリーダーシップチームは誰ですか？",
+    "answer": "暫定リーダーシップチームは、バレエマスターのジョナサン・スタッフォードが率いる4人組で構成されています。メンバーは、カガミ・ホール、レベッカ・クローン、そしてNYCB在籍振付家でソリストのジャスティン・ペックです。",
+    "chunk_id": "cc_news_2per_768_chunk_1",
+    "topic": "暫定リーダーシップチーム",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ピーター・マーティンス氏が休職することになった背景は何ですか？",
+    "answer": "マーティンス氏は、会社が彼に向けられたセクシャルハラスメントの告発について内部調査を行うため、NYCBとアメリカン・バレエ・スクールから一時的な休職を要請しました。",
+    "chunk_id": "cc_news_2per_768_chunk_1",
+    "topic": "休職の背景",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "暫定リーダーシップチームの主な役割は何ですか？",
+    "answer": "このチームは、スケジューリング、キャスティング、リハーサルの実施など、会社の日常的な芸術的ニーズを担当する責任を負います。",
+    "chunk_id": "cc_news_2per_768_chunk_1",
+    "topic": "チームの役割",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "Martinの在籍期間について、何か進展はありますか？",
+    "answer": "現時点では在籍期間に関する具体的な情報は発表されていませんが、状況が分かり次第、引き続き更新していきます。",
+    "chunk_id": "cc_news_2per_768_chunk_2",
+    "topic": "Martinの経歴",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエとボストン・バレエがスーパーボウルでパフォーマンスをした目的は何ですか？",
+    "answer": "試合当日を祝い、それぞれの地域のチームを応援するために、バレエダンサーたちが普段のリハーサルを中断してスーパーボウルをテーマにした振り付けを披露しました。",
+    "chunk_id": "cc_news_2per_768_chunk_3",
+    "topic": "パフォーマンスの目的",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ペンシルベニア・バレエのダンサーたちはどのような衣装と振り付けでパフォーマンスをしましたか？",
+    "answer": "イーグルスの緑色の衣装をまとい、フォゥエフェターン、高いジャンプ、そして白鳥のような腕の動きを多く含む、テンポの速いルーティンを披露しました。",
+    "chunk_id": "cc_news_2per_768_chunk_3",
+    "topic": "PABの衣装と振り付け",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "このパフォーマンスは、どのようなイベントに関連していますか？",
+    "answer": "フィラデルフィア・イーグルスとニューイングランド・ペイトリオッツが関わるスーパーボウルを記念したものです。",
+    "chunk_id": "cc_news_2per_768_chunk_3",
+    "topic": "スーパーボウル関連",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ボストン・バレエはスーパーボウルに関連してどのような活動をしましたか？",
+    "answer": "ボストン・バレエは、スーパーボウルの楽しみに加わるため、Facebookで独自の動画を公開しました。",
+    "chunk_id": "cc_news_2per_768_chunk_4",
+    "topic": "スーパーボウル参加",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ボストン・バレエがFacebookで公開した動画にはどのような要素が含まれていますか？",
+    "answer": "この動画には、プリンシパル（主役）のポール・クレイグとソリストのデレク・ダンが出演し、プロディガル・サンから提供された小道具を使ってバランシン・トリックが組み込まれています。",
+    "chunk_id": "cc_news_2per_768_chunk_4",
+    "topic": "動画の内容",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "動画に組み込まれたバレエの要素や小道具について教えてください。",
+    "answer": "動画には、ポール・クレイグとデレク・ダンが出演し、プロディガル・サンからの小道具を利用してバランシン・トリックが組み込まれています。",
+    "chunk_id": "cc_news_2per_768_chunk_4",
+    "topic": "組み込まれた要素",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "Só Dançaの新しいダンスシューズコレクションの特徴について教えてください。",
+    "answer": "このコレクションは、ミュージカル界の著名人たちとコラボレーションして発売されたもので、2種類のスタイルと2.5インチまたは3インチのヒールが用意されています。",
+    "chunk_id": "cc_news_2per_768_chunk_5",
+    "topic": "コレクションの特徴",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "このダンスシューズはどのような点でプロから評価されていますか？",
+    "answer": "業界のプロたちは、このシューズが非常に万能（versatile）でサポート性に優れている点を気に入っています。",
+    "chunk_id": "cc_news_2per_768_chunk_5",
+    "topic": "サポート性",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "シューズの安定性を高めるためのプロのヒントはありますか？",
+    "answer": "安定性を高めるためのプロのヒントとして、ヒールを体の真下に中央に配置することが推奨されています。",
+    "chunk_id": "cc_news_2per_768_chunk_5",
+    "topic": "安定性のヒント",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "レベッカ・クロンさんがNYCBで引退されるのはいつですか？",
+    "answer": "レベッカ・クロンさんは今週土曜日の夜に、NYCBで最後の舞台を飾ります。",
+    "chunk_id": "cc_news_2per_768_chunk_6",
+    "topic": "退団日",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "レベッカ・クロンさんのNYCBでのキャリアの経緯と功績について教えてください。",
+    "answer": "彼女は1998年秋にアプレンティスとして参加し、2012年にプリンシパルになりました。特にクラシックなバランシン作品での完璧な表現力で知られています。",
+    "chunk_id": "cc_news_2per_768_chunk_6",
+    "topic": "キャリア経緯と功績",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "退団後、レベッカ・クロンさんはどのような役割を担う予定ですか？",
+    "answer": "土曜日の公演の後、彼女は月曜日にNYCBのスタジオに戻り、バレエマスターという新しい役割を担う予定です。",
+    "chunk_id": "cc_news_2per_768_chunk_6",
+    "topic": "退団後の役割",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "好きなバレエ作品や役柄について教えてください。",
+    "answer": "個人的な好みとしては、バランジナの『ストラヴィンスキーのヴァイオリン協奏曲』や『ムーブメンツ・フォー・ピアノ・アンド・オーケストラ』、そして『アゴン』などが好きです。ロビンズの作品も非常に充実感があります。",
+    "chunk_id": "cc_news_2per_768_chunk_7",
+    "topic": "レパートリーと好み",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "会社での経験を通じて、自身の役割や関心はどのように変化しましたか？",
+    "answer": "年を重ねるにつれて、会社が若々しく見えるようになり、ソリストやプリンシパルになったことで、若いダンサーたちに憧れの存在となり、サポートやアドバイスを提供したいと思うようになりました。",
+    "chunk_id": "cc_news_2per_768_chunk_7",
+    "topic": "役割の変化と指導",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "尊敬する指導者やメンターはいますか？",
+    "answer": "カリン・フォン・アローディンゲンさんの作品への尽きない情熱は非常に刺激的です。また、スージー・ヘンドルさんからは、誰もが持つユニークな資質や女性らしさを引き出す才能を学んでいます。",
+    "chunk_id": "cc_news_2per_768_chunk_7",
+    "topic": "指導者からのインスピレーション",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "退職後、時間が増えたことで特に楽しみにしている活動は何ですか？",
+    "answer": "美術館巡りを楽しみにしています。以前はバレエをしていたため、休日に一日中足を上げることに気を遣っていましたが、それがなくなるので、街をさまよい刺激を受ける時間を楽しむ予定です。",
+    "chunk_id": "cc_news_2per_768_chunk_8",
+    "topic": "美術館巡り",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "以前の生活（バレエ）と比べて、時間が増えることで身体的にどのような変化が期待できますか？",
+    "answer": "以前はバレエをしていたため、休日に一日中足を上げることに気を使う必要がありましたが、退職後はその心配が減り、自由に過ごせるようになります。",
+    "chunk_id": "cc_news_2per_768_chunk_8",
+    "topic": "身体的な制約からの解放",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "退職後の趣味や社交的な活動について、他にどのような計画がありますか？",
+    "answer": "料理が好きなので、もっと料理をする機会が増えることを楽しみにしています。また、より多くのディナーパーティーを主催したいと考えています。",
+    "chunk_id": "cc_news_2per_768_chunk_8",
+    "topic": "料理と社交的な活動",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "Krohn and Companyが出演した作品は何ですか？",
+    "answer": "Krohn and Companyは、バランシーンの作品『Serenade』に出演しています。",
+    "chunk_id": "cc_news_2per_768_chunk_9",
+    "topic": "Serenade",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "これからダンスを始める若手ダンサーへのアドバイスはありますか？",
+    "answer": "バレエで学べる規律（ディシプリン）が非常に重要です。これは、ダンサーが続けるか、他の道に進むかに関わらず、人生において貴重な資質となります。",
+    "chunk_id": "cc_news_2per_768_chunk_10",
+    "topic": "若手ダンサーへのアドバイス",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "バレエを通じて身につく規律とは具体的にどのようなものですか？",
+    "answer": "バレエクラスで毎日教わる規律こそが、最も重要な点です。この規律は、単にダンスの技術に留まらない、人生全般に役立つ価値ある資質です。",
+    "chunk_id": "cc_news_2per_768_chunk_10",
+    "topic": "バレエの規律",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "バレエで身につけた規律は、ダンス以外の分野でどのように役立ちますか？",
+    "answer": "バレエで身につける規律は、ダンサーとして活動し続ける場合だけでなく、他の職業に就いた場合においても、非常に価値のある資質として役立ちます。",
+    "chunk_id": "cc_news_2per_768_chunk_10",
+    "topic": "規律の応用",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "毎日をどのように捉えるべきですか？",
+    "answer": "毎日を新しいスタートとして扱う必要があります。どんな日でも、前向きになり、前に進むことが大切です。",
+    "chunk_id": "cc_news_2per_768_chunk_11",
+    "topic": "日々の心構え",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "気分が落ち込んだり、体調が優れない日でもどうすれば良いですか？",
+    "answer": "毎日それぞれ異なるため、自分自身にがっかりしたり、体の調子が悪い日があっても、新鮮な気持ちでスタートし、前向きに進むよう努めるべきです。",
+    "chunk_id": "cc_news_2per_768_chunk_11",
+    "topic": "自己受容と前向きな姿勢",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "人生や日々の課題に対してどのような姿勢を持つべきですか？",
+    "answer": "毎日を新しいスタートと捉え、前向きな姿勢を保ち、常に前に進み続けることが重要です。",
+    "chunk_id": "cc_news_2per_768_chunk_11",
+    "topic": "変化への対応",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ロイ・カイザー氏は、ネバダ・バレエ・シアターの新しい芸術監督に就任するのですか？",
+    "answer": "はい、以前ペンシルベニア・バレエの芸術監督を務めていたロイ・カイザー氏が、ラスベガスを拠点とするネバダ・バレエ・シアターの新しい芸術監督に就任することが発表されました。",
+    "chunk_id": "cc_news_2per_768_chunk_12",
+    "topic": "新芸術監督",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ネバダ・バレエ・シアター（NBT）の規模や歴史について教えてください。",
+    "answer": "NBTは州最大級のプロのバレエカンパニー兼ダンスアカデミーであり、46年の歴史を持ち、35名のカンパニーダンサーと活気ある学校を持っています。",
+    "chunk_id": "cc_news_2per_768_chunk_12",
+    "topic": "NBTの歴史と規模",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "今後の公演予定やプログラムの内容について教えてください。",
+    "answer": "NBTは、現在開催中の「振付家によるショーケース」や、来月（11月）には『クラシック・アメリカナ』というプログラムで『セレナーデ』や『ウエスタン・シンフォニー』を上演する予定です。",
+    "chunk_id": "cc_news_2per_768_chunk_12",
+    "topic": "今後の公演予定",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ピーター・マーティンス氏が退任した後のNYCBの状況はどうですか？",
+    "answer": "ピーター・マーティンス氏が退任して以来、NYCBは指導体制の変更に伴う不確実な時期を過ごしており、ダンサーたちは今後の検索プロセスや計画について十分な情報を得られていません。",
+    "chunk_id": "cc_news_2per_768_chunk_13",
+    "topic": "指導体制の変更",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ピーター・マーティンス氏は具体的にどのような貢献をされていましたか？",
+    "answer": "彼は日々のリハーサルにはあまり参加しませんでしたが、バレエが公演に臨む前の最終リハーサルでは常に監督をしており、難しいパ・トニングやターンなどの技術的な修正に役立つ知恵を共有していました。",
+    "chunk_id": "cc_news_2per_768_chunk_13",
+    "topic": "指導・リハーサルでの貢献",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "NYCBは現在どのような課題に直面していますか？",
+    "answer": "マーティンス氏の不在により、新ディレクターの決定、バレエの監督、キャスティングの担当など、多くの分野で不確実性が生じており、組織全体が大きな変化に直面しています。",
+    "chunk_id": "cc_news_2per_768_chunk_13",
+    "topic": "組織の不確実性",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『くるみ割り人形とネズミの王』の原作者と初出年はいつですか？",
+    "answer": "原作者はドイツの作家ホフマンで、1816年にこの不気味で暗い物語を執筆しました。",
+    "chunk_id": "cc_news_2per_768_chunk_15",
+    "topic": "原作者と初出年",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "アレクサンドル・デュマが物語を改変した主な点は何ですか？",
+    "answer": "デュマは物語を明るくし、キャラクター描写を和らげました。また、主人公の名前も変更しています。",
+    "chunk_id": "cc_news_2per_768_chunk_15",
+    "topic": "物語の改変点",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "主人公の名前の変更と、それによって象徴する意味の変化について教えてください。",
+    "answer": "「マリー・シュタールバウム」（抑圧的な家族を象徴）から「クララ・ジルバーハウス」（輝く魔法に満ちた壮大な家を意味する）に変更されました。",
+    "chunk_id": "cc_news_2per_768_chunk_15",
+    "topic": "主人公の名前と象徴",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『ノッツ・クラッ cracker』はいつ、どこで初演されましたか？",
+    "answer": "『ノッツ・クラッ cracker』は1892年にサンクトペテルブルクのマリインスキー劇場で初演されました。振り付けはマリーウス・プティパ、作曲はピョートル・イリイチ・チャイコフスキーが担当しました。",
+    "chunk_id": "cc_news_2per_768_chunk_16",
+    "topic": "初演の経緯",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "初期の批評家や観客は、初演の『ノッツ・クラッ cracker』をどのように評価しましたか？",
+    "answer": "批評家たちは作品が不均一だと感じ、特に第一幕にメインのバレリーナがいない点を嘆きました。また、歴史に基づいた物語に比べて物語が軽すぎると考える人もいました。",
+    "chunk_id": "cc_news_2per_768_chunk_16",
+    "topic": "初期の批評家の反応",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "アメリカで『ノッツ・クラッ cracker』が本格的に普及し、重要な役割を果たしたのはいつですか？",
+    "answer": "1944年にサンフランシスコ・バレエの創設芸術監督ウィラム・クリステンセンが、アメリカ初のフルレングスの『ノッツ・クラッ cracker』を振り付けし、以降、地域バレエを通じて普及しました。",
+    "chunk_id": "cc_news_2per_768_chunk_16",
+    "topic": "アメリカでの普及",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『ノッツ・クラッ cracker』が現代の文化・経済的な役割について教えてください。",
+    "answer": "現在、『ノッツ・クラッ cracker』は単なる公演以上の存在であり、毎年家族連れを劇場に引きつけ、バレエをメインストリーム文化に維持する重要なホリデーの伝統となっています。",
+    "chunk_id": "cc_news_2per_768_chunk_16",
+    "topic": "現代の文化的役割",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "チャイコフスキーがフランスで耳にした稀な楽器について教えてください。",
+    "answer": "チャイコフスキーは、フランスで「秘密裏に」送られてきた稀な楽器を耳にしました。",
+    "chunk_id": "cc_news_2per_768_chunk_17",
+    "topic": "チャイコフスキーの楽器",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "1954年の初演におけるバランシンの予算と支出について教えてください。",
+    "answer": "バランシンには1954年の初演に4万ドルの予算が与えられ、そのうちクリスマスツリーだけで2万5千ドルを費やしました。",
+    "chunk_id": "cc_news_2per_768_chunk_17",
+    "topic": "バランシンの予算",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ニューヨーク市立バレエのツリーの現在の状態はどうなっていますか？",
+    "answer": "現在、ニューヨーク市立バレエのツリーは重さが1トンで、最大高さは41フィートに達します。",
+    "chunk_id": "cc_news_2per_768_chunk_17",
+    "topic": "バレエのツリー",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『くるみ割り人形』の男性役の元々の名前と由来は何ですか？",
+    "answer": "砂糖菓子のような「咳」を意味するフランス語の「Prince Coqueluche」という名前でした。これは、咳止め飴（lozenge candy）を指していたと考えられています。",
+    "chunk_id": "cc_news_2per_768_chunk_18",
+    "topic": "男性役の由来",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『くるみ割り人形』の男性役のバリエーションは元々誰によって踊られていたのですか？",
+    "answer": "振り付けの記録によると、カバリエ（Cavalier）のバリエーションは、果物、花、夢などを象徴する8人の女性の精霊の群れによって踊られていたとされています。",
+    "chunk_id": "cc_news_2per_768_chunk_18",
+    "topic": "振り付けの変遷",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『くるみ割り人形』のグラン・パ・ド・ドゥにおけるスライドの振り付けの出典について教えてください。",
+    "answer": "バランシンが用いたグラン・パ・ド・ドゥでのスライドは、イヴァノフのオリジナルの振り付けから取り入れられたものだと、フラーリントンによるとされています。",
+    "chunk_id": "cc_news_2per_768_chunk_18",
+    "topic": "振り付けの出典",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "NYCBのパフォーマーと衣装について教えてください。",
+    "answer": "NYCBのUnity PhelanとSilas Farleyが、Karinskaのホットチョコレートの衣装を着ています。この写真はPaul Kolnik氏が撮影し、New York City Balletが提供しています。",
+    "chunk_id": "cc_news_2per_768_chunk_19",
+    "topic": "パフォーマーと衣装",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "北京ダンスアカデミー（BDA）はどのような歴史的背景と規模を持っていますか？",
+    "answer": "BDAは1954年に中国の共産党政府によって設立された、州が完全に資金提供する専門訓練学校です。現在、4つの部門（バレエ、古典中国舞踊、社交ダンス、ミュージカルシアター）があり、約3,000人の学生と275人の常勤教師が在籍しています。",
+    "chunk_id": "cc_news_2per_768_chunk_20",
+    "topic": "BDAの概要と歴史",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "BDAのバレエプログラムの教育内容や特徴について教えてください。",
+    "answer": "バレエプログラムは、長年ロシア流の才能を育むことで知られていますが、2011年以降は、中国の舞踊の伝統や西洋のコンテンポラリーバレエ振付家の作品に関する知識を広めることに力を入れています。",
+    "chunk_id": "cc_news_2per_768_chunk_20",
+    "topic": "教育プログラムの変遷",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "BDAのプロフェッショナルなバレエプログラムに入学するための選考プロセスはどのようなものですか？",
+    "answer": "入学手続きは非常に厳格で、毎年16歳から18歳の数百人の学生が2日間にわたって北京でオーディションを受けます。この際、古典およびコンテンポラリーのバリエーション、即興作品の発表に加え、学術試験も受験する必要があります。",
+    "chunk_id": "cc_news_2per_768_chunk_20",
+    "topic": "入学プロセスと選考",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "BDAの学生の典型的な一日はどのような流れですか？",
+    "answer": "学生は午前8時にヴァガノワメソッドに基づいたテクニッククラスから一日を始めます。その後、古典中国舞踊、コンテンポラリー、レパートリー、ダンス史、解剖学など、多岐にわたる学習が続きます。",
+    "chunk_id": "cc_news_2per_768_chunk_21",
+    "topic": "一日の学習内容",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "BDAにおける古典中国舞踊はどのような役割を果たしていますか？",
+    "answer": "古典中国舞踊は、中国のバレエダンサーとしてのアイデンティティの大きな一部であり、バレエのテクニックを補完する独自の協調性を持つ、円形の上半身の動きに焦点を当てています。",
+    "chunk_id": "cc_news_2per_768_chunk_21",
+    "topic": "中国舞踊の役割",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "学生がプロとして発見される機会はどこですか？",
+    "answer": "最も重要なプロの成長の側面は舞台での公演です。毎年開催される古典バレエや現代作品の公演が、中国国内のバレエ団のディレクターが才能を発掘する場となります。",
+    "chunk_id": "cc_news_2per_768_chunk_21",
+    "topic": "プロの機会と発見",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "現代舞踊へのアプローチや指導の変化について教えてください。",
+    "answer": "現代舞踊を取り入れることで、中国のバレエダンサー全体の能力が広がり、学生はPaul TaylorやJorma Eloなどの振付家から直接指導を受け、自由でエキサイティングな表現を学んでいます。",
+    "chunk_id": "cc_news_2per_768_chunk_21",
+    "topic": "現代舞踊への適応",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "BDA卒業生のキャリアパスや就職状況について教えてください。",
+    "answer": "卒業生は20歳から22歳頃に社会に出ますが、会社契約を得るのは最も有望な生徒に限られます。多くはBDAや周辺のダンス学校で指導や関連職に就き、海外での就職はごく一部です。",
+    "chunk_id": "cc_news_2per_768_chunk_22",
+    "topic": "卒業生のキャリアパス",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "BDAにおけるブルノンヴィル様式の教育の特徴は何ですか？",
+    "answer": "ブルノンヴィル様式は、多様なバレエ教育の一環として提供されています。アンドーセン氏からは、レパートリーやデンマークのマイムを通じて指導され、「マイムを信じることが最も重要」とされています。",
+    "chunk_id": "cc_news_2per_768_chunk_22",
+    "topic": "ブルノンヴィル様式の特徴",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ブルノンヴィル様式を学ぶ上で、指導法として特に重要視されている点は何ですか？",
+    "answer": "アンドーセン氏によると、単に言葉で説明するだけでなく、「見せること（Showing）」が非常に効果的であり、それがブルノンヴィル様式のもつ正直さ（honesty）の美しさであると説明されています。",
+    "chunk_id": "cc_news_2per_768_chunk_22",
+    "topic": "指導方法とマイム",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "イザベラ・ボイルストンとジェームズ・ホワイトサイドの友情について、どのようなエピソードが語られましたか？",
+    "answer": "二人は「Cindies」というニックネームで呼ばれており、ファンとのライブ配信で、食べ物への共通の愛（特にパスタや日本のカレー）や、このニックネームの由来など、個人的な側面を共有しました。",
+    "chunk_id": "cc_news_2per_768_chunk_23",
+    "topic": "友情と共通の興味",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "プロのダンサーを目指す人へ、ボイルストンとホワイトサイドからどのようなアドバイスがありましたか？",
+    "answer": "二人は、将来のダンサーを目指す人たちに向けて、心からのアドバイスを提供しました。具体的な内容はテキストに記載されています。",
+    "chunk_id": "cc_news_2per_768_chunk_23",
+    "topic": "キャリアアドバイス",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ボイルストンが経験した、キャリアや夢に関するエピソードを教えてください。",
+    "answer": "ボイルストンは、パリ・オペラ座バレエでのゲスト出演経験や、ホワイトサイドを相手にカーライ・レイ・ジェプセンの曲でアヴァンギャルドなバレエを振付したいという夢について語りました。",
+    "chunk_id": "cc_news_2per_768_chunk_23",
+    "topic": "キャリアと夢",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "ジョン・ノイマイヤーの『アンナ・カレニナ』はどのような形で上演されますか？",
+    "answer": "ハンブルク・バレエがレオ・トルストイの小説を基にした現代的な翻案版のワールドプレミアを上演し、ボリショイバレエやカナダ国立バレエと共同制作しています。",
+    "chunk_id": "cc_news_2per_768_chunk_24",
+    "topic": "アンナ・カレニナ",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『アンナ・カレニナ』のボリショイでの初日はいつですか？",
+    "answer": "ボリショイバレエがこの作品をプレミア公演するのは3月23日です。なお、カナダ国立バレエのプレミアは11月に行われます。",
+    "chunk_id": "cc_news_2per_768_chunk_24",
+    "topic": "公演日程",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "『アンナ・カレニナ』の主演は誰が務める予定ですか？",
+    "answer": "ボリショイのスターであるスヴェトラーナ・ザハロワが、この作品のタイトルロール（主役）を演じる予定です。",
+    "chunk_id": "cc_news_2per_768_chunk_24",
+    "topic": "出演者",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "リッチモンド・バレエの新作公演はいつ開催されますか？",
+    "answer": "リッチモンド・バレエの新作公演は、3月20日から25日まで開催される「New Works Festival」で実施されます。",
+    "chunk_id": "cc_news_2per_768_chunk_25",
+    "topic": "公演日程",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "新作公演に参加する振付家は誰ですか？",
+    "answer": "参加する振付家は、フランチェスカ・ハーパー、トム・マッティングリー、マリアナ・オリベイラ、ブラッドリー・シェルバーの4名です。",
+    "chunk_id": "cc_news_2per_768_chunk_25",
+    "topic": "振付家",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "振付家たちはどのような制約の中で作品を制作したのですか？",
+    "answer": "各振付家は、ダンサーと過ごせる時間がわずか25時間という制約の中で、10〜15分のバレエ作品を制作しました。",
+    "chunk_id": "cc_news_2per_768_chunk_25",
+    "topic": "創作プロセス",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "「Today's Masters 2018」はいつ開催されますか？",
+    "answer": "「Today's Masters 2018」は3月22日から3月25日まで開催されます。",
+    "chunk_id": "cc_news_2per_768_chunk_26",
+    "topic": "開催日程",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "今回のプログラムで注目すべきプレミア公演は何ですか？",
+    "answer": "プログラムには、Alejandro Cerrudoによるカンパニープレミア、Nayon Iovinoおよび芸術監督のIb Andersenによるワールドプレミアが含まれます。",
+    "chunk_id": "cc_news_2per_768_chunk_26",
+    "topic": "プレミア公演",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "Andersenの作品『Pelvis』はどのような要素を参照していますか？",
+    "answer": "Andersenの『Pelvis』は、1950年代のダンスの動きや衣装を参照しています。",
+    "chunk_id": "cc_news_2per_768_chunk_26",
+    "topic": "作品のテーマ",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "サンフランシスコ・バレエ（SFB）がジェローム・ロビンズに捧げるトリビュート公演はいつですか？",
+    "answer": "SFBは、ジェローム・ロビンズに捧げるトリビュート公演を3月20日から25日にかけて開催します。",
+    "chunk_id": "cc_news_2per_768_chunk_27",
+    "topic": "公演日程",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "SFBが上演するジェローム・ロビンズの作品にはどのようなものがありますか？",
+    "answer": "SFBは、『Fancy Free』、『Opus 19/The Dreamer』、『The Cage』、そして『Other Dances』の4作品を上演します。",
+    "chunk_id": "cc_news_2per_768_chunk_27",
+    "topic": "作品名",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "SFBはジェローム・ロビンズの功績をどのように表現していますか？",
+    "answer": "SFBは、ロビンズの功績を「神秘的で、ロマンチックで、ウィットに富み、エキサイティング」と表現しています。",
+    "chunk_id": "cc_news_2per_768_chunk_27",
+    "topic": "SFBの評価",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "Reid and Harriet Designsの公演はいつ、どこで行われますか？",
+    "answer": "Reid and Harriet Designsは、3月25日から27日にかけてグッゲンハイム美術館（Guggenheim）で「Guggenheim Works & Process」の一環として公演を行います。",
+    "chunk_id": "cc_news_2per_768_chunk_28",
+    "topic": "公演情報",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "Reid and Harriet Designsの活動内容や特徴について教えてください。",
+    "answer": "デザインとダンスを創造的に交差させることで知られており、過去にはジャスティン・ペックの衣装を基にした水着ラインの制作や、デザイン主導の『ノートルダムの鐘』の発表などを行っています。",
+    "chunk_id": "cc_news_2per_768_chunk_28",
+    "topic": "活動内容",
+    "dataset_type": "cc_news_2per_768_chunks"
+  },
+  {
+    "question": "今回の公演でどのような展示や参加者が見られますか？",
+    "answer": "今回は、ラル・ルボビッチやパム・タノウィッツなど多くの振付家とコラボレーションし、衣装をフィーチャーしたショートワークが制作されます。また、ニューヨーク市立バレエのラセル・ジャンゼンなどのダンサーがモデルとして参加します。",
+    "chunk_id": "cc_news_2per_768_chunk_28",
+    "topic": "公演の参加者",
+    "dataset_type": "cc_news_2per_768_chunks"
+  }
+]

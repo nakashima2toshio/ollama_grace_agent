@@ -18,6 +18,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.exceptions import UnexpectedResponse, ResponseHandlingException
 from qdrant_client_wrapper import search_collection, embed_query, embed_sparse_query_unified, QDRANT_CONFIG, get_qdrant_client
 from config import AgentConfig, CohereConfig
+from services.qdrant_service import get_collection_embedding_params, embed_query_for_search
 
 # キャッシュと並列検索のインポート
 from agent_cache import collection_cache
@@ -429,12 +430,21 @@ def search_rag_knowledge_base_structured(
             logger.warning(error_msg)
             raise CollectionNotFoundError(error_msg)
 
-        # Phase 3 STEP 7 改善: 事前計算ベクトルがあればそれを使用
-        if precomputed_query_vector is not None:
+        # Phase 3 STEP 7 改善: 事前計算ベクトルがあればそれを使用（次元数チェック付き）
+        collection_params = get_collection_embedding_params(client, collection_name)
+        col_dims = collection_params.get("dims", 3072)
+        col_model = collection_params.get("model", "text-embedding-3-large")
+
+        if precomputed_query_vector is not None and len(precomputed_query_vector) == col_dims:
             query_vector = precomputed_query_vector
             logger.debug(f"事前計算済みDenseベクトルを使用: {collection_name}")
+        elif col_dims != 3072:
+            # 次元数不一致 → コレクション専用のEmbeddingを再生成（例: 768次元はnomic-embed-text/Ollama）
+            logger.info(f"次元数不一致: precomputed={len(precomputed_query_vector) if precomputed_query_vector else 'None'}D, "
+                        f"collection={col_dims}D → {collection_name}用Embedding再生成 (model={col_model})")
+            query_vector = embed_query_for_search(query, model=col_model, dims=col_dims)
         else:
-            query_vector: List[float] = embed_query(query)
+            query_vector = precomputed_query_vector if precomputed_query_vector is not None else embed_query(query)
         if query_vector is None:
             raise EmbeddingError("クエリの埋め込み生成に失敗しました。")
 

@@ -32,7 +32,7 @@ from .confidence import (
     create_llm_evaluator,
     create_confidence_aggregator,
     create_query_coverage_calculator,
-    create_source_agreement_calculator,  # TODO #5: 追加
+    create_source_agreement_calculator,
 )
 from .intervention import (
     InterventionHandler,
@@ -45,32 +45,38 @@ from .intervention import (
 # === Legacy Agent Integration ===
 try:
     from services.agent_service import ReActAgent, get_available_collections_from_qdrant_helper
-
     LEGACY_AGENT_AVAILABLE = True
 except ImportError:
-    logger = logging.getLogger(__name__)  # Ensure logger exists before warning
+    logger = logging.getLogger(__name__)
     logger.warning("Failed to import services.agent_service. Legacy agent execution will fail.")
     LEGACY_AGENT_AVAILABLE = False
 # ================================
 
-# [MIGRATION] create_llm_client を追加（_check_rag_relevance_with_llm で使用）
+# [MIGRATION] create_llm_client を追加
 try:
-    from helper.helper_llm import create_llm_client  # [FIXED] helper_llm → helper.helper_llm
+    from helper.helper_llm import create_llm_client
     _LLM_CLIENT_AVAILABLE = True
 except ImportError:
     _LLM_CLIENT_AVAILABLE = False
+# ベンチマーク用トークン集計
+try:
+    from helper.helper_llm import (
+        reset_token_counter as _reset_token_counter,
+        get_token_counter   as _get_token_counter,
+        LLM_PRICING         as _LLM_PRICING,
+    )
+    _TOKEN_TRACKING_AVAILABLE = True
+except ImportError:
+    _TOKEN_TRACKING_AVAILABLE = False
+    def _reset_token_counter() -> None: pass
+    def _get_token_counter()   -> dict: return {}
+    _LLM_PRICING: dict = {}
 
 logger = logging.getLogger(__name__)
 
 
-# =============================================================================
-# 実行状態管理
-# =============================================================================
-
 @dataclass
 class ExecutionState:
-    """実行状態管理"""
-
     plan: ExecutionPlan
     current_step_id: int = 0
     step_results: Dict[int, StepResult] = field(default_factory=dict)
@@ -78,20 +84,17 @@ class ExecutionState:
     overall_confidence: float = 0.0
     is_cancelled: bool = False
     is_paused: bool = False
-    intervention_request: Optional[Any] = None  # InterventionRequest
+    intervention_request: Optional[Any] = None
     replan_count: int = 0
     max_replans: int = 3
     start_time: Optional[float] = None
     end_time: Optional[float] = None
 
     def __post_init__(self):
-        """初期化後の処理"""
-        # 全ステップをPENDINGで初期化
         for step in self.plan.steps:
             self.step_statuses[step.step_id] = StepStatus.PENDING
 
     def get_completed_outputs(self) -> Dict[int, str]:
-        """完了済みステップの出力を取得"""
         return {
             step_id: result.output
             for step_id, result in self.step_results.items()
@@ -99,7 +102,6 @@ class ExecutionState:
         }
 
     def get_completed_sources(self) -> List[str]:
-        """完了済みステップのソースを取得"""
         sources = []
         for result in self.step_results.values():
             if result.status == "success" and result.sources:
@@ -107,27 +109,19 @@ class ExecutionState:
         return sources
 
     def can_replan(self) -> bool:
-        """リプラン可能か判定"""
         return self.replan_count < self.max_replans and not self.is_cancelled
 
     def get_execution_time_ms(self) -> Optional[int]:
-        """実行時間を取得（ミリ秒）"""
         if self.start_time is None:
             return None
         end = self.end_time or time.time()
         return int((end - self.start_time) * 1000)
 
 
-# =============================================================================
-# Executor クラス
-# =============================================================================
-
 from .replan import ReplanOrchestrator, create_replan_orchestrator
 
 
 class Executor:
-    """計画実行エージェント（GRACEネイティブ実装）"""
-
     def __init__(
             self,
             config: Optional[GraceConfig] = None,
@@ -141,319 +135,145 @@ class Executor:
             enable_replan: bool = True,
     ):
         self.config = config or get_config()
-
-        # ToolRegistry（指定がなければデフォルト作成）
         self.tool_registry = tool_registry or create_tool_registry(config=self.config)
-
-        # Confidence関連コンポーネント（Phase 2）
         self.confidence_calculator = create_confidence_calculator(config=self.config)
         self.llm_evaluator = create_llm_evaluator(config=self.config)
         self.query_coverage_calculator = create_query_coverage_calculator(config=self.config)
         self.confidence_aggregator = create_confidence_aggregator(config=self.config)
-
-        # コールバック
         self.on_step_start = on_step_start
         self.on_step_complete = on_step_complete
         self.on_intervention_required = on_intervention_required
         self.on_confidence_update = on_confidence_update
-        self.on_replan = on_replan  # リプラン発生時のコールバック
-
-        # InterventionHandler（Phase 3）
+        self.on_replan = on_replan
         self.intervention_handler = create_intervention_handler(
             config=self.config,
             on_notify=self._handle_intervention_notify,
             on_confirm=self._handle_intervention_confirm,
             on_escalate=self._handle_intervention_escalate,
         )
-
-        # ReplanOrchestrator（Phase 4）
         if replan_orchestrator is not None:
             self.replan_orchestrator = replan_orchestrator
         elif enable_replan:
             self.replan_orchestrator = create_replan_orchestrator(config=self.config)
         else:
             self.replan_orchestrator = None
-
-        # ステップごとのConfidenceScoreを保持
         self.step_confidence_scores: Dict[int, ConfidenceScore] = {}
-
         replan_status = "enabled" if self.replan_orchestrator else "disabled"
-        logger.info(
-            f"Executor (GRACE Native) initialized: "
-            f"tools={self.tool_registry.list_tools()}, replan={replan_status}"
-        )
+        logger.info(f"Executor (GRACE Native) initialized: tools={self.tool_registry.list_tools()}, replan={replan_status}")
 
-    def execute_plan_generator(
-            self,
-            plan: ExecutionPlan,
-            state: Optional[ExecutionState] = None
-    ) -> Generator[ExecutionState, None, ExecutionResult]:
-        """
-        計画をステップごとに実行（ジェネレータ版）
-        UIなどで進捗をリアルタイム表示するために使用
-        Args:
-            plan: 実行する計画
-            state: 既存の状態（再開時などに指定）
-        Yields:
-            ExecutionState: 各ステップ完了後の状態
-        Returns:
-            ExecutionResult: 最終実行結果
-        """
+    def execute_plan_generator(self, plan: ExecutionPlan, state: Optional[ExecutionState] = None) -> Generator[ExecutionState, None, ExecutionResult]:
         logger.info(f"Executing plan (generator): {plan.plan_id}, steps={len(plan.steps)}")
-
-        # 受け取ったプラン内容をログ出力
         logger.info(f"Received Execution Plan in Executor (generator):\n{plan.model_dump_json(indent=2)}")
-
-        # 実行状態を初期化（未指定の場合）
         if state is None:
             state = ExecutionState(plan=plan)
             state.start_time = time.time()
-
         try:
-            # 各ステップを順次実行
-            # 注: リプランなどでステップ数が増減する可能性があるため、インデックス管理が必要
-            # ここでは簡易的に、現在のステップID以降を実行するロジック
-
-            # 実行すべきステップのリストを取得（現在の計画に基づく）
-            # 既に完了しているステップはスキップ
-            steps_to_execute = [
-                s for s in plan.steps
-                if state.step_statuses.get(s.step_id) != StepStatus.SUCCESS
-            ]
-
+            steps_to_execute = [s for s in plan.steps if state.step_statuses.get(s.step_id) != StepStatus.SUCCESS]
             for step in steps_to_execute:
-                # 状態更新: 現在のステップID
                 state.current_step_id = step.step_id
-
-                # キャンセルチェック
                 if state.is_cancelled:
                     logger.info("Execution cancelled")
                     break
-
-                # スキップ済みチェック（RAGスコア十分時にweb_searchを動的スキップした場合）
                 if state.step_statuses.get(step.step_id) == StepStatus.SKIPPED:
-                    logger.info(f"Step {step.step_id}: Already marked as SKIPPED, skipping")
                     yield state
                     continue
-
-                # 依存関係チェック
                 if not self._check_dependencies(step, state):
-                    logger.warning(f"Step {step.step_id}: Dependencies not met, skipping")
                     state.step_statuses[step.step_id] = StepStatus.SKIPPED
                     yield state
                     continue
-
-                # ステップ開始コールバック
                 state.step_statuses[step.step_id] = StepStatus.RUNNING
                 if self.on_step_start:
                     self.on_step_start(step)
-
-                # ステップ実行
-                # _execute_step は StepResult または Generator[Any, None, StepResult] を返す可能性がある
                 step_execution = self._execute_step(step, state)
-
                 result = None
                 if isinstance(step_execution, Generator):
-                    # ジェネレータの場合はイベントを中継し、最終結果(return value)を取得
-                    # yield from は return value を返す
                     result = yield from step_execution
                 else:
-                    # 直接結果が返ってきた場合
                     result = step_execution
-
-                # 結果を保存
                 state.step_results[step.step_id] = result
-                state.step_statuses[step.step_id] = (
-                    StepStatus.SUCCESS if result.status == "success" else StepStatus.FAILED
-                )
-
-                # --- RAG検索結果に基づく動的条件分岐 ---
+                state.step_statuses[step.step_id] = (StepStatus.SUCCESS if result.status == "success" else StepStatus.FAILED)
                 if step.action == "rag_search" and result.status == "success":
                     rag_max_score = 0.0
                     if step.step_id in self.step_confidence_scores:
                         rag_max_score = self.step_confidence_scores[step.step_id].factors.search_max_score
-
-                    rag_threshold = self.config.qdrant.rag_sufficient_score  # デフォルト 0.7
-
-                    # web_searchを実行すべきかの判定
+                    rag_threshold = self.config.qdrant.rag_sufficient_score
                     need_web_search = False
-
                     if rag_max_score < rag_threshold:
-                        # スコア不足 → 無条件でweb_search
-                        logger.info(
-                            f"RAG score insufficient ({rag_max_score:.4f} < {rag_threshold}), "
-                            f"need web_search"
-                        )
                         need_web_search = True
                     else:
-                        # スコア十分 → LLMで意味的適合性を検証
-                        logger.info(
-                            f"RAG score sufficient ({rag_max_score:.4f} >= {rag_threshold}), "
-                            f"checking semantic relevance with LLM"
-                        )
-                        is_relevant = self._evaluate_rag_relevance(
-                            query=step.query or step.description,
-                            rag_output=result.output or "",
-                        )
+                        is_relevant = self._evaluate_rag_relevance(query=step.query or step.description, rag_output=result.output or "")
                         if not is_relevant:
-                            logger.info("RAG result not semantically relevant, need web_search")
                             need_web_search = True
-                        else:
-                            logger.info("RAG result semantically relevant, skipping web_search")
-
                     if need_web_search:
-                        # パターン(2)(3): web_search を動的実行
                         web_result = yield from self._execute_dynamic_web_search(step, state)
-
                         if web_result is None or web_result.status == "failed":
-                            # パターン(3): Webも失敗 → ask_user を動的実行
-                            logger.info("Web search also failed, executing ask_user")
                             yield from self._execute_dynamic_ask_user(step, state)
                     else:
-                        # パターン(1): web_search スキップ
                         for future_step in steps_to_execute:
                             if future_step.action == "web_search" and future_step.step_id > step.step_id:
                                 state.step_statuses[future_step.step_id] = StepStatus.SKIPPED
-                                logger.info(f"Skipping planned web_search step {future_step.step_id}")
-
-                # ステップ完了コールバック
                 if self.on_step_complete:
                     self.on_step_complete(result)
-
-                # 信頼度に基づく介入チェック (Phase 3)
                 if step.step_id in self.step_confidence_scores:
                     confidence_score = self.step_confidence_scores[step.step_id]
                     action_decision = self.confidence_calculator.decide_action(confidence_score)
-
-                    # CONFIRM または ESCALATE の場合は一時停止
                     if action_decision.level in [InterventionLevel.CONFIRM, InterventionLevel.ESCALATE]:
-                        logger.info(f"Pausing for intervention: {action_decision.level} (Step {step.step_id})")
-
                         state.is_paused = True
-
-                        # 介入リクエストを作成
-                        req_type = "confirm" if action_decision.level == InterventionLevel.CONFIRM else "escalate"
                         message = f"信頼度が低いため確認が必要です ({confidence_score.score:.2f})"
                         if action_decision.reason:
                             message += f"\n理由: {action_decision.reason}"
-
-                        # InterventionRequestオブジェクトを作成
                         state.intervention_request = InterventionRequest(
-                            level=action_decision.level,
-                            step_id=step.step_id,
-                            message=message,
-                            reason=action_decision.reason,
-                            confidence_score=confidence_score.score,
-                            plan=plan
+                            level=action_decision.level, step_id=step.step_id, message=message,
+                            reason=action_decision.reason, confidence_score=confidence_score.score, plan=plan
                         )
-
-                        # Yield: 一時停止状態を通知
                         yield state
-
-                        # ジェネレータを終了（再開時は新しいジェネレータを作成）
                         return self._create_execution_result(state)
-
-                    # 通知のみ（SILENT/NOTIFY）
                     self._handle_intervention_if_needed(action_decision, step, state)
-
-                # Yield: ステップ完了状態を通知
                 yield state
-
-                # ask_user の場合の処理（既存ロジック）
                 if step.action == "ask_user" and result.status == "success":
-                    # ...既存のask_user処理...
                     pass
-
-                # 失敗時のリプラン
                 if result.status == "failed" and self.replan_orchestrator:
                     replan_result = self.replan_orchestrator.handle_step_failure(
-                        step_result=result,
-                        current_plan=plan,
-                        completed_results=state.step_results,
-                        replan_count=state.replan_count
+                        step_result=result, current_plan=plan, completed_results=state.step_results, replan_count=state.replan_count
                     )
                     if replan_result and replan_result.success and replan_result.new_plan:
-                        logger.info(f"Replanning: {replan_result.reason}")
                         state.replan_count += 1
-
-                        # 新しい計画に差し替え
-                        # Generatorを再帰呼び出しするか、ループを再構成する必要がある
-                        # ここでは、新しい計画で再帰的にGeneratorを作成し、その値をYieldする
                         state.plan = replan_result.new_plan
-                        # 再帰呼び出し
                         yield from self.execute_plan_generator(replan_result.new_plan, state)
-                        # 再帰から戻ったら終了（新しい計画が完了しているため）
                         return self._create_execution_result(state)
-
-            # 全体の信頼度を計算
             state.overall_confidence = self._calculate_overall_confidence(state)
             state.end_time = time.time()
-
-            # 最終結果
             return self._create_execution_result(state)
-
         except Exception as e:
             logger.error(f"Execution failed: {e}", exc_info=True)
             state.end_time = time.time()
-            # エラー時も結果を返す
             return ExecutionResult(
-                plan_id=plan.plan_id or create_plan_id(),
-                original_query=plan.original_query,
-                final_answer=f"実行エラー: {str(e)}",
-                step_results=list(state.step_results.values()),
-                overall_confidence=0.0,
-                overall_status="failed",
-                replan_count=state.replan_count,
-                total_execution_time_ms=state.get_execution_time_ms(),
-                total_token_usage=None,
-                total_cost_usd=None,
+                plan_id=plan.plan_id or create_plan_id(), original_query=plan.original_query,
+                final_answer=f"実行エラー: {str(e)}", step_results=list(state.step_results.values()),
+                overall_confidence=0.0, overall_status="failed", replan_count=state.replan_count,
+                total_execution_time_ms=state.get_execution_time_ms(), total_token_usage=None, total_cost_usd=None,
             )
 
     def execute_plan(self, plan: ExecutionPlan) -> ExecutionResult:
-        """
-        計画を実行（GRACEネイティブ実装）
-        Args:
-            plan: 実行する計画
-        Returns:
-            ExecutionResult: 実行結果
-        """
         logger.info(f"Executing plan: {plan.plan_id}, steps={len(plan.steps)}")
-
-        # 受け取ったプラン内容をログ出力
         logger.info(f"Received Execution Plan in Executor (blocking):\n{plan.model_dump_json(indent=2)}")
-
-        # 実行状態を初期化
         state = ExecutionState(plan=plan)
         state.start_time = time.time()
-
         try:
-            # 各ステップを順次実行
             for step in plan.steps:
-                # キャンセルチェック
                 if state.is_cancelled:
-                    logger.info("Execution cancelled")
                     break
-
-                # 依存関係チェック
                 if not self._check_dependencies(step, state):
-                    logger.warning(f"Step {step.step_id}: Dependencies not met, skipping")
                     state.step_statuses[step.step_id] = StepStatus.SKIPPED
                     continue
-
-                # ステップ開始コールバック
                 state.step_statuses[step.step_id] = StepStatus.RUNNING
                 if self.on_step_start:
                     self.on_step_start(step)
-
-                # ステップ実行
                 step_execution = self._execute_step(step, state)
-
                 result = None
                 if isinstance(step_execution, Generator):
-                    # ジェネレータの場合は最後まで回して最終結果を取得
                     try:
                         while True:
-                            # 中間イベント（ログなど）はブロッキング版では無視するかログ出力
                             event = next(step_execution)
                             if isinstance(event, dict) and event.get("type") == "log":
                                 logger.info(event.get("content"))
@@ -461,72 +281,45 @@ class Executor:
                         result = e.value
                 else:
                     result = step_execution
-
-                # 結果を保存
                 state.step_results[step.step_id] = result
-                state.step_statuses[step.step_id] = (
-                    StepStatus.SUCCESS if result.status == "success" else StepStatus.FAILED
-                )
-
-                # ステップ完了コールバック
+                state.step_statuses[step.step_id] = (StepStatus.SUCCESS if result.status == "success" else StepStatus.FAILED)
                 if self.on_step_complete:
                     self.on_step_complete(result)
-
-                # ask_user の場合、介入が必要
                 if step.action == "ask_user" and result.status == "success":
                     if self.on_intervention_required and isinstance(result.output, str):
                         try:
-                            output_data = eval(result.output) if result.output.startswith("{}") else {
-                                "question": result.output}
+                            output_data = eval(result.output) if result.output.startswith("{}") else {"question": result.output}
                         except Exception:
                             output_data = {"question": result.output}
-
                         user_response = self.on_intervention_required("ask_user", output_data)
                         if user_response:
-                            # ユーザー応答を次のステップで利用可能にする
                             result.output = f"ユーザー応答: {user_response}"
                             state.step_results[step.step_id] = result
-
-                # 失敗時のリプラン（Phase 4で有効化）
                 if result.status == "failed" and self.replan_orchestrator:
                     replan_result = self.replan_orchestrator.handle_step_failure(
-                        step_result=result,
-                        current_plan=plan,
-                        completed_results=state.step_results,
-                        replan_count=state.replan_count
+                        step_result=result, current_plan=plan, completed_results=state.step_results, replan_count=state.replan_count
                     )
                     if replan_result and replan_result.success and replan_result.new_plan:
-                        logger.info(f"Replanning: {replan_result.reason}")
                         state.replan_count += 1
-                        # 新しい計画で再実行（再帰）
                         return self.execute_plan(replan_result.new_plan)
-
-            # 全体の信頼度を計算
             state.overall_confidence = self._calculate_overall_confidence(state)
             state.end_time = time.time()
-
-            # 実行結果を生成
             return self._create_execution_result(state)
-
         except Exception as e:
             logger.error(f"Execution failed: {e}", exc_info=True)
             state.end_time = time.time()
-
             return ExecutionResult(
-                plan_id=plan.plan_id or create_plan_id(),
-                original_query=plan.original_query,
-                final_answer=f"実行エラー: {str(e)}",
-                step_results=list(state.step_results.values()),
-                overall_confidence=0.0,
-                overall_status="failed",
-                replan_count=state.replan_count,
-                total_execution_time_ms=state.get_execution_time_ms(),
-                total_token_usage=None,
-                total_cost_usd=None,
+                plan_id=plan.plan_id or create_plan_id(), original_query=plan.original_query,
+                final_answer=f"実行エラー: {str(e)}", step_results=list(state.step_results.values()),
+                overall_confidence=0.0, overall_status="failed", replan_count=state.replan_count,
+                total_execution_time_ms=state.get_execution_time_ms(), total_token_usage=None, total_cost_usd=None,
             )
 
+    def execute(self, plan: ExecutionPlan) -> ExecutionResult:
+        """execute_plan() の統一エントリーポイント（benchmark.py 互換）"""
+        return self.execute_plan(plan)
+
     def _check_dependencies(self, step: PlanStep, state: ExecutionState) -> bool:
-        """依存ステップの完了確認"""
         for dep_id in step.depends_on:
             if dep_id not in state.step_results:
                 return False
@@ -535,216 +328,95 @@ class Executor:
         return True
 
     def _execute_step(self, step: PlanStep, state: ExecutionState) -> Any:
-        """
-        個別ステップの実行
-        Args:
-            step: 実行するステップ
-            state: 現在の実行状態
-        Returns:
-            StepResult or Generator: ステップ実行結果（またはジェネレータ）
-        """
         logger.info(f"Executing step {step.step_id}: {step.action} - {step.description}")
-
         start_time = time.time()
-
         try:
-            # ツールを取得
             tool = self.tool_registry.get(step.action)
-
-            # --- 互換性維持のための特別なハンドリング ---
             if tool is None and step.action == "run_legacy_agent":
-                # ツールとして登録されていないが、以前のLegacyプランが残っている場合
                 return self._execute_legacy_agent_step(step, state, start_time)
-
             if tool is None:
                 raise ValueError(f"Unknown action: {step.action}")
-
-            # ツール実行引数を準備
             kwargs = self._prepare_tool_kwargs(step, state)
-
-            # 実行
+            if _TOKEN_TRACKING_AVAILABLE:
+                _reset_token_counter()
             tool_result: ToolResult = tool.execute(**kwargs)
-
-            # --- UIへの中間結果通知 (思考プロセス表示用) ---
             if tool_result.success and tool_result.output:
                 import json
                 try:
-                    # RAG検索結果などはリスト/辞書なので整形する
-                    out_display = json.dumps(tool_result.output, indent=2, ensure_ascii=False) if isinstance(
-                        tool_result.output, (list, dict)) else str(tool_result.output)
+                    out_display = json.dumps(tool_result.output, indent=2, ensure_ascii=False) if isinstance(tool_result.output, (list, dict)) else str(tool_result.output)
                 except Exception:
                     out_display = str(tool_result.output)
-
-                # IPO風のラベルをつけて通知
-                yield {
-                    "type"   : "log",
-                    "content": f"📝 【ツール実行結果: {step.action}】\n{out_display}"
-                }
-
-            # 実行時間
+                yield {"type": "log", "content": f"📝 【ツール実行結果: {step.action}】\n{out_display}"}
             execution_time = int((time.time() - start_time) * 1000)
-
-            # ----------------------
-            # 信頼度を計算（state引数を渡す）
-            # ----------------------
-            # confidence = self._calculate_step_confidence(tool_result, step, state)
             confidence = self._llm_calculate_step_confidence(tool_result, step, state)
-
-            # ソースを抽出
             sources = self._extract_sources(tool_result)
-
+            _tu = _get_token_counter() if _TOKEN_TRACKING_AVAILABLE else {}
+            _step_token_usage = _tu if (_tu.get("input_tokens") or _tu.get("output_tokens")) else None
             return StepResult(
-                step_id=step.step_id,
-                status="success" if tool_result.success else "failed",
-                output=self._format_output(tool_result.output),
-                confidence=confidence,
-                sources=sources,
+                step_id=step.step_id, status="success" if tool_result.success else "failed",
+                output=self._format_output(tool_result.output), confidence=confidence, sources=sources,
                 error=tool_result.error if not tool_result.success else None,
-                execution_time_ms=execution_time,
-                token_usage=None,
+                execution_time_ms=execution_time, token_usage=_step_token_usage,
             )
-
         except Exception as e:
             logger.error(f"Step {step.step_id} failed: {e}")
             execution_time = int((time.time() - start_time) * 1000)
-
-            # フォールバック処理
             if step.fallback:
-                logger.info(f"Attempting fallback: {step.fallback}")
                 fallback_result = self._execute_fallback(step, state)
                 if fallback_result.status == "success":
                     return fallback_result
+            return StepResult(step_id=step.step_id, status="failed", output=None, confidence=0.0, error=str(e), execution_time_ms=execution_time, token_usage=None)
 
-            return StepResult(
-                step_id=step.step_id,
-                status="failed",
-                output=None,
-                confidence=0.0,
-                error=str(e),
-                execution_time_ms=execution_time,
-                token_usage=None,
-            )
-
-    def _execute_legacy_agent_step(self, step: PlanStep, state: ExecutionState, start_time: float) -> Generator[
-        Any, None, StepResult]:
-        """Legacy ReActAgent を使用したステップ実行（ジェネレータ版）"""
+    def _execute_legacy_agent_step(self, step: PlanStep, state: ExecutionState, start_time: float) -> Generator[Any, None, StepResult]:
         if not LEGACY_AGENT_AVAILABLE:
             raise ImportError("agent_service module not found")
-
-        # 1. コレクション準備
         available_collections = get_available_collections_from_qdrant_helper()
         if not available_collections:
             available_collections = self.config.qdrant.search_priority
-
-        # 2. Agent初期化
-        agent = ReActAgent(
-            selected_collections=available_collections,
-            model_name=self.config.llm.model
-        )
-
+        agent = ReActAgent(selected_collections=available_collections, model_name=self.config.llm.model)
         query = step.query or step.description
-        logger.info(f"Running Legacy Agent with query: {query}")
-
         final_answer = ""
         sources = []
-
-        # 3. エージェント実行（ジェネレータ）
-        # ストリーミングイベントを拾いながら、ツール結果からソースを収集
         for event in agent.execute_turn(query):
-            # イベントをそのまま上位へ流す（UI表示用）
             yield event
-
-            # ログ出力（デバッグ用）
             if event["type"] == "log":
                 logger.info(f"[LegacyAgent] {event['content']}")
-            elif event["type"] == "tool_call":
-                logger.info(f"[LegacyAgent] Tool Call: {event['name']} args={event['args']}")
             elif event["type"] == "tool_result":
-                logger.info(f"[LegacyAgent] Tool Result (len={len(event['content'])})")
-                # ソース抽出 (簡易的な文字列解析)
                 if "Source:" in event["content"]:
                     import re
-                    # Source: filename.csv のパターンを抽出
                     found_sources = re.findall(r"Source:\s*([a-zA-Z0-9_.\-]+)", event["content"])
                     if found_sources:
                         sources.extend(found_sources)
             elif event["type"] == "final_answer":
                 final_answer = event["content"]
-
-        # 4. 結果構築
         execution_time = int((time.time() - start_time) * 1000)
-
-        # ソースの重複排除
         sources = list(set(sources))
-
-        # Confidence計算 (簡易版)
         confidence = 0.8 if final_answer and "申し訳ありません" not in final_answer else 0.3
-
-        # ConfidenceScoreオブジェクトを作成して保存
-        conf_score_obj = ConfidenceScore(
-            score=confidence,
-            factors=ConfidenceFactors(
-                source_count=len(sources),
-                search_result_count=len(sources),
-                llm_self_confidence=confidence
-            )
-        )
+        conf_score_obj = ConfidenceScore(score=confidence, factors=ConfidenceFactors(source_count=len(sources), search_result_count=len(sources), llm_self_confidence=confidence))
         self.step_confidence_scores[step.step_id] = conf_score_obj
-
-        # アクション判定
         if self.on_confidence_update:
             action = self.confidence_calculator.decide_action(conf_score_obj)
             self.on_confidence_update(conf_score_obj, action)
+        return StepResult(step_id=step.step_id, status="success", output=final_answer, confidence=confidence, sources=sources, error=None, execution_time_ms=execution_time, token_usage=None)
 
-        return StepResult(
-            step_id=step.step_id,
-            status="success",
-            output=final_answer,
-            confidence=confidence,
-            sources=sources,
-            error=None,
-            execution_time_ms=execution_time,
-            token_usage=None,
-        )
-
-    def _prepare_tool_kwargs(
-            self,
-            step: PlanStep,
-            state: ExecutionState
-    ) -> Dict[str, Any]:
-        """ツール実行引数を準備"""
-        kwargs: Dict[str, Any] = {
-            "query": step.query or step.description,
-        }
-
+    def _prepare_tool_kwargs(self, step: PlanStep, state: ExecutionState) -> Dict[str, Any]:
+        kwargs: Dict[str, Any] = {"query": step.query or step.description}
         if step.action == "rag_search":
             kwargs["collection"] = step.collection
-
         elif step.action == "web_search":
             kwargs["num_results"] = self.config.web_search.num_results
             kwargs["language"] = self.config.web_search.language
-
         elif step.action == "reasoning":
-            # 全成功ステップの結果をコンテキストとして追加
-            # （depends_on ではなく state.step_results 全体を参照）
-            # → 動的挿入された web_search やリプラン後の結果も取得可能
             context_parts = []
             sources = []
-            logger.info(f"--- Reasoning Step ---")
-            logger.info(f"Step: {step}")
-            logger.info(f"Available step_results: {list(state.step_results.keys())}")
-
             for dep_id in sorted(state.step_results.keys()):
                 dep_result = state.step_results[dep_id]
                 if dep_result.status != "success":
                     continue
                 dep_output = dep_result.output
-
                 if dep_output:
-                    # 文字列化されたリストを復元する試み
                     if isinstance(dep_output, str):
                         try:
-                            # RAG検索結果は "[{...}, {...}]" 形式で文字列化されている
                             if dep_output.startswith("[{") or dep_output.startswith("[{'"):
                                 import ast
                                 parsed = ast.literal_eval(dep_output)
@@ -753,126 +425,46 @@ class Executor:
                                     continue
                         except (ValueError, SyntaxError):
                             pass
-                        # パースできない場合はコンテキストとして追加
                         context_parts.append(f"--- 参照情報 (Step {dep_id}) ---\n{dep_output}")
                     elif isinstance(dep_output, list):
                         sources.extend(dep_output)
-
             if sources:
                 kwargs["sources"] = sources
             if context_parts:
                 kwargs["context"] = "\n\n".join(context_parts)
-
         elif step.action == "ask_user":
-            kwargs.update({
-                "question": step.query or step.description,
-                "reason"  : f"ステップ {step.step_id}: {step.description}",
-                "urgency" : "blocking"
-            })
-
+            kwargs.update({"question": step.query or step.description, "reason": f"ステップ {step.step_id}: {step.description}", "urgency": "blocking"})
         return kwargs
 
-    def _evaluate_rag_relevance(
-            self,
-            query: str,
-            rag_output: str,
-    ) -> bool:
-        """
-        LLMを使用してRAG検索結果がユーザーの質問に意味的に適合しているかを判定する。
-
-        コサイン類似度は文構造の類似性を反映するが、意味的な適合性は保証しない。
-        例: 「日本の多義性」と「言語の多義性」は文構造が似ているが主題が異なる。
-
-        Args:
-            query: ユーザーの元の質問文
-            rag_output: RAG検索結果の出力文字列
-
-        Returns:
-            bool: 適合していればTrue、不適合ならFalse
-        """
+    def _evaluate_rag_relevance(self, query: str, rag_output: str) -> bool:
         prompt = (
-            "以下の【検索結果】が、【ユーザーの質問】に対する回答として使えるかを判定してください。\n"
-            "\n"
-            "【判定基準】\n"
-            "- 検索結果の主題が質問の主題と一致しているか\n"
-            "- 質問に対する回答に必要な情報が含まれているか\n"
-            "\n"
-            f"【ユーザーの質問】\n{query}\n"
-            f"\n"
-            f"【検索結果】\n{rag_output[:500]}\n"
-            "\n"
+            "以下の【検索結果】が、【ユーザーの質問】に対する回答として使えるかを判定してください。\n\n"
+            f"【ユーザーの質問】\n{query}\n\n【検索結果】\n{rag_output[:500]}\n\n"
             "回答として使える場合は YES、使えない場合は NO とだけ回答してください。"
         )
-
         try:
-            # [MIGRATION] from google import genai / types → create_llm_client("openai")
-            # Gemini: genai.Client().models.generate_content() + GenerateContentConfig + AFC無効化
-            # OpenAI:  create_llm_client("openai").generate_content() で代替
             import time as _time
-
             if not _LLM_CLIENT_AVAILABLE:
                 raise ImportError("helper_llm.create_llm_client が利用できません")
-
             llm = create_llm_client("openai", default_model=self.config.llm.model)
             t0 = _time.time()
-
-            # temperature=0.0, max_tokens=5 で YES/NO のみ返させる
-            answer = llm.generate_content(
-                prompt=prompt,
-                temperature=0.0,
-                max_completion_tokens=5,  # [FIX] gpt-5.4-mini以降: max_tokens → max_completion_tokens
-            ).strip().upper()
-
+            answer = llm.generate_content(prompt=prompt, temperature=0.0, max_completion_tokens=5).strip().upper()
             elapsed = _time.time() - t0
             is_relevant = "YES" in answer
-            logger.info(
-                f"RAG relevance check: '{answer}' -> {is_relevant} ({elapsed:.1f}s)"
-            )
+            logger.info(f"RAG relevance check: '{answer}' -> {is_relevant} ({elapsed:.1f}s)")
             return is_relevant
-
         except Exception as e:
             logger.warning(f"RAG relevance check failed: {e}, defaulting to True")
-            return True  # フォールバック: 判定失敗時は既存動作（スコアのみで判定）を維持
+            return True
 
-    def _execute_dynamic_web_search(
-            self,
-            rag_step: PlanStep,
-            state: ExecutionState
-    ) -> Generator:
-        """
-        RAGスコア不足時に web_search を動的に実行する。
-
-        Args:
-            rag_step: 直前に実行された rag_search ステップ
-            state: 現在の実行状態
-
-        Yields:
-            state: 中間状態
-
-        Returns:
-            StepResult or None: web_search の結果
-        """
-        web_step_id = rag_step.step_id + 100  # 動的挿入用に大きなIDを付与
-        web_step = PlanStep(
-            step_id=web_step_id,
-            action="web_search",
-            description=f"[動的挿入] RAGスコア不足のためWeb検索を実行",
-            query=rag_step.query,
-            collection=None,
-            depends_on=[rag_step.step_id],
-            expected_output="Web検索結果",
-            fallback=None,
-            timeout_seconds=15,  # タイムアウト短め
-        )
-
-        logger.info(f"Dynamic web_search: step_id={web_step_id}, query={rag_step.query[:50]}")
-
+    def _execute_dynamic_web_search(self, rag_step: PlanStep, state: ExecutionState) -> Generator:
+        web_step_id = rag_step.step_id + 100
+        web_step = PlanStep(step_id=web_step_id, action="web_search", description=f"[動的挿入] RAGスコア不足のためWeb検索を実行",
+            query=rag_step.query, collection=None, depends_on=[rag_step.step_id], expected_output="Web検索結果", fallback=None, timeout_seconds=15)
         state.current_step_id = web_step_id
         state.step_statuses[web_step_id] = StepStatus.RUNNING
-
         if self.on_step_start:
             self.on_step_start(web_step)
-
         try:
             step_execution = self._execute_step(web_step, state)
             web_result = None
@@ -880,74 +472,29 @@ class Executor:
                 web_result = yield from step_execution
             else:
                 web_result = step_execution
-
             state.step_results[web_step_id] = web_result
-            state.step_statuses[web_step_id] = (
-                StepStatus.SUCCESS if web_result.status == "success" else StepStatus.FAILED
-            )
-
+            state.step_statuses[web_step_id] = (StepStatus.SUCCESS if web_result.status == "success" else StepStatus.FAILED)
             if self.on_step_complete:
                 self.on_step_complete(web_result)
-
             yield state
             return web_result
-
         except Exception as e:
             logger.error(f"Dynamic web_search failed: {e}")
-            failed_result = StepResult(
-                step_id=web_step_id,
-                status="failed",
-                output=None,
-                confidence=0.0,
-                error=str(e),
-                execution_time_ms=0,
-                token_usage=None,
-            )
+            failed_result = StepResult(step_id=web_step_id, status="failed", output=None, confidence=0.0, error=str(e), execution_time_ms=0, token_usage=None)
             state.step_results[web_step_id] = failed_result
             state.step_statuses[web_step_id] = StepStatus.FAILED
             yield state
             return failed_result
 
-    def _execute_dynamic_ask_user(
-            self,
-            rag_step: PlanStep,
-            state: ExecutionState
-    ) -> Generator:
-        """
-        RAG・Web検索の両方が不十分な場合に ask_user を動的に実行する。
-
-        Args:
-            rag_step: 元の rag_search ステップ
-            state: 現在の実行状態
-
-        Yields:
-            state: 中間状態
-        """
-        ask_step_id = rag_step.step_id + 200  # 動的挿入用ID
-        ask_step = PlanStep(
-            step_id=ask_step_id,
-            action="ask_user",
-            description=f"[動的挿入] 検索結果が不十分なためユーザーに確認",
-            query=(
-                f"「{rag_step.query[:100]}」について検索しましたが、"
-                f"十分な情報が見つかりませんでした。\n"
-                f"追加の情報があれば教えてください。"
-                f"または、現在の情報で回答を試みますか？"
-            ),
-            collection=None,
-            depends_on=[rag_step.step_id],
-            expected_output="ユーザーの指示",
-            fallback=None,
-        )
-
-        logger.info(f"Dynamic ask_user: step_id={ask_step_id}")
-
+    def _execute_dynamic_ask_user(self, rag_step: PlanStep, state: ExecutionState) -> Generator:
+        ask_step_id = rag_step.step_id + 200
+        ask_step = PlanStep(step_id=ask_step_id, action="ask_user", description=f"[動的挿入] 検索結果が不十分なためユーザーに確認",
+            query=f"「{rag_step.query[:100]}」について検索しましたが、十分な情報が見つかりませんでした。追加情報があれば教えてください。",
+            collection=None, depends_on=[rag_step.step_id], expected_output="ユーザーの指示", fallback=None)
         state.current_step_id = ask_step_id
         state.step_statuses[ask_step_id] = StepStatus.RUNNING
-
         if self.on_step_start:
             self.on_step_start(ask_step)
-
         try:
             step_execution = self._execute_step(ask_step, state)
             ask_result = None
@@ -955,37 +502,21 @@ class Executor:
                 ask_result = yield from step_execution
             else:
                 ask_result = step_execution
-
             state.step_results[ask_step_id] = ask_result
-            state.step_statuses[ask_step_id] = (
-                StepStatus.SUCCESS if ask_result.status == "success" else StepStatus.FAILED
-            )
-
+            state.step_statuses[ask_step_id] = (StepStatus.SUCCESS if ask_result.status == "success" else StepStatus.FAILED)
             if self.on_step_complete:
                 self.on_step_complete(ask_result)
-
             yield state
-
         except Exception as e:
             logger.error(f"Dynamic ask_user failed: {e}")
             yield state
 
-    def _execute_fallback(
-            self,
-            step: PlanStep,
-            state: ExecutionState
-    ) -> StepResult:
-        """フォールバックアクションを実行"""
+    def _execute_fallback(self, step: PlanStep, state: ExecutionState) -> StepResult:
         fallback_step = PlanStep(
             step_id=step.step_id,
             action=cast(Literal["rag_search", "web_search", "reasoning", "ask_user", "code_execute", "run_legacy_agent"], step.fallback),
-            description=f"[Fallback] {step.description}",
-            query=step.query,
-            collection=step.collection,
-            depends_on=step.depends_on,
-            expected_output=step.expected_output,
-            fallback=None,  # 二重フォールバックは無し
-            timeout_seconds=step.timeout_seconds,
+            description=f"[Fallback] {step.description}", query=step.query, collection=step.collection,
+            depends_on=step.depends_on, expected_output=step.expected_output, fallback=None, timeout_seconds=step.timeout_seconds,
         )
         step_execution = self._execute_step(fallback_step, state)
         if isinstance(step_execution, Generator):
@@ -996,245 +527,96 @@ class Executor:
                 return e.value
         return step_execution
 
-    def _llm_calculate_step_confidence(
-            self,
-            tool_result: ToolResult,
-            step: PlanStep,
-            state: ExecutionState
-    ) -> float:
-        """
-        LLMを使用したステップ信頼度の計算
-        """
+    def _llm_calculate_step_confidence(self, tool_result: ToolResult, step: PlanStep, state: ExecutionState) -> float:
         if not tool_result.success:
             return 0.0
-
         factors = tool_result.confidence_factors
-        logger.info(f"[_llm_calculate_step_confidence] Initial factors: {factors}")
-
-        # ConfidenceFactorsを構築
-        # source_countの決定: ツールが明示的に返した値を優先
         extracted_sources = self._extract_sources(tool_result)
         source_count = factors.get("source_count", len(extracted_sources))
-
-        # ソース一致度 (Source Agreement) の計算
         source_agreement = 1.0
         if source_count > 1:
-            # ツール結果からテキストを抽出
             texts = []
             if isinstance(tool_result.output, list):
                 for item in tool_result.output:
                     if isinstance(item, dict):
                         payload = item.get("payload", {})
-                        # content, text, answer などのフィールドを探す
                         content = payload.get("content") or payload.get("text") or payload.get("answer")
                         if content:
                             texts.append(str(content))
-
             if len(texts) > 1:
                 try:
                     sa_calc = create_source_agreement_calculator(config=self.config)
                     source_agreement = sa_calc.calculate(texts)
-                    logger.info(f"[_llm_calculate_step_confidence] Calculated source_agreement: {source_agreement:.4f}")
                 except Exception as e:
                     logger.warning(f"Failed to calculate source_agreement: {e}")
                     source_agreement = 0.5
-
-        # 依存ステップからのスコア継承ロジック
         current_result_count = factors.get("result_count", 0)
         current_max_score = factors.get("max_score", factors.get("avg_score", 0.0))
         current_avg_score = factors.get("avg_score", 0.0)
-
-        # 自身で検索しておらず、かつ推論ステップなどの場合、依存元のスコアを引き継ぐ
         if current_result_count == 0 and not (step.action in ["rag_search", "web_search"]):
             inherited_max = 0.0
             inherited_found = False
             for dep_id in step.depends_on:
                 if dep_id in state.step_results:
                     dep_res = state.step_results[dep_id]
-                    # 依存先の信頼度を継承
                     if dep_res.confidence > inherited_max:
                         inherited_max = dep_res.confidence
                         inherited_found = True
-
             if inherited_found:
-                logger.info(f"[_llm_calculate_step_confidence] Inherited scores from dependency: max={inherited_max}")
                 current_max_score = inherited_max
                 current_avg_score = inherited_max
-                current_result_count = 1  # 仮想的に1件あったとみなす
-
+                current_result_count = 1
         confidence_factors = ConfidenceFactors(
-            # RAG検索関連
-            search_result_count=current_result_count,
-            search_avg_score=current_avg_score,
-            search_max_score=current_max_score,
-            search_score_variance=factors.get("score_variance", 1.0),
-            # ソース関連
-            source_count=source_count,
-            source_agreement=source_agreement,
-            # ツール実行関連
+            search_result_count=current_result_count, search_avg_score=current_avg_score,
+            search_max_score=current_max_score, search_score_variance=factors.get("score_variance", 1.0),
+            source_count=source_count, source_agreement=source_agreement,
             tool_success_rate=1.0 if tool_result.success else 0.0,
-            tool_execution_count=1,
-            tool_success_count=1 if tool_result.success else 0,
-            # ステップタイプ
+            tool_execution_count=1, tool_success_count=1 if tool_result.success else 0,
             is_search_step=(step.action in ["rag_search", "web_search"])
         )
-        logger.info(f"[_llm_calculate_step_confidence] Constructed ConfidenceFactors: {confidence_factors}")
-
-        # ConfidenceCalculatorで計算（LLM評価 + Heuristicフォールバック）
         try:
-            confidence_score = self.confidence_calculator.llm_calculate(
-                factors=confidence_factors,
-                step_description=step.description,
-                tool_output=str(tool_result.output)
-            )
-
-            # LLM評価が低すぎる場合、Heuristicで再計算して比較
+            confidence_score = self.confidence_calculator.llm_calculate(factors=confidence_factors, step_description=step.description, tool_output=str(tool_result.output))
             if confidence_score.score < 0.6 and confidence_factors.is_search_step:
                 heuristic_score = self.confidence_calculator.calculate(confidence_factors)
                 if heuristic_score.score > confidence_score.score:
-                    logger.info(
-                        f"Using heuristic score {heuristic_score.score:.2f} "
-                        f"instead of LLM score {confidence_score.score:.2f}"
-                    )
                     confidence_score = heuristic_score
-
         except Exception as e:
             logger.error(f"LLM confidence calculation failed: {e}, falling back to heuristic")
             confidence_score = self.confidence_calculator.calculate(confidence_factors)
-
-        # ステップごとのConfidenceScoreを保存
         self.step_confidence_scores[step.step_id] = confidence_score
-
-        # アクション決定を取得
         action_decision = self.confidence_calculator.decide_action(confidence_score)
-
-        # コールバックで通知（Phase 3のHITLと連携）
         if self.on_confidence_update:
             self.on_confidence_update(confidence_score, action_decision)
-
-        logger.info(
-            f"Step {step.step_id} confidence: {confidence_score.score:.2f} "
-            f"(level={confidence_score.level}, action={action_decision.level.value})"
-        )
-
+        logger.info(f"Step {step.step_id} confidence: {confidence_score.score:.2f} (level={confidence_score.level}, action={action_decision.level.value})")
         return confidence_score.score
 
-    # -------------------
-    # Step 3の評価を担当する関数
-    # -------------------
-    def _calculate_step_confidence(
-            self,
-            tool_result: ToolResult,
-            step: PlanStep,
-            state: ExecutionState
-    ) -> float:
-        """
-        ステップの信頼度を計算（ConfidenceCalculator使用 - Heuristic版）
-        Args:
-            tool_result: ツール実行結果
-            step: 実行したステップ
-            state: 現在の実行状態
-        Returns:
-            float: 信頼度スコア (0.0-1.0)
-        """
+    def _calculate_step_confidence(self, tool_result: ToolResult, step: PlanStep, state: ExecutionState) -> float:
         if not tool_result.success:
             return 0.0
-
         factors = tool_result.confidence_factors
-        logger.info(f"[_calculate_step_confidence] Initial factors: {factors}")
-
-        # ConfidenceFactorsを構築
-        # source_countの決定: ツールが明示的に返した値を優先
         extracted_sources = self._extract_sources(tool_result)
         source_count = factors.get("source_count", len(extracted_sources))
-
-        # ソース一致度 (Source Agreement) の計算
         source_agreement = 1.0
-        if source_count > 1:
-            # ツール結果からテキストを抽出
-            texts = []
-            if isinstance(tool_result.output, list):
-                for item in tool_result.output:
-                    if isinstance(item, dict):
-                        payload = item.get("payload", {})
-                        content = payload.get("content") or payload.get("text") or payload.get("answer")
-                        if content:
-                            texts.append(str(content))
-
-            if len(texts) > 1:
-                try:
-                    sa_calc = create_source_agreement_calculator(config=self.config)
-                    source_agreement = sa_calc.calculate(texts)
-                    logger.info(f"[_calculate_step_confidence] Calculated source_agreement: {source_agreement:.4f}")
-                except Exception as e:
-                    logger.warning(f"Failed to calculate source_agreement: {e}")
-                    source_agreement = 0.5
-
-        # 依存ステップからのスコア継承ロジック
         current_result_count = factors.get("result_count", 0)
         current_max_score = factors.get("max_score", factors.get("avg_score", 0.0))
         current_avg_score = factors.get("avg_score", 0.0)
-
-        # 自身で検索しておらず、かつ推論ステップなどの場合、依存元のスコアを引き継ぐ
-        if current_result_count == 0 and not (step.action in ["rag_search", "web_search"]):
-            inherited_max = 0.0
-            inherited_found = False
-            for dep_id in step.depends_on:
-                if dep_id in state.step_results:
-                    dep_res = state.step_results[dep_id]
-                    # 依存先の信頼度を継承
-                    if dep_res.confidence > inherited_max:
-                        inherited_max = dep_res.confidence
-                        inherited_found = True
-
-            if inherited_found:
-                logger.info(f"[_calculate_step_confidence] Inherited scores from dependency: max={inherited_max}")
-                current_max_score = inherited_max
-                current_avg_score = inherited_max
-                current_result_count = 1  # 仮想的に1件あったとみなす
-
         confidence_factors = ConfidenceFactors(
-            # RAG検索関連
-            search_result_count=current_result_count,
-            search_avg_score=current_avg_score,
-            search_max_score=current_max_score,
-            search_score_variance=factors.get("score_variance", 1.0),
-            # ソース関連
-            source_count=source_count,
-            source_agreement=source_agreement,
-            # ツール実行関連
+            search_result_count=current_result_count, search_avg_score=current_avg_score,
+            search_max_score=current_max_score, search_score_variance=factors.get("score_variance", 1.0),
+            source_count=source_count, source_agreement=source_agreement,
             tool_success_rate=1.0 if tool_result.success else 0.0,
-            tool_execution_count=1,
-            tool_success_count=1 if tool_result.success else 0,
-            # ステップタイプ
+            tool_execution_count=1, tool_success_count=1 if tool_result.success else 0,
             is_search_step=(step.action in ["rag_search", "web_search"])
         )
-        logger.info(f"[_calculate_step_confidence] Constructed ConfidenceFactors: {confidence_factors}")
-
-        # ConfidenceCalculatorで計算
         confidence_score = self.confidence_calculator.calculate(confidence_factors)
-
-        # ステップごとのConfidenceScoreを保存
         self.step_confidence_scores[step.step_id] = confidence_score
-
-        # アクション決定を取得
         action_decision = self.confidence_calculator.decide_action(confidence_score)
-
-        # コールバックで通知（Phase 3のHITLと連携）
         if self.on_confidence_update:
             self.on_confidence_update(confidence_score, action_decision)
-
-        logger.info(
-            f"Step {step.step_id} confidence: {confidence_score.score:.2f} "
-            f"(level={confidence_score.level}, action={action_decision.level.value})"
-        )
-
         return confidence_score.score
 
     def _extract_sources(self, tool_result: ToolResult) -> List[str]:
-        """ツール結果からソースを抽出"""
         sources = []
-
         if isinstance(tool_result.output, list):
             for item in tool_result.output:
                 if isinstance(item, dict):
@@ -1242,11 +624,9 @@ class Executor:
                     source = payload.get("source", "")
                     if source and source not in sources:
                         sources.append(source)
-
         return sources
 
     def _format_output(self, output: Any) -> Optional[str]:
-        """出力を文字列にフォーマット"""
         if output is None:
             return None
         if isinstance(output, str):
@@ -1254,35 +634,18 @@ class Executor:
         if isinstance(output, dict):
             return str(output)
         if isinstance(output, list):
-            # RAG検索結果の場合
             if output and isinstance(output[0], dict):
                 return str(output)
             return "\n".join(str(item) for item in output)
         return str(output)
 
     def _calculate_overall_confidence(self, state: ExecutionState) -> float:
-        """
-        全体の信頼度を計算（ConfidenceAggregator + LLMSelfEvaluator使用）
-
-        Args:
-            state: 実行状態
-
-        Returns:
-            float: 全体の信頼度スコア (0.0-1.0)
-        """
         if not state.step_results:
             return 0.0
-
-        # 各ステップのConfidenceScoreを収集
         step_scores = list(self.step_confidence_scores.values())
-
-        # 最新のbreakdownを取得（ベースとして使用）
         current_breakdown = {}
         if step_scores:
-            # 最後のステップのbreakdownをコピー
             current_breakdown = step_scores[-1].breakdown.copy()
-
-        # 最終回答を取得（最後のreasoningまたはlegacy_agentステップの出力）
         final_answer: Optional[str] = None
         for step in reversed(state.plan.steps):
             if (step.action in ["reasoning", "run_legacy_agent"]) and step.step_id in state.step_results:
@@ -1290,86 +653,37 @@ class Executor:
                 if result.status == "success":
                     final_answer = result.output
                     break
-
-        # LLMSelfEvaluatorで最終回答を評価（オプション）
         if final_answer is not None:
-            # 1. LLM自己評価 (Accuracy/Style etc.)
             try:
-                eval_result = self.llm_evaluator.evaluate(
-                    query=state.plan.original_query,
-                    answer=final_answer,
-                    sources=state.get_completed_sources()
-                )
-
+                eval_result = self.llm_evaluator.evaluate(query=state.plan.original_query, answer=final_answer, sources=state.get_completed_sources())
                 score_val = 0.0
                 if hasattr(eval_result, 'score'):
                     score_val = eval_result.score
                 elif isinstance(eval_result, (int, float)):
                     score_val = float(eval_result)
-
-                # breakdownを更新
                 current_breakdown["llm_self_eval"] = score_val
-
-                # 更新されたbreakdownを持つConfidenceScoreを作成
-                llm_score = ConfidenceScore(
-                    score=score_val,
-                    factors=ConfidenceFactors(llm_self_confidence=score_val),
-                    breakdown=current_breakdown.copy()  # 全要素を含むbreakdown
-                )
+                llm_score = ConfidenceScore(score=score_val, factors=ConfidenceFactors(llm_self_confidence=score_val), breakdown=current_breakdown.copy())
                 step_scores.append(llm_score)
-                logger.info(f"LLM self-evaluation: {score_val:.2f}")
-
             except Exception as e:
                 logger.warning(f"LLM self-evaluation failed: {e}")
-
-            # 2. クエリ網羅度評価 (Query Coverage)
             try:
-                coverage_score = self.query_coverage_calculator.calculate(
-                    query=state.plan.original_query,
-                    answer=final_answer
-                )
-
-                # breakdownを更新
+                coverage_score = self.query_coverage_calculator.calculate(query=state.plan.original_query, answer=final_answer)
                 current_breakdown["query_coverage"] = coverage_score
-
-                coverage_obj = ConfidenceScore(
-                    score=coverage_score,
-                    factors=ConfidenceFactors(query_coverage=coverage_score),
-                    breakdown=current_breakdown.copy()  # 全要素を含むbreakdown
-                )
+                coverage_obj = ConfidenceScore(score=coverage_score, factors=ConfidenceFactors(query_coverage=coverage_score), breakdown=current_breakdown.copy())
                 step_scores.append(coverage_obj)
-                logger.info(f"Query coverage evaluation: {coverage_score:.2f}")
-
-                # UIへの反映のために、最後の信頼度更新として通知する
                 if self.on_confidence_update:
-                    decision = ActionDecision(
-                        level=InterventionLevel.SILENT,
-                        confidence_score=coverage_score,
-                        reason="Final coverage evaluation completed"
-                    )
+                    decision = ActionDecision(level=InterventionLevel.SILENT, confidence_score=coverage_score, reason="Final coverage evaluation completed")
                     self.on_confidence_update(coverage_obj, decision)
-
             except Exception as e:
                 logger.warning(f"Query coverage evaluation failed: {e}")
-
-        # ConfidenceAggregatorで統合
         if step_scores:
-            aggregated_score = self.confidence_aggregator.aggregate(
-                scores=step_scores,
-                method="weighted"
-            )
-            logger.info(f"Aggregated confidence: {aggregated_score:.2f}")
+            aggregated_score = self.confidence_aggregator.aggregate(scores=step_scores, method="weighted")
             return aggregated_score
-
-        # フォールバック: 単純平均
         confidences = [r.confidence for r in state.step_results.values()]
         return sum(confidences) / len(confidences)
 
     def _create_execution_result(self, state: ExecutionState) -> ExecutionResult:
-        """実行結果を生成"""
-        # 全体ステータスを判定
         statuses = [r.status for r in state.step_results.values()]
-
         overall_status: Literal["success", "partial", "failed", "cancelled"]
         if state.is_cancelled:
             overall_status = "cancelled"
@@ -1379,8 +693,6 @@ class Executor:
             overall_status = "partial"
         else:
             overall_status = "failed"
-
-        # 最終回答を取得（最後のreasoningまたはlegacy_agentステップの出力）
         final_answer = None
         for step in reversed(state.plan.steps):
             if (step.action in ["reasoning", "run_legacy_agent"]) and step.step_id in state.step_results:
@@ -1388,59 +700,37 @@ class Executor:
                 if result.status == "success":
                     final_answer = result.output
                     break
-
+        _total_in  = sum((sr.token_usage or {}).get("input_tokens",  0) for sr in state.step_results.values())
+        _total_out = sum((sr.token_usage or {}).get("output_tokens", 0) for sr in state.step_results.values())
+        _token_summary = ({"input_tokens": _total_in, "output_tokens": _total_out} if (_total_in or _total_out) else None)
+        _total_cost: Optional[float] = None
+        if _token_summary and _TOKEN_TRACKING_AVAILABLE:
+            _pricing = _LLM_PRICING.get(self.config.llm.model, {"input": 0.0, "output": 0.0})
+            _total_cost = round(_total_in * _pricing["input"] / 1000 + _total_out * _pricing["output"] / 1000, 6)
         return ExecutionResult(
-            plan_id=state.plan.plan_id or create_plan_id(),
-            original_query=state.plan.original_query,
-            final_answer=final_answer,
-            step_results=list(state.step_results.values()),
-            overall_confidence=state.overall_confidence,
-            overall_status=overall_status,
-            replan_count=state.replan_count,
-            total_execution_time_ms=state.get_execution_time_ms(),
-            total_token_usage=None,
-            total_cost_usd=None,
+            plan_id=state.plan.plan_id or create_plan_id(), original_query=state.plan.original_query,
+            final_answer=final_answer, step_results=list(state.step_results.values()),
+            overall_confidence=state.overall_confidence, overall_status=overall_status,
+            replan_count=state.replan_count, total_execution_time_ms=state.get_execution_time_ms(),
+            total_token_usage=_token_summary, total_cost_usd=_total_cost,
         )
 
     def cancel(self, state: ExecutionState):
-        """実行をキャンセル"""
         state.is_cancelled = True
-        logger.info("Execution cancelled")
 
     def resume(self, state: ExecutionState):
-        """実行を再開"""
         state.is_paused = False
-        logger.info("Execution resumed")
-
-    # =========================================================================
-    # Intervention Handler コールバック（Phase 3）
-    # =========================================================================
 
     def _handle_intervention_notify(self, message: str) -> None:
-        """通知レベルの介入処理（ログ出力のみ）"""
         logger.info(f"[NOTIFY] {message}")
-        # UIへの通知（オプション）
         if self.on_intervention_required:
             self.on_intervention_required("notify", {"message": message})
 
-    def _handle_intervention_confirm(
-            self,
-            request: InterventionRequest
-    ) -> InterventionResponse:
-        """確認レベルの介入処理"""
+    def _handle_intervention_confirm(self, request: InterventionRequest) -> InterventionResponse:
         logger.info(f"[CONFIRM] {request.message}")
-
-        # on_intervention_requiredコールバックでUIに確認を要求
         if self.on_intervention_required:
-            user_response = self.on_intervention_required("confirm", {
-                "message"   : request.message,
-                "reason"    : request.reason,
-                "options"   : request.options,
-                "confidence": request.confidence_score,
-            })
-
+            user_response = self.on_intervention_required("confirm", {"message": request.message, "reason": request.reason, "options": request.options, "confidence": request.confidence_score})
             if user_response:
-                # ユーザー応答を解析
                 if user_response in ["はい、続行", "proceed", "yes"]:
                     return InterventionResponse(action=InterventionAction.PROCEED)
                 elif user_response in ["計画を修正", "modify"]:
@@ -1448,99 +738,30 @@ class Executor:
                 elif user_response in ["キャンセル", "cancel", "no"]:
                     return InterventionResponse(action=InterventionAction.CANCEL)
                 else:
-                    # ユーザー入力として扱う
-                    return InterventionResponse(
-                        action=InterventionAction.INPUT,
-                        user_input=str(user_response)
-                    )
-
-        # コールバックがない場合はデフォルトで続行
+                    return InterventionResponse(action=InterventionAction.INPUT, user_input=str(user_response))
         return InterventionResponse(action=InterventionAction.PROCEED)
 
-    def _handle_intervention_escalate(
-            self,
-            request: InterventionRequest
-    ) -> InterventionResponse:
-        """エスカレーションレベルの介入処理"""
+    def _handle_intervention_escalate(self, request: InterventionRequest) -> InterventionResponse:
         logger.info(f"[ESCALATE] {request.message}")
-
-        # on_intervention_requiredコールバックでUIにユーザー入力を要求
         if self.on_intervention_required:
-            user_response = self.on_intervention_required("escalate", {
-                "message"   : request.message,
-                "question"  : request.question,
-                "reason"    : request.reason,
-                "confidence": request.confidence_score,
-            })
-
+            user_response = self.on_intervention_required("escalate", {"message": request.message, "question": request.question, "reason": request.reason, "confidence": request.confidence_score})
             if user_response:
-                return InterventionResponse(
-                    action=InterventionAction.INPUT,
-                    user_input=str(user_response)
-                )
+                return InterventionResponse(action=InterventionAction.INPUT, user_input=str(user_response))
+        return InterventionResponse(action=InterventionAction.PROCEED, timeout_reached=True)
 
-        # コールバックがない場合はタイムアウト扱い
-        return InterventionResponse(
-            action=InterventionAction.PROCEED,
-            timeout_reached=True
-        )
-
-    def _handle_intervention_if_needed(
-            self,
-            action_decision: ActionDecision,
-            step: PlanStep,
-            state: ExecutionState
-    ) -> Optional[InterventionResponse]:
-        """
-        必要に応じて介入を処理
-
-        Args:
-            action_decision: 信頼度に基づくアクション決定
-            step: 現在のステップ
-            state: 実行状態
-
-        Returns:
-            InterventionResponse: 介入レスポンス（介入が発生した場合）、またはNone
-        """
-        # SILENT/NOTIFYは自動続行
+    def _handle_intervention_if_needed(self, action_decision: ActionDecision, step: PlanStep, state: ExecutionState) -> Optional[InterventionResponse]:
         if action_decision.level in [InterventionLevel.SILENT, InterventionLevel.NOTIFY]:
             if action_decision.level == InterventionLevel.NOTIFY:
                 self.intervention_handler.handle(action_decision, step, state.plan)
             return None
-
-        # CONFIRM/ESCALATEはユーザー介入が必要
         response = self.intervention_handler.handle(action_decision, step, state.plan)
-
-        # キャンセルの場合は実行を中止
         if response.action == InterventionAction.CANCEL:
             state.is_cancelled = True
-
         return response
 
 
-# =============================================================================
-# ファクトリ関数
-# =============================================================================
-
-def create_executor(
-        config: Optional[GraceConfig] = None,
-        tool_registry: Optional[ToolRegistry] = None,
-        **kwargs
-) -> Executor:
-    """Executorインスタンスを作成"""
-    return Executor(
-        config=config,
-        tool_registry=tool_registry,
-        **kwargs
-    )
+def create_executor(config: Optional[GraceConfig] = None, tool_registry: Optional[ToolRegistry] = None, **kwargs) -> Executor:
+    return Executor(config=config, tool_registry=tool_registry, **kwargs)
 
 
-# =============================================================================
-# エクスポート
-# =============================================================================
-
-__all__ = [
-    "ExecutionState",
-    "Executor",
-    "create_executor",
-]
+__all__ = ["ExecutionState", "Executor", "create_executor"]

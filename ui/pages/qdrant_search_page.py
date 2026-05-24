@@ -220,7 +220,7 @@ def show_qdrant_search_page():
 
             # クエリの埋め込みベクトルを生成
             with st.spinner("クエリの埋め込みベクトルを生成中..."):
-                qvec = embed_query_for_search(query, model=embedding_model)
+                qvec = embed_query_for_search(query, model=embedding_model, dims=embedding_dims)
 
                 if debug_mode:
                     st.success(f"✅ {len(qvec)}次元のベクトルを生成しました")
@@ -378,7 +378,7 @@ def show_qdrant_search_page():
             if hits:
                 best_hit = hits[0]
                 st.divider()
-                st.subheader("🧠 AI応答（OpenAI）")
+                st.subheader("🧠 AI応答（Ollama）")
 
                 best_payload = best_hit.payload or {}
                 best_question = best_payload.get("question", "")
@@ -411,11 +411,13 @@ def show_qdrant_search_page():
                     st.code(qa_prompt)
 
                 try:
-                    with st.spinner("OpenAI GPTが回答を生成中..."):
-                        llm_client = create_llm_client(provider="openai")
+                    from config import GeminiConfig
+                    _llm_model = st.session_state.get("startup_model", GeminiConfig.DEFAULT_MODEL)
+                    with st.spinner(f"Ollama ({_llm_model}) が回答を生成中..."):
+                        llm_client = create_llm_client(provider="ollama")
                         generated_answer = llm_client.generate_content(
                             prompt=qa_prompt,
-                            model="gpt-5.4-mini"
+                            model=_llm_model
                         )
 
                     if generated_answer and generated_answer.strip():
